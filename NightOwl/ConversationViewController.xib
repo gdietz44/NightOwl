@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConversationViewController">
+            <connections>
+                <outlet property="messageTextView" destination="Prf-UW-a9y" id="QKi-rG-tuq"/>
+                <outlet property="messageTextViewHeightConstraint" destination="KDf-1V-HNJ" id="nCl-6C-3Q5"/>
+                <outlet property="messageView" destination="RWZ-Kh-obd" id="Arp-Ss-oJC"/>
+                <outlet property="messageViewBottomConstraint" destination="98t-G6-b8D" id="Rcf-S3-pqv"/>
+                <outlet property="sendButton" destination="ORe-Sa-201" id="YuP-oG-9bf"/>
+                <outlet property="tableView" destination="cKk-f6-qaZ" id="QKe-3e-aoK"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cKk-f6-qaZ">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RWZ-Kh-obd">
+                    <rect key="frame" x="0.0" y="478" width="320" height="41"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Prf-UW-a9y">
+                            <rect key="frame" x="4" y="4" width="263" height="33"/>
+                            <animations/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <accessibility key="accessibilityConfiguration" hint=""/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="4Pq-Pf-vQN"/>
+                                <constraint firstAttribute="height" constant="33" id="KDf-1V-HNJ"/>
+                                <constraint firstAttribute="height" constant="28" id="S75-re-Ed7"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="4Pq-Pf-vQN"/>
+                                    <exclude reference="S75-re-Ed7"/>
+                                </mask>
+                            </variation>
+                        </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORe-Sa-201">
+                            <rect key="frame" x="275" y="2" width="37" height="39"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="39" id="k6N-ks-5Ov"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                            <state key="normal" title="Send">
+                                <color key="titleColor" red="0.64705882349999999" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="sendButtonWasPressed:" destination="-1" eventType="touchUpInside" id="Zg3-DS-HTJ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="ORe-Sa-201" firstAttribute="leading" secondItem="Prf-UW-a9y" secondAttribute="trailing" constant="8" id="9VX-8X-QFZ"/>
+                        <constraint firstAttribute="bottom" secondItem="ORe-Sa-201" secondAttribute="bottom" id="Aig-wB-Ze2"/>
+                        <constraint firstItem="Prf-UW-a9y" firstAttribute="bottom" secondItem="ORe-Sa-201" secondAttribute="bottom" constant="-4" id="L3x-3f-fd4"/>
+                        <constraint firstItem="Prf-UW-a9y" firstAttribute="leading" secondItem="RWZ-Kh-obd" secondAttribute="leading" constant="4" id="Lbb-K7-1R9"/>
+                        <constraint firstItem="Prf-UW-a9y" firstAttribute="top" secondItem="RWZ-Kh-obd" secondAttribute="top" constant="4" id="Nfs-4d-ro3"/>
+                        <constraint firstAttribute="trailing" secondItem="ORe-Sa-201" secondAttribute="trailing" constant="8" id="OId-0U-WoF"/>
+                        <constraint firstAttribute="bottom" secondItem="Prf-UW-a9y" secondAttribute="bottom" constant="4" id="SMG-pT-ZKR"/>
+                        <constraint firstAttribute="height" constant="30" id="TN2-Qd-itY"/>
+                        <constraint firstAttribute="bottom" secondItem="Prf-UW-a9y" secondAttribute="bottom" constant="4" id="cOa-cm-6l8"/>
+                        <constraint firstAttribute="bottom" secondItem="ORe-Sa-201" secondAttribute="bottom" id="tov-N8-Hih"/>
+                        <constraint firstItem="ORe-Sa-201" firstAttribute="top" secondItem="RWZ-Kh-obd" secondAttribute="top" id="v7s-0G-WW1"/>
+                        <constraint firstItem="Prf-UW-a9y" firstAttribute="top" secondItem="RWZ-Kh-obd" secondAttribute="top" constant="4" id="yPe-R5-rxh"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="TN2-Qd-itY"/>
+                            <exclude reference="Nfs-4d-ro3"/>
+                            <exclude reference="cOa-cm-6l8"/>
+                            <exclude reference="Aig-wB-Ze2"/>
+                            <exclude reference="v7s-0G-WW1"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="cKk-f6-qaZ" secondAttribute="trailing" id="13C-0B-1HI"/>
+                <constraint firstAttribute="bottom" secondItem="cKk-f6-qaZ" secondAttribute="bottom" id="2tJ-tM-Hhm"/>
+                <constraint firstItem="cKk-f6-qaZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="34w-ac-D0D"/>
+                <constraint firstItem="RWZ-Kh-obd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3Bz-dP-MK0"/>
+                <constraint firstAttribute="bottom" secondItem="RWZ-Kh-obd" secondAttribute="bottom" constant="49" id="98t-G6-b8D"/>
+                <constraint firstAttribute="bottom" secondItem="cKk-f6-qaZ" secondAttribute="bottom" id="QAg-sD-SfD"/>
+                <constraint firstItem="cKk-f6-qaZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="T6O-aB-GCY"/>
+                <constraint firstItem="RWZ-Kh-obd" firstAttribute="top" secondItem="cKk-f6-qaZ" secondAttribute="bottom" id="hMg-ND-Wr7"/>
+                <constraint firstAttribute="trailing" secondItem="RWZ-Kh-obd" secondAttribute="trailing" id="u1J-ub-DmJ"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="QAg-sD-SfD"/>
+                    <exclude reference="hMg-ND-Wr7"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

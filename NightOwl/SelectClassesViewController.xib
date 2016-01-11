@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectClassesViewController">
+            <connections>
+                <outlet property="button" destination="O1u-Ux-Rv3" id="Zqr-WG-kgq"/>
+                <outlet property="buttonView" destination="BGh-gm-djR" id="oM9-hv-CfO"/>
+                <outlet property="tableView" destination="VIB-Bc-HRB" id="MyL-pe-UJc"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="hZn-U2-byj"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What are you working on?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgS-K1-cuu">
+                    <rect key="frame" x="62" y="36" width="196" height="76"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="196" id="Tw9-dI-yqw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="32"/>
+                    <color key="textColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VIB-Bc-HRB">
+                    <rect key="frame" x="0.0" y="149" width="320" height="419"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f0a-yC-TUp">
+                    <rect key="frame" x="0.0" y="148" width="320" height="1"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.64705882349999999" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="ORG-pm-f1u"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BGh-gm-djR">
+                    <rect key="frame" x="0.0" y="459" width="320" height="60"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1u-Ux-Rv3">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                            <state key="normal" title="Find NightOwls">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="findNightOwlsButtonClicked:" destination="-1" eventType="touchUpInside" id="O8l-vy-MIq"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="O1u-Ux-Rv3" secondAttribute="trailing" id="5cI-Xy-P95"/>
+                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="height" secondItem="BGh-gm-djR" secondAttribute="height" id="6ti-72-lYj"/>
+                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerY" secondItem="BGh-gm-djR" secondAttribute="centerY" id="Epa-j2-bZh"/>
+                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="width" secondItem="BGh-gm-djR" secondAttribute="width" id="Lhr-Da-WSf"/>
+                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerX" secondItem="BGh-gm-djR" secondAttribute="centerX" id="OTG-nt-CnU"/>
+                        <constraint firstAttribute="height" constant="60" id="bpU-8F-lQ5"/>
+                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="leading" secondItem="BGh-gm-djR" secondAttribute="leading" id="tFB-Qs-YL1"/>
+                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerX" secondItem="BGh-gm-djR" secondAttribute="centerX" id="u5P-Op-J7h"/>
+                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerY" secondItem="BGh-gm-djR" secondAttribute="centerY" id="wgI-2h-qxy"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="5cI-Xy-P95"/>
+                            <exclude reference="Epa-j2-bZh"/>
+                            <exclude reference="tFB-Qs-YL1"/>
+                            <exclude reference="u5P-Op-J7h"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="VIB-Bc-HRB" secondAttribute="trailing" id="6gP-di-nRe"/>
+                <constraint firstItem="VIB-Bc-HRB" firstAttribute="top" secondItem="f0a-yC-TUp" secondAttribute="bottom" id="7ny-xf-Qsf"/>
+                <constraint firstItem="lgS-K1-cuu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="BST-dt-rbd"/>
+                <constraint firstItem="lgS-K1-cuu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="36" id="Bpc-0r-u3d"/>
+                <constraint firstItem="VIB-Bc-HRB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LP2-6A-Vzd"/>
+                <constraint firstItem="BGh-gm-djR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QaQ-hV-7M3"/>
+                <constraint firstItem="BGh-gm-djR" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RPZ-uG-jq9"/>
+                <constraint firstItem="VIB-Bc-HRB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RXu-5T-Nka"/>
+                <constraint firstItem="f0a-yC-TUp" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="VkR-Ms-LY2"/>
+                <constraint firstItem="f0a-yC-TUp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WI0-eU-9b6"/>
+                <constraint firstAttribute="bottom" secondItem="BGh-gm-djR" secondAttribute="bottom" constant="49" id="fBz-vK-rzq"/>
+                <constraint firstItem="f0a-yC-TUp" firstAttribute="top" secondItem="VIB-Bc-HRB" secondAttribute="top" id="l2o-0T-fuF"/>
+                <constraint firstItem="f0a-yC-TUp" firstAttribute="top" secondItem="lgS-K1-cuu" secondAttribute="bottom" constant="36" id="rVi-Fk-gaZ"/>
+                <constraint firstItem="VIB-Bc-HRB" firstAttribute="top" secondItem="lgS-K1-cuu" secondAttribute="bottom" constant="32" id="yTl-jp-MTx"/>
+                <constraint firstAttribute="bottom" secondItem="VIB-Bc-HRB" secondAttribute="bottom" id="zDA-fs-kSm"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="l2o-0T-fuF"/>
+                    <exclude reference="yTl-jp-MTx"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

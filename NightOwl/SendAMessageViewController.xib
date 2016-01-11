@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendAMessageViewController">
+            <connections>
+                <outlet property="button" destination="DPA-9d-0BZ" id="IDV-Md-9NS"/>
+                <outlet property="buttonView" destination="med-8R-9HW" id="Iit-QT-Jdo"/>
+                <outlet property="messageTextView" destination="agn-3U-Pdn" id="RWe-qP-QYh"/>
+                <outlet property="scrollView" destination="HaP-SM-6mA" id="MpY-F9-5gf"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HaP-SM-6mA">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send a message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DK6-Ig-VyQ">
+                            <rect key="frame" x="8" y="45" width="174" height="29"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                            <color key="textColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="agn-3U-Pdn" customClass="MultiLineFieldTextView">
+                            <rect key="frame" x="8" y="82" width="304" height="256"/>
+                            <animations/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="256" id="YVL-Dc-Ajg"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <animations/>
+                    <constraints>
+                        <constraint firstItem="agn-3U-Pdn" firstAttribute="centerX" secondItem="HaP-SM-6mA" secondAttribute="centerX" id="Eeb-MD-ZCS"/>
+                        <constraint firstItem="DK6-Ig-VyQ" firstAttribute="leading" secondItem="HaP-SM-6mA" secondAttribute="leading" constant="8" id="GLX-Sj-NYN"/>
+                        <constraint firstItem="DK6-Ig-VyQ" firstAttribute="top" secondItem="HaP-SM-6mA" secondAttribute="top" constant="45" id="Kxo-CD-cKo"/>
+                        <constraint firstAttribute="bottom" secondItem="agn-3U-Pdn" secondAttribute="bottom" constant="230" id="ONI-WH-X4U"/>
+                        <constraint firstAttribute="trailing" secondItem="agn-3U-Pdn" secondAttribute="trailing" constant="8" id="fll-dH-7d4"/>
+                        <constraint firstItem="agn-3U-Pdn" firstAttribute="top" secondItem="DK6-Ig-VyQ" secondAttribute="bottom" constant="8" id="ji6-0Y-y4L"/>
+                        <constraint firstItem="agn-3U-Pdn" firstAttribute="top" secondItem="HaP-SM-6mA" secondAttribute="top" constant="82" id="qEh-Py-v33"/>
+                        <constraint firstItem="agn-3U-Pdn" firstAttribute="leading" secondItem="HaP-SM-6mA" secondAttribute="leading" constant="8" id="w5k-mN-BDR"/>
+                    </constraints>
+                </scrollView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="med-8R-9HW">
+                    <rect key="frame" x="0.0" y="508" width="320" height="60"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DPA-9d-0BZ">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                            <state key="normal" title="Send Message">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="sendMessageButtonWasClicked:" destination="-1" eventType="touchUpInside" id="jF6-w7-B1v"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="DPA-9d-0BZ" firstAttribute="centerX" secondItem="med-8R-9HW" secondAttribute="centerX" id="4H2-4C-XZ8"/>
+                        <constraint firstItem="DPA-9d-0BZ" firstAttribute="leading" secondItem="med-8R-9HW" secondAttribute="leading" id="7Ni-rC-dNT"/>
+                        <constraint firstItem="DPA-9d-0BZ" firstAttribute="centerX" secondItem="med-8R-9HW" secondAttribute="centerX" id="9lU-JA-uJc"/>
+                        <constraint firstAttribute="height" constant="60" id="GoH-Ej-0n1"/>
+                        <constraint firstItem="DPA-9d-0BZ" firstAttribute="centerY" secondItem="med-8R-9HW" secondAttribute="centerY" id="Inm-CV-pnY"/>
+                        <constraint firstItem="DPA-9d-0BZ" firstAttribute="width" secondItem="med-8R-9HW" secondAttribute="width" id="L4U-cq-1Eq"/>
+                        <constraint firstItem="DPA-9d-0BZ" firstAttribute="centerY" secondItem="med-8R-9HW" secondAttribute="centerY" id="W47-VU-Tf9"/>
+                        <constraint firstItem="DPA-9d-0BZ" firstAttribute="height" secondItem="med-8R-9HW" secondAttribute="height" id="oHs-Es-pyb"/>
+                        <constraint firstAttribute="trailing" secondItem="DPA-9d-0BZ" secondAttribute="trailing" id="sgq-Ge-Ku8"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="4H2-4C-XZ8"/>
+                            <exclude reference="7Ni-rC-dNT"/>
+                            <exclude reference="Inm-CV-pnY"/>
+                            <exclude reference="sgq-Ge-Ku8"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="HaP-SM-6mA" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="14T-pJ-RRt"/>
+                <constraint firstItem="HaP-SM-6mA" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="6W5-XV-FDJ"/>
+                <constraint firstAttribute="bottom" secondItem="HaP-SM-6mA" secondAttribute="bottom" id="8Pq-Fb-q9x"/>
+                <constraint firstItem="HaP-SM-6mA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="A5W-fD-611"/>
+                <constraint firstItem="med-8R-9HW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CeV-tV-TZv"/>
+                <constraint firstItem="HaP-SM-6mA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Hhc-hM-cll"/>
+                <constraint firstAttribute="trailing" secondItem="HaP-SM-6mA" secondAttribute="trailing" id="MUK-ic-6cM"/>
+                <constraint firstAttribute="bottom" secondItem="med-8R-9HW" secondAttribute="bottom" id="Xl8-iK-C9h"/>
+                <constraint firstItem="HaP-SM-6mA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="mde-aG-GoT"/>
+                <constraint firstItem="med-8R-9HW" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="sSD-pi-iMg"/>
+                <constraint firstItem="HaP-SM-6mA" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="tkm-lB-Uo8"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Hhc-hM-cll"/>
+                    <exclude reference="tkm-lB-Uo8"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MeViewController">
+            <connections>
+                <outlet property="addButton" destination="e68-dw-X3F" id="BfY-3G-g1u"/>
+                <outlet property="cancelButton" destination="w1T-PS-Qhv" id="JPs-7d-gDn"/>
+                <outlet property="deleteButton" destination="bS9-wU-haB" id="nKV-H2-7x4"/>
+                <outlet property="editButton" destination="F2L-IR-zWb" id="x1g-tM-ITP"/>
+                <outlet property="profileImageView" destination="6Rh-ds-2mg" id="e9d-7H-STC"/>
+                <outlet property="tableView" destination="I17-yZ-l5X" id="kdJ-b6-eFW"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GriffinDProfilePic.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="6Rh-ds-2mg">
+                    <rect key="frame" x="88" y="35" width="144" height="144"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="144" id="0xz-6l-ctl"/>
+                        <constraint firstAttribute="width" constant="144" id="OJG-7t-MHy"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Griffin D." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1i0-jN-Ga8">
+                    <rect key="frame" x="123" y="187" width="75" height="24"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F2L-IR-zWb">
+                    <rect key="frame" x="8" y="229" width="30" height="24"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="iB1-jU-RZZ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                    <state key="normal" title="Edit">
+                        <color key="titleColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="editClicked:" destination="-1" eventType="touchUpInside" id="vJP-o4-KMc"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1T-PS-Qhv">
+                    <rect key="frame" x="8" y="229" width="48" height="24"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="qFU-cO-ZhG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                    <state key="normal" title="Cancel">
+                        <color key="titleColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="rOq-cF-2Ip"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bS9-wU-haB">
+                    <rect key="frame" x="247" y="229" width="65" height="24"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="xdg-f0-rfM"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                    <state key="normal" title="Delete All">
+                        <color key="titleColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="deleteAction:" destination="-1" eventType="touchUpInside" id="PoU-au-VVd"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Classes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dv8-fX-sLs">
+                    <rect key="frame" x="121" y="233" width="79" height="19"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SYd-wb-Wc8">
+                    <rect key="frame" x="0.0" y="254" width="320" height="1"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.64705882349999999" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="Rgw-Ba-U3y"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="I17-yZ-l5X">
+                    <rect key="frame" x="0.0" y="255" width="320" height="225"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e68-dw-X3F">
+                    <rect key="frame" x="280" y="226" width="32" height="24"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="An0-90-o17"/>
+                        <constraint firstAttribute="width" constant="32" id="QE0-tn-aWt"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="30"/>
+                    <color key="tintColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="+">
+                        <color key="titleColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="addClassButtonSelected:" destination="-1" eventType="touchUpInside" id="SpG-Nh-IRa"/>
+                    </connections>
+                </button>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="F2L-IR-zWb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="0VH-Bs-wjg"/>
+                <constraint firstItem="I17-yZ-l5X" firstAttribute="top" secondItem="e68-dw-X3F" secondAttribute="bottom" id="0rj-RS-jBW"/>
+                <constraint firstAttribute="bottom" secondItem="I17-yZ-l5X" secondAttribute="bottom" id="3M4-yn-ctA"/>
+                <constraint firstItem="w1T-PS-Qhv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="CSW-qN-Qg8"/>
+                <constraint firstItem="bS9-wU-haB" firstAttribute="centerY" secondItem="w1T-PS-Qhv" secondAttribute="centerY" id="E7l-nO-zzr"/>
+                <constraint firstItem="w1T-PS-Qhv" firstAttribute="centerY" secondItem="Dv8-fX-sLs" secondAttribute="centerY" constant="-2" id="Kna-Dr-8xm"/>
+                <constraint firstItem="I17-yZ-l5X" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LUV-7m-Pyk"/>
+                <constraint firstItem="6Rh-ds-2mg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="35" id="Mby-sK-4Gs"/>
+                <constraint firstItem="I17-yZ-l5X" firstAttribute="top" secondItem="F2L-IR-zWb" secondAttribute="bottom" id="WYh-mi-xBT"/>
+                <constraint firstItem="I17-yZ-l5X" firstAttribute="top" secondItem="Dv8-fX-sLs" secondAttribute="bottom" constant="-2" id="YxN-zT-C3o"/>
+                <constraint firstItem="SYd-wb-Wc8" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="bFT-YR-Zdk"/>
+                <constraint firstItem="6Rh-ds-2mg" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ceK-jN-Sne"/>
+                <constraint firstItem="1i0-jN-Ga8" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="f3z-22-RzI"/>
+                <constraint firstItem="Dv8-fX-sLs" firstAttribute="centerY" secondItem="e68-dw-X3F" secondAttribute="centerY" constant="4.5" id="ffI-wB-Yla"/>
+                <constraint firstAttribute="trailing" secondItem="I17-yZ-l5X" secondAttribute="trailing" id="gXy-Eq-vS1"/>
+                <constraint firstAttribute="trailing" secondItem="e68-dw-X3F" secondAttribute="trailing" constant="8" id="if2-vw-VIv"/>
+                <constraint firstItem="e68-dw-X3F" firstAttribute="centerY" secondItem="w1T-PS-Qhv" secondAttribute="centerY" id="k4F-0T-MLB"/>
+                <constraint firstItem="Dv8-fX-sLs" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="lFZ-TN-j4C"/>
+                <constraint firstItem="Dv8-fX-sLs" firstAttribute="top" secondItem="1i0-jN-Ga8" secondAttribute="bottom" constant="22.5" id="miV-zu-0Ht"/>
+                <constraint firstItem="I17-yZ-l5X" firstAttribute="top" secondItem="SYd-wb-Wc8" secondAttribute="bottom" id="ptF-st-a7S"/>
+                <constraint firstItem="SYd-wb-Wc8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rEN-6N-EO2"/>
+                <constraint firstItem="1i0-jN-Ga8" firstAttribute="top" secondItem="6Rh-ds-2mg" secondAttribute="bottom" constant="8" id="ran-T2-4lA"/>
+                <constraint firstItem="SYd-wb-Wc8" firstAttribute="top" secondItem="Dv8-fX-sLs" secondAttribute="bottom" constant="2" id="vbZ-NT-WOP"/>
+                <constraint firstAttribute="trailing" secondItem="bS9-wU-haB" secondAttribute="trailing" constant="8" id="zBu-2C-Ez5"/>
+                <constraint firstItem="F2L-IR-zWb" firstAttribute="centerY" secondItem="Dv8-fX-sLs" secondAttribute="centerY" constant="-1.5" id="zhP-yN-UQH"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="0rj-RS-jBW"/>
+                    <exclude reference="WYh-mi-xBT"/>
+                    <exclude reference="YxN-zT-C3o"/>
+                    <exclude reference="k4F-0T-MLB"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="268" y="265"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="GriffinDProfilePic.jpg" width="1536" height="1536"/>
+    </resources>
+</document>
