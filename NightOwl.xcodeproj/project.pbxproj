@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		491A0A541C4384AC0014EDF7 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 491A0A511C4384AC0014EDF7 /* FBSDKCoreKit.framework */; };
+		491A0A551C4384AC0014EDF7 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 491A0A521C4384AC0014EDF7 /* FBSDKLoginKit.framework */; };
+		491A0A561C4384AC0014EDF7 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 491A0A531C4384AC0014EDF7 /* FBSDKShareKit.framework */; };
+		491A0A5B1C4386650014EDF7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 491A0A591C4386650014EDF7 /* LoginViewController.m */; };
+		491A0A5C1C4386650014EDF7 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 491A0A5A1C4386650014EDF7 /* LoginViewController.xib */; };
 		850E13951BF671B7003911EA /* courselist.xml in Resources */ = {isa = PBXBuildFile; fileRef = 850E13941BF671B7003911EA /* courselist.xml */; };
 		850E13981BF67920003911EA /* ClassList.m in Sources */ = {isa = PBXBuildFile; fileRef = 850E13971BF67920003911EA /* ClassList.m */; };
 		856130381C1042B8003E69D7 /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 856130371C1042B8003E69D7 /* SplashScreen.png */; };
@@ -121,6 +126,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		491A0A511C4384AC0014EDF7 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		491A0A521C4384AC0014EDF7 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		491A0A531C4384AC0014EDF7 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		491A0A581C4386650014EDF7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		491A0A591C4386650014EDF7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		491A0A5A1C4386650014EDF7 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		850E13941BF671B7003911EA /* courselist.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = courselist.xml; sourceTree = "<group>"; };
 		850E13961BF67920003911EA /* ClassList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassList.h; sourceTree = "<group>"; };
 		850E13971BF67920003911EA /* ClassList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassList.m; sourceTree = "<group>"; };
@@ -258,6 +269,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				491A0A551C4384AC0014EDF7 /* FBSDKLoginKit.framework in Frameworks */,
+				491A0A541C4384AC0014EDF7 /* FBSDKCoreKit.framework in Frameworks */,
+				491A0A561C4384AC0014EDF7 /* FBSDKShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +292,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		491A0A501C4384850014EDF7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				491A0A511C4384AC0014EDF7 /* FBSDKCoreKit.framework */,
+				491A0A521C4384AC0014EDF7 /* FBSDKLoginKit.framework */,
+				491A0A531C4384AC0014EDF7 /* FBSDKShareKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		491A0A571C43860D0014EDF7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				491A0A581C4386650014EDF7 /* LoginViewController.h */,
+				491A0A591C4386650014EDF7 /* LoginViewController.m */,
+				491A0A5A1C4386650014EDF7 /* LoginViewController.xib */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		857D70051BEF48B700639EE1 = {
 			isa = PBXGroup;
 			children = (
@@ -301,10 +335,12 @@
 		857D70101BEF48B800639EE1 /* NightOwl */ = {
 			isa = PBXGroup;
 			children = (
+				491A0A571C43860D0014EDF7 /* Login */,
 				857D704E1BEF52A800639EE1 /* HomeTab */,
 				857D705F1BF020DF00639EE1 /* Messages */,
 				857D70651BF0229400639EE1 /* Me */,
 				857D704F1BEF52C000639EE1 /* Navigation */,
+				491A0A501C4384850014EDF7 /* Frameworks */,
 				857D70141BEF48B800639EE1 /* AppDelegate.h */,
 				857D70151BEF48B800639EE1 /* AppDelegate.m */,
 				857D701D1BEF48B800639EE1 /* Assets.xcassets */,
@@ -616,6 +652,7 @@
 				857BF1A41C0A56C9006BAF2A /* ConversationViewController.xib in Resources */,
 				857D705A1BEFD26200639EE1 /* Home-Gray0.5x.png in Resources */,
 				85CD24341C071E5800B6E173 /* Arun.jpg in Resources */,
+				491A0A5C1C4386650014EDF7 /* LoginViewController.xib in Resources */,
 				85CD244C1C071E5800B6E173 /* Steph.jpg in Resources */,
 				85CD24461C071E5800B6E173 /* Miguel.jpg in Resources */,
 				85C55FB31BFB2EA0008CCC6B /* AddClassesViewController.xib in Resources */,
@@ -699,6 +736,7 @@
 				857D706D1BF024DA00639EE1 /* noHomeNavigationController.m in Sources */,
 				850E13981BF67920003911EA /* ClassList.m in Sources */,
 				857BF19F1C09BA29006BAF2A /* noMessagesTabNavigationController.m in Sources */,
+				491A0A5B1C4386650014EDF7 /* LoginViewController.m in Sources */,
 				85BB15071BFF07B00032E88B /* SetLocationStatusViewController.m in Sources */,
 				85DA58731BFFABC9007D57FD /* MultiLineFieldTextView.m in Sources */,
 				857BF1A31C0A56C9006BAF2A /* ConversationViewController.m in Sources */,
@@ -853,6 +891,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NightOwl",
+				);
 				INFOPLIST_FILE = NightOwl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.cs193p.gdietz44.NightOwl;
@@ -865,6 +907,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NightOwl",
+				);
 				INFOPLIST_FILE = NightOwl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.cs193p.gdietz44.NightOwl;

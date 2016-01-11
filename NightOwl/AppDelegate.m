@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "noTabBarController.h"
+#import "LoginViewController.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/2ef464aa-947f-11e5-95ef-3f4617001ad6";
 
@@ -34,8 +36,11 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/2ef464aa-94
         [defaults synchronize];
     }
     
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    [self.window.rootViewController presentViewController:loginVC animated:true completion:nil];
     
-    
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
     return YES;
 }
 
@@ -61,10 +66,21 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/2ef464aa-94
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [FBSDKAppEvents activateApp];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
 }
 
 @end
