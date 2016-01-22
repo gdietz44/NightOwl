@@ -35,7 +35,7 @@ static NSString* const SelectedClassCell = @"SelectClassesTableViewCellSelected"
 - (id)initWithDelegate:(id<SelectClassesViewControllerDelegate>)delegate {
     if (self = [super initWithNibName:NSStringFromClass([self class]) bundle:[NSBundle mainBundle]]) {
         self.delegate = delegate;
-        self.title = @"Select Classes";
+        self.title = @"NightOwl";
     }
     return self;
 }
