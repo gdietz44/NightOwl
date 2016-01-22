@@ -8,8 +8,7 @@
 
 #import "AppDelegate.h"
 #import "noTabBarController.h"
-
-static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/2ef464aa-947f-11e5-95ef-3f4617001ad6";
+#import <Lookback/Lookback.h>
 
 @interface AppDelegate ()
 
@@ -25,6 +24,9 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/2ef464aa-94
     self.window.rootViewController = notbc;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    [Lookback_Weak setupWithAppToken:@"ohdshJX2zNXBCzoeX"];
+    [Lookback_Weak sharedLookback].shakeToRecord = YES;
+    [Lookback_Weak sharedLookback].feedbackBubbleVisible = YES;
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
     {
         NSArray *classes = @[@"CS 147", @"ECON 1", @"MATH 51"];
@@ -33,9 +35,6 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/2ef464aa-94
         [defaults setBool:YES forKey:@"HasLaunchedOnce"];
         [defaults synchronize];
     }
-    
-    
-    
     return YES;
 }
 
