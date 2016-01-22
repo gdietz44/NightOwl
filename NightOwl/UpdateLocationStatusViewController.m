@@ -149,7 +149,11 @@ static NSUInteger const MaxStatusLength = 60;
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string {
     if([string isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
+        if([textView isEqual:self.locationField]) {
+            [self.statusField becomeFirstResponder];
+        } else {
+            [textView resignFirstResponder];
+        }
         return NO;
     }
     if (![textView isEqual:self.statusField]) return YES;
