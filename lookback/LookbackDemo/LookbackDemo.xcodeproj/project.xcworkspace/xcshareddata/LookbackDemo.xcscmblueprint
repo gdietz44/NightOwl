@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8FE608FC25EC59BD4A89F81BF9DCE6DC6F205F8F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "8FE608FC25EC59BD4A89F81BF9DCE6DC6F205F8F" : 0,
+    "D6B7AB63E6AE9D41609E74EBED9CBC29D33F1C34" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A89AA947-414D-41AD-894E-DB7C73F593EE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "8FE608FC25EC59BD4A89F81BF9DCE6DC6F205F8F" : "lookback-ios\/",
+    "D6B7AB63E6AE9D41609E74EBED9CBC29D33F1C34" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "LookbackDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Apps\/LookbackDemo\/LookbackDemo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:lookback\/lookback-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8FE608FC25EC59BD4A89F81BF9DCE6DC6F205F8F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:lookback\/lookback-mac.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D6B7AB63E6AE9D41609E74EBED9CBC29D33F1C34"
+    }
+  ]
+}
