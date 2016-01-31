@@ -7,7 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-//#import <GoogleMaps/GoogleMaps.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 #import "SelectClassesViewController.h"
 #import "SelectClassesTableViewCellUnselected.h"
@@ -17,6 +17,7 @@
 #import "UpdateLocationStatusViewController.h"
 #import "noModalNavigationController.h"
 #import "FindNightOwlsViewController.h"
+#import "GMSPlacesClient.h"
 
 static NSString* const UnselectedClassCell = @"SelectClassesTableViewCellUnselected";
 static NSString* const SelectedClassCell = @"SelectClassesSelectedWithTextFieldTableViewCell";
@@ -34,7 +35,9 @@ static NSUInteger const MaxStatusLength = 40;
 @property (nonatomic) NSString *location;
 @end
 
-@implementation SelectClassesViewController
+@implementation SelectClassesViewController {
+    GMSPlacesClient *_placesClient;
+}
 
 #pragma mark Initialization Methods
 - (id)initWithDelegate:(id<SelectClassesViewControllerDelegate>)delegate {
@@ -52,6 +55,23 @@ static NSUInteger const MaxStatusLength = 40;
 #pragma mark View Controller Life Cycle Methods
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _placesClient = [[GMSPlacesClient alloc] init];
+    [[[CLLocationManager alloc] init] requestWhenInUseAuthorization];
+    [_placesClient currentPlaceWithCallback:^(GMSPlaceLikelihoodList *likelihoodList, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Current Place error %@", [error localizedDescription]);
+            return;
+        }
+        
+        for (GMSPlaceLikelihood *likelihood in likelihoodList.likelihoods) {
+            GMSPlace* place = likelihood.place;
+            NSLog(@"Current Place name %@ at likelihood %g", place.name, likelihood.likelihood);
+            NSLog(@"Current Place address %@", place.formattedAddress);
+            NSLog(@"Current Place attributions %@", place.attributions);
+            NSLog(@"Current PlaceID %@", place.placeID);
+        }
+        
+    }];
     
     self.location = @"";
     
@@ -94,6 +114,8 @@ static NSUInteger const MaxStatusLength = 40;
             self.activeClasses++;
         }
     }
+    
+    
     
     self.buttonView.layer.cornerRadius = 8;
     
