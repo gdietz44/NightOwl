@@ -21,6 +21,7 @@ static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
 
 @interface FindNightOwlsViewController ()<HorizontalPickerViewDataSource,HorizontalPickerViewDelegate, UITableViewDataSource, UITableViewDelegate, SendAMessageViewControllerDelegate, noModalNavigationControllerDelegate> {
     BOOL firstAppearance;
+    NSUInteger startIndex;
 }
 @property (weak, nonatomic) IBOutlet HorizontalPickerView *horizontalPicker;
 @property (nonatomic) NSArray *classes;
@@ -35,9 +36,10 @@ static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
 
 @implementation FindNightOwlsViewController
 #pragma mark Initialization
-- (id)initWithClassList:(NSArray *)activeClasses {
+- (id)initWithClassList:(NSArray *)activeClasses highlightedClassIndex:(NSUInteger)index {
     if (self = [super init]) {
         self.classes = activeClasses;
+        startIndex = index;
     }
     return self;
 }
@@ -83,7 +85,7 @@ static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     if (firstAppearance) {
-        [self.horizontalPicker selectItem:0 animated:NO];
+        [self.horizontalPicker selectItem:startIndex animated:NO];
         firstAppearance = NO;
     }
 }

@@ -41,8 +41,8 @@
 - (void)addPlaceholderLabel {
     self.placeholderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 5.0, CGRectGetWidth(self.frame)-20.0, 20.0)];
     self.placeholderLabel.text = @"Add comment here";
-    self.placeholderLabel.textColor = [UIColor lightGrayColor];
-    self.placeholderLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0];
+    self.placeholderLabel.textColor = [UIColor colorWithRed:165.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1.0];
+    self.placeholderLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12.0];
     self.placeholderLabel.textAlignment = NSTextAlignmentLeft;
     self.placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
     

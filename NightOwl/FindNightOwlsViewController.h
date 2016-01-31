@@ -10,6 +10,6 @@
 
 @interface FindNightOwlsViewController : UIViewController
 
-- (id)initWithClassList:(NSArray *)activeClasses;
+- (id)initWithClassList:(NSArray *)activeClasses highlightedClassIndex:(NSUInteger)index;
 
 @end

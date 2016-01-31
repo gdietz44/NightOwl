@@ -7,9 +7,11 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+//#import <GoogleMaps/GoogleMaps.h>
+
 #import "SelectClassesViewController.h"
 #import "SelectClassesTableViewCellUnselected.h"
-#import "SelectClassesTableViewCellSelected.h"
+#import "SelectClassesSelectedWithTextFieldTableViewCell.h"
 #import "EnrolledClass.h"
 #import "SetLocationStatusViewController.h"
 #import "UpdateLocationStatusViewController.h"
@@ -17,9 +19,11 @@
 #import "FindNightOwlsViewController.h"
 
 static NSString* const UnselectedClassCell = @"SelectClassesTableViewCellUnselected";
-static NSString* const SelectedClassCell = @"SelectClassesTableViewCellSelected";
+static NSString* const SelectedClassCell = @"SelectClassesSelectedWithTextFieldTableViewCell";
+static NSUInteger const MaxStatusLength = 40;
 
-@interface SelectClassesViewController () <UITableViewDataSource, UITableViewDelegate, SetLocationStatusViewControllerDelegate, noModalNavigationControllerDelegate, UpdateLocationStatusViewControllerDelegate>
+
+@interface SelectClassesViewController () <UITableViewDataSource, UITableViewDelegate, SetLocationStatusViewControllerDelegate, noModalNavigationControllerDelegate, UpdateLocationStatusViewControllerDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *button;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
@@ -115,22 +119,27 @@ static NSString* const SelectedClassCell = @"SelectClassesTableViewCellSelected"
 
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 65;
+    return 87;
 }
 
 - (void) tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if([cell isKindOfClass:[SelectClassesTableViewCellSelected class]]) {
-        NSString *key = [(SelectClassesTableViewCellSelected *)cell getName];
-        UpdateLocationStatusViewController* ulsvc = [[UpdateLocationStatusViewController alloc] initWithDelegate:self classTitle:key currLocation:self.location currStatus:((EnrolledClass *)[self.classInfo objectForKey:key]).status];
-        noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:ulsvc withDelegate:self];
-        [self.navigationController presentViewController:modal animated:YES completion:nil];
+    if([cell isKindOfClass:[SelectClassesSelectedWithTextFieldTableViewCell class]]) {
+        NSString *key = [(SelectClassesSelectedWithTextFieldTableViewCell *)cell getName];
+        [self findNightOwlsForClass:key];
+//        UpdateLocationStatusViewController* ulsvc = [[UpdateLocationStatusViewController alloc] initWithDelegate:self classTitle:key currLocation:self.location currStatus:((EnrolledClass *)[self.classInfo objectForKey:key]).status];
+//        noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:ulsvc withDelegate:self];
+//        [self.navigationController presentViewController:modal animated:YES completion:nil];
     } else {
         NSString *key = [(SelectClassesTableViewCellUnselected *)cell getName];
-        SetLocationStatusViewController* slsvc = [[SetLocationStatusViewController alloc] initWithDelegate:self classTitle:key currLocation:self.location];
-        noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:slsvc withDelegate:self];
-        [self.navigationController presentViewController:modal animated:YES completion:nil];
+        ((EnrolledClass *)[self.classInfo objectForKey:key]).active = YES;
+        self.activeClasses++;
+        [self.tableView reloadData];
+        //        NSString *key = [(SelectClassesTableViewCellUnselected *)cell getName];
+//        SetLocationStatusViewController* slsvc = [[SetLocationStatusViewController alloc] initWithDelegate:self classTitle:key currLocation:self.location];
+//        noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:slsvc withDelegate:self];
+//        [self.navigationController presentViewController:modal animated:YES completion:nil];
     }
     [self setButtonColor];
     [tableView reloadData];
@@ -152,11 +161,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *classTitle = [self.currentClasses objectAtIndex:(NSUInteger)indexPath.row];
     EnrolledClass *classObj = (EnrolledClass *)[self.classInfo objectForKey:classTitle];
     if (classObj.active) {
-        SelectClassesTableViewCellSelected *cell = [tableView dequeueReusableCellWithIdentifier:SelectedClassCell];
+        SelectClassesSelectedWithTextFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SelectedClassCell];
         if (cell == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:SelectedClassCell owner:self options:nil];
             cell = [nib objectAtIndex:0];
         }
+        cell.statusLabel.delegate = self;
         cell.activeButton.tag = indexPath.row;
         [cell.activeButton addTarget:self action:@selector(deactivateButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cell configureCell:classTitle withStatus:classObj.status];
@@ -219,7 +229,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (IBAction)findNightOwlsButtonClicked:(id)sender {
+- (void)findNightOwlsForClass:(NSString *)class {
     NSMutableArray *activeClasses = [[NSMutableArray alloc] initWithCapacity:self.activeClasses];
     for (id key in [self.classInfo allKeys]) {
         if (((EnrolledClass *)[self.classInfo objectForKey:key]).active) {
@@ -227,8 +237,21 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
     [activeClasses sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    FindNightOwlsViewController *fnovc = [[FindNightOwlsViewController alloc] initWithClassList:activeClasses];
+    FindNightOwlsViewController *fnovc = [[FindNightOwlsViewController alloc] initWithClassList:activeClasses highlightedClassIndex:[activeClasses indexOfObject:class]];
     [self.navigationController pushViewController:fnovc animated:YES];
+}
+
+#pragma mark TextViewDleegate Methods
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string {
+    if([string isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return [self isAcceptableTextLength:textView.text.length + string.length - range.length];
+}
+
+- (BOOL)isAcceptableTextLength:(NSUInteger)length {
+    return length <= MaxStatusLength;
 }
 
 #pragma mark SetLocationStatusViewControllerDelegate methods

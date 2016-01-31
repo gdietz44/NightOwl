@@ -55,6 +55,8 @@
 		858BCB921C515FE3009E8205 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 858BCB861C515FE3009E8205 /* QuartzCore.framework */; };
 		858BCB931C515FE3009E8205 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 858BCB871C515FE3009E8205 /* SystemConfiguration.framework */; };
 		858BCB941C515FE3009E8205 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 858BCB881C515FE3009E8205 /* VideoToolbox.framework */; };
+		85954BF81C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85954BF61C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.m */; };
+		85954BF91C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85954BF71C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.xib */; };
 		85A8463F1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A8463D1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.m */; };
 		85A846401BF1636D0027D236 /* SelectClassesTableViewCellUnselected.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85A8463E1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.xib */; };
 		85BB14E31BFEAAD50032E88B /* Disclosure-Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 85BB14E21BFEAAD50032E88B /* Disclosure-Gray.png */; };
@@ -134,9 +136,70 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		397215CC7DC4D4113B967F6A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C992CCA3D08FB20B68032A6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		850E13941BF671B7003911EA /* courselist.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = courselist.xml; sourceTree = "<group>"; };
 		850E13961BF67920003911EA /* ClassList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassList.h; sourceTree = "<group>"; };
 		850E13971BF67920003911EA /* ClassList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassList.m; sourceTree = "<group>"; };
+		853B1F881C5EABDF003FA1F5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		853B1F8A1C5EB06E003FA1F5 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Pods/GoogleMaps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
+		853B1F8D1C5EB0D3003FA1F5 /* GoogleMaps */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = GoogleMaps; sourceTree = "<group>"; };
+		853B1F8F1C5EB0D3003FA1F5 /* GMSAddress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSAddress.h; sourceTree = "<group>"; };
+		853B1F901C5EB0D3003FA1F5 /* GMSAutocompleteFetcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSAutocompleteFetcher.h; sourceTree = "<group>"; };
+		853B1F911C5EB0D3003FA1F5 /* GMSAutocompleteFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSAutocompleteFilter.h; sourceTree = "<group>"; };
+		853B1F921C5EB0D3003FA1F5 /* GMSAutocompleteMatchFragment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSAutocompleteMatchFragment.h; sourceTree = "<group>"; };
+		853B1F931C5EB0D3003FA1F5 /* GMSAutocompletePrediction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSAutocompletePrediction.h; sourceTree = "<group>"; };
+		853B1F941C5EB0D3003FA1F5 /* GMSAutocompleteResultsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSAutocompleteResultsViewController.h; sourceTree = "<group>"; };
+		853B1F951C5EB0D3003FA1F5 /* GMSAutocompleteTableDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSAutocompleteTableDataSource.h; sourceTree = "<group>"; };
+		853B1F961C5EB0D3003FA1F5 /* GMSAutocompleteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSAutocompleteViewController.h; sourceTree = "<group>"; };
+		853B1F971C5EB0D3003FA1F5 /* GMSCALayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSCALayer.h; sourceTree = "<group>"; };
+		853B1F981C5EB0D3003FA1F5 /* GMSCameraPosition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSCameraPosition.h; sourceTree = "<group>"; };
+		853B1F991C5EB0D3003FA1F5 /* GMSCameraUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSCameraUpdate.h; sourceTree = "<group>"; };
+		853B1F9A1C5EB0D3003FA1F5 /* GMSCircle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSCircle.h; sourceTree = "<group>"; };
+		853B1F9B1C5EB0D3003FA1F5 /* GMSCoordinateBounds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSCoordinateBounds.h; sourceTree = "<group>"; };
+		853B1F9C1C5EB0D3003FA1F5 /* GMSGeocoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSGeocoder.h; sourceTree = "<group>"; };
+		853B1F9D1C5EB0D3003FA1F5 /* GMSGeometryUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSGeometryUtils.h; sourceTree = "<group>"; };
+		853B1F9E1C5EB0D3003FA1F5 /* GMSGroundOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSGroundOverlay.h; sourceTree = "<group>"; };
+		853B1F9F1C5EB0D3003FA1F5 /* GMSIndoorBuilding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSIndoorBuilding.h; sourceTree = "<group>"; };
+		853B1FA01C5EB0D3003FA1F5 /* GMSIndoorDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSIndoorDisplay.h; sourceTree = "<group>"; };
+		853B1FA11C5EB0D3003FA1F5 /* GMSIndoorLevel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSIndoorLevel.h; sourceTree = "<group>"; };
+		853B1FA21C5EB0D3003FA1F5 /* GMSMapLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSMapLayer.h; sourceTree = "<group>"; };
+		853B1FA31C5EB0D3003FA1F5 /* GMSMapView+Animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GMSMapView+Animation.h"; sourceTree = "<group>"; };
+		853B1FA41C5EB0D3003FA1F5 /* GMSMapView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSMapView.h; sourceTree = "<group>"; };
+		853B1FA51C5EB0D3003FA1F5 /* GMSMarker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSMarker.h; sourceTree = "<group>"; };
+		853B1FA61C5EB0D3003FA1F5 /* GMSMarkerLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSMarkerLayer.h; sourceTree = "<group>"; };
+		853B1FA71C5EB0D3003FA1F5 /* GMSMutablePath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSMutablePath.h; sourceTree = "<group>"; };
+		853B1FA81C5EB0D3003FA1F5 /* GMSOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSOrientation.h; sourceTree = "<group>"; };
+		853B1FA91C5EB0D3003FA1F5 /* GMSOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSOverlay.h; sourceTree = "<group>"; };
+		853B1FAA1C5EB0D3003FA1F5 /* GMSPanorama.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPanorama.h; sourceTree = "<group>"; };
+		853B1FAB1C5EB0D3003FA1F5 /* GMSPanoramaCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPanoramaCamera.h; sourceTree = "<group>"; };
+		853B1FAC1C5EB0D3003FA1F5 /* GMSPanoramaCameraUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPanoramaCameraUpdate.h; sourceTree = "<group>"; };
+		853B1FAD1C5EB0D3003FA1F5 /* GMSPanoramaLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPanoramaLayer.h; sourceTree = "<group>"; };
+		853B1FAE1C5EB0D3003FA1F5 /* GMSPanoramaLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPanoramaLink.h; sourceTree = "<group>"; };
+		853B1FAF1C5EB0D3003FA1F5 /* GMSPanoramaService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPanoramaService.h; sourceTree = "<group>"; };
+		853B1FB01C5EB0D3003FA1F5 /* GMSPanoramaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPanoramaView.h; sourceTree = "<group>"; };
+		853B1FB11C5EB0D3003FA1F5 /* GMSPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPath.h; sourceTree = "<group>"; };
+		853B1FB21C5EB0D3003FA1F5 /* GMSPlace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPlace.h; sourceTree = "<group>"; };
+		853B1FB31C5EB0D3003FA1F5 /* GMSPlaceLikelihood.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPlaceLikelihood.h; sourceTree = "<group>"; };
+		853B1FB41C5EB0D3003FA1F5 /* GMSPlaceLikelihoodList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPlaceLikelihoodList.h; sourceTree = "<group>"; };
+		853B1FB51C5EB0D3003FA1F5 /* GMSPlacePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPlacePicker.h; sourceTree = "<group>"; };
+		853B1FB61C5EB0D3003FA1F5 /* GMSPlacePickerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPlacePickerConfig.h; sourceTree = "<group>"; };
+		853B1FB71C5EB0D3003FA1F5 /* GMSPlacesClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPlacesClient.h; sourceTree = "<group>"; };
+		853B1FB81C5EB0D3003FA1F5 /* GMSPlacesMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPlacesMacros.h; sourceTree = "<group>"; };
+		853B1FB91C5EB0D3003FA1F5 /* GMSPlaceTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPlaceTypes.h; sourceTree = "<group>"; };
+		853B1FBA1C5EB0D3003FA1F5 /* GMSPolygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPolygon.h; sourceTree = "<group>"; };
+		853B1FBB1C5EB0D3003FA1F5 /* GMSPolyline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSPolyline.h; sourceTree = "<group>"; };
+		853B1FBC1C5EB0D3003FA1F5 /* GMSProjection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSProjection.h; sourceTree = "<group>"; };
+		853B1FBD1C5EB0D3003FA1F5 /* GMSServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSServices.h; sourceTree = "<group>"; };
+		853B1FBE1C5EB0D3003FA1F5 /* GMSSyncTileLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSSyncTileLayer.h; sourceTree = "<group>"; };
+		853B1FBF1C5EB0D3003FA1F5 /* GMSTileLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSTileLayer.h; sourceTree = "<group>"; };
+		853B1FC01C5EB0D3003FA1F5 /* GMSUISettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSUISettings.h; sourceTree = "<group>"; };
+		853B1FC11C5EB0D3003FA1F5 /* GMSURLTileLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSURLTileLayer.h; sourceTree = "<group>"; };
+		853B1FC21C5EB0D3003FA1F5 /* GMSUserAddedPlace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSUserAddedPlace.h; sourceTree = "<group>"; };
+		853B1FC31C5EB0D3003FA1F5 /* GoogleMaps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleMaps.h; sourceTree = "<group>"; };
+		853B1FC51C5EB0D3003FA1F5 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		853B1FC71C5EB0D3003FA1F5 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
+		853B1FC81C5EB1BC003FA1F5 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		856130371C1042B8003E69D7 /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashScreen.png; sourceTree = "<group>"; };
 		8561303F1C1046B9003E69D7 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		856130401C1046B9003E69D7 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
@@ -202,6 +265,9 @@
 		858BCB861C515FE3009E8205 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		858BCB871C515FE3009E8205 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		858BCB881C515FE3009E8205 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		85954BF51C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectClassesSelectedWithTextFieldTableViewCell.h; sourceTree = "<group>"; };
+		85954BF61C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectClassesSelectedWithTextFieldTableViewCell.m; sourceTree = "<group>"; };
+		85954BF71C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectClassesSelectedWithTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		85A8463C1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectClassesTableViewCellUnselected.h; sourceTree = "<group>"; };
 		85A8463D1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectClassesTableViewCellUnselected.m; sourceTree = "<group>"; };
 		85A8463E1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectClassesTableViewCellUnselected.xib; sourceTree = "<group>"; };
@@ -277,6 +343,7 @@
 		85DA58741C04EFEE007D57FD /* UpdateLocationStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateLocationStatusViewController.h; sourceTree = "<group>"; };
 		85DA58751C04EFEE007D57FD /* UpdateLocationStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateLocationStatusViewController.m; sourceTree = "<group>"; };
 		85DA58761C04EFEE007D57FD /* UpdateLocationStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateLocationStatusViewController.xib; sourceTree = "<group>"; };
+		EA1CEBA9BCF4A6C736D7A6FF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +383,106 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6AA567AE9CFA97EE98E88449 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				853B1FC81C5EB1BC003FA1F5 /* libPods.a */,
+				853B1F8C1C5EB0D3003FA1F5 /* A */,
+				853B1F8A1C5EB06E003FA1F5 /* GoogleMaps.framework */,
+				853B1F881C5EABDF003FA1F5 /* Foundation.framework */,
+				397215CC7DC4D4113B967F6A /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		853B1F8C1C5EB0D3003FA1F5 /* A */ = {
+			isa = PBXGroup;
+			children = (
+				853B1F8D1C5EB0D3003FA1F5 /* GoogleMaps */,
+				853B1F8E1C5EB0D3003FA1F5 /* Headers */,
+				853B1FC41C5EB0D3003FA1F5 /* Modules */,
+				853B1FC61C5EB0D3003FA1F5 /* Resources */,
+			);
+			name = A;
+			path = Pods/GoogleMaps/Frameworks/GoogleMaps.framework/Versions/A;
+			sourceTree = "<group>";
+		};
+		853B1F8E1C5EB0D3003FA1F5 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				853B1F8F1C5EB0D3003FA1F5 /* GMSAddress.h */,
+				853B1F901C5EB0D3003FA1F5 /* GMSAutocompleteFetcher.h */,
+				853B1F911C5EB0D3003FA1F5 /* GMSAutocompleteFilter.h */,
+				853B1F921C5EB0D3003FA1F5 /* GMSAutocompleteMatchFragment.h */,
+				853B1F931C5EB0D3003FA1F5 /* GMSAutocompletePrediction.h */,
+				853B1F941C5EB0D3003FA1F5 /* GMSAutocompleteResultsViewController.h */,
+				853B1F951C5EB0D3003FA1F5 /* GMSAutocompleteTableDataSource.h */,
+				853B1F961C5EB0D3003FA1F5 /* GMSAutocompleteViewController.h */,
+				853B1F971C5EB0D3003FA1F5 /* GMSCALayer.h */,
+				853B1F981C5EB0D3003FA1F5 /* GMSCameraPosition.h */,
+				853B1F991C5EB0D3003FA1F5 /* GMSCameraUpdate.h */,
+				853B1F9A1C5EB0D3003FA1F5 /* GMSCircle.h */,
+				853B1F9B1C5EB0D3003FA1F5 /* GMSCoordinateBounds.h */,
+				853B1F9C1C5EB0D3003FA1F5 /* GMSGeocoder.h */,
+				853B1F9D1C5EB0D3003FA1F5 /* GMSGeometryUtils.h */,
+				853B1F9E1C5EB0D3003FA1F5 /* GMSGroundOverlay.h */,
+				853B1F9F1C5EB0D3003FA1F5 /* GMSIndoorBuilding.h */,
+				853B1FA01C5EB0D3003FA1F5 /* GMSIndoorDisplay.h */,
+				853B1FA11C5EB0D3003FA1F5 /* GMSIndoorLevel.h */,
+				853B1FA21C5EB0D3003FA1F5 /* GMSMapLayer.h */,
+				853B1FA31C5EB0D3003FA1F5 /* GMSMapView+Animation.h */,
+				853B1FA41C5EB0D3003FA1F5 /* GMSMapView.h */,
+				853B1FA51C5EB0D3003FA1F5 /* GMSMarker.h */,
+				853B1FA61C5EB0D3003FA1F5 /* GMSMarkerLayer.h */,
+				853B1FA71C5EB0D3003FA1F5 /* GMSMutablePath.h */,
+				853B1FA81C5EB0D3003FA1F5 /* GMSOrientation.h */,
+				853B1FA91C5EB0D3003FA1F5 /* GMSOverlay.h */,
+				853B1FAA1C5EB0D3003FA1F5 /* GMSPanorama.h */,
+				853B1FAB1C5EB0D3003FA1F5 /* GMSPanoramaCamera.h */,
+				853B1FAC1C5EB0D3003FA1F5 /* GMSPanoramaCameraUpdate.h */,
+				853B1FAD1C5EB0D3003FA1F5 /* GMSPanoramaLayer.h */,
+				853B1FAE1C5EB0D3003FA1F5 /* GMSPanoramaLink.h */,
+				853B1FAF1C5EB0D3003FA1F5 /* GMSPanoramaService.h */,
+				853B1FB01C5EB0D3003FA1F5 /* GMSPanoramaView.h */,
+				853B1FB11C5EB0D3003FA1F5 /* GMSPath.h */,
+				853B1FB21C5EB0D3003FA1F5 /* GMSPlace.h */,
+				853B1FB31C5EB0D3003FA1F5 /* GMSPlaceLikelihood.h */,
+				853B1FB41C5EB0D3003FA1F5 /* GMSPlaceLikelihoodList.h */,
+				853B1FB51C5EB0D3003FA1F5 /* GMSPlacePicker.h */,
+				853B1FB61C5EB0D3003FA1F5 /* GMSPlacePickerConfig.h */,
+				853B1FB71C5EB0D3003FA1F5 /* GMSPlacesClient.h */,
+				853B1FB81C5EB0D3003FA1F5 /* GMSPlacesMacros.h */,
+				853B1FB91C5EB0D3003FA1F5 /* GMSPlaceTypes.h */,
+				853B1FBA1C5EB0D3003FA1F5 /* GMSPolygon.h */,
+				853B1FBB1C5EB0D3003FA1F5 /* GMSPolyline.h */,
+				853B1FBC1C5EB0D3003FA1F5 /* GMSProjection.h */,
+				853B1FBD1C5EB0D3003FA1F5 /* GMSServices.h */,
+				853B1FBE1C5EB0D3003FA1F5 /* GMSSyncTileLayer.h */,
+				853B1FBF1C5EB0D3003FA1F5 /* GMSTileLayer.h */,
+				853B1FC01C5EB0D3003FA1F5 /* GMSUISettings.h */,
+				853B1FC11C5EB0D3003FA1F5 /* GMSURLTileLayer.h */,
+				853B1FC21C5EB0D3003FA1F5 /* GMSUserAddedPlace.h */,
+				853B1FC31C5EB0D3003FA1F5 /* GoogleMaps.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		853B1FC41C5EB0D3003FA1F5 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				853B1FC51C5EB0D3003FA1F5 /* module.modulemap */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		853B1FC61C5EB0D3003FA1F5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				853B1FC71C5EB0D3003FA1F5 /* GoogleMaps.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		857D70051BEF48B700639EE1 = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +490,8 @@
 				857D702A1BEF48B800639EE1 /* NightOwlTests */,
 				857D70351BEF48B800639EE1 /* NightOwlUITests */,
 				857D700F1BEF48B800639EE1 /* Products */,
+				B784B3C8F93C6CE48488B125 /* Pods */,
+				6AA567AE9CFA97EE98E88449 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -392,6 +561,9 @@
 				85A8463C1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.h */,
 				85A8463D1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.m */,
 				85A8463E1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.xib */,
+				85954BF51C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.h */,
+				85954BF61C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.m */,
+				85954BF71C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.xib */,
 				85C75BAC1C051ED9006F63BB /* FindNightOwlsViewController.h */,
 				85C75BAD1C051ED9006F63BB /* FindNightOwlsViewController.m */,
 				85C75BAE1C051ED9006F63BB /* FindNightOwlsViewController.xib */,
@@ -578,6 +750,15 @@
 			name = "Profile Images";
 			sourceTree = "<group>";
 		};
+		B784B3C8F93C6CE48488B125 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EA1CEBA9BCF4A6C736D7A6FF /* Pods.debug.xcconfig */,
+				4C992CCA3D08FB20B68032A6 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -740,6 +921,7 @@
 				85CD24441C071E5800B6E173 /* Lucy.jpg in Resources */,
 				856130411C1046B9003E69D7 /* logo@2x.png in Resources */,
 				85BB14EA1BFEB0290032E88B /* Check-White.png in Resources */,
+				85954BF91C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.xib in Resources */,
 				857D705E1BEFFE5800639EE1 /* Messages-Gray0.5x.png in Resources */,
 				85CD24451C071E5800B6E173 /* Margaret.jpg in Resources */,
 				85CD243E1C071E5800B6E173 /* Jenai.jpg in Resources */,
@@ -779,6 +961,7 @@
 				85BB15071BFF07B00032E88B /* SetLocationStatusViewController.m in Sources */,
 				85DA58731BFFABC9007D57FD /* MultiLineFieldTextView.m in Sources */,
 				857BF1A31C0A56C9006BAF2A /* ConversationViewController.m in Sources */,
+				85954BF81C5DD60C00BB31A3 /* SelectClassesSelectedWithTextFieldTableViewCell.m in Sources */,
 				85CD240E1C06DE1100B6E173 /* User.m in Sources */,
 				857BF19B1C09B3DE006BAF2A /* MessageTableViewCell.m in Sources */,
 				85CD240B1C06DD9F00B6E173 /* HardcodedUserData.m in Sources */,
@@ -930,9 +1113,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = lookback/HD;
 				INFOPLIST_FILE = NightOwl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-ObjC",
 					"-framework",
@@ -948,9 +1133,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = lookback/Safe;
 				INFOPLIST_FILE = NightOwl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-ObjC",
 					"-framework",

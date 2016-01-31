@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SelectClassesTableViewCellSelected : UITableViewCell
-- (NSString *)getName;
 @property (weak, nonatomic) IBOutlet UIButton *activeButton;
+- (NSString *)getName;
 - (void)configureCell:(NSString *)className withStatus:(NSString *)status;
 @end
