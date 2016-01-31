@@ -60,7 +60,8 @@ static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
     self.horizontalPicker.delegate = self;
     self.horizontalPicker.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
     self.horizontalPicker.textColor = [UIColor colorWithRed:163.0/255.0 green:165.0/255.0 blue:165.0/255.0 alpha:1.0];
-    self.horizontalPicker.highlightedTextColor = [UIColor grayColor];
+    self.horizontalPicker.highlightedTextColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
+    self.horizontalPicker.highlightedFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:18];
     self.horizontalPicker.pickerViewStyle = HorizontalPickerViewStyleFlat;
     
     self.tableView.dataSource = self;

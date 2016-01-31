@@ -26,7 +26,7 @@
     [self.window makeKeyAndVisible];
     [Lookback_Weak setupWithAppToken:@"ohdshJX2zNXBCzoeX"];
     [Lookback_Weak sharedLookback].shakeToRecord = YES;
-    [Lookback_Weak sharedLookback].feedbackBubbleVisible = YES;
+    [Lookback_Weak sharedLookback].feedbackBubbleVisible = NO;
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
     {
         NSArray *classes = @[@"CS 147", @"ECON 1", @"MATH 51"];

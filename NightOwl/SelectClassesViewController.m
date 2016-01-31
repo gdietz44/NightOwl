@@ -6,6 +6,7 @@
 //  Copyright © 2015 Stanford University. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "SelectClassesViewController.h"
 #import "SelectClassesTableViewCellUnselected.h"
 #import "SelectClassesTableViewCellSelected.h"
@@ -89,6 +90,9 @@ static NSString* const SelectedClassCell = @"SelectClassesTableViewCellSelected"
             self.activeClasses++;
         }
     }
+    
+    self.buttonView.layer.cornerRadius = 8;
+    
     [self setButtonColor];
     [self.tableView reloadData];
 }
@@ -111,7 +115,7 @@ static NSString* const SelectedClassCell = @"SelectClassesTableViewCellSelected"
 
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 73;
+    return 65;
 }
 
 - (void) tableView:(UITableView *)tableView
@@ -172,9 +176,15 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)setButtonColor {
     if (self.activeClasses > 0) {
         self.buttonView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
+        self.buttonView.layer.masksToBounds = NO;
+        self.buttonView.layer.shadowOffset = CGSizeMake(5, 5);
+        self.buttonView.layer.shadowRadius = 5;
+        self.buttonView.layer.shadowOpacity = 0.5;
         self.button.enabled = YES;
     } else {
         self.buttonView.backgroundColor = [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1];
+        self.buttonView.layer.masksToBounds = YES;
+        self.buttonView.layer.shadowOffset = CGSizeMake(0, 0);
         self.button.enabled = NO;
     }
 }

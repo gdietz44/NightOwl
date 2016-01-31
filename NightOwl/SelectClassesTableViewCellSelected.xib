@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectClassesTableViewCellSelected"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="73" id="ats-VD-BqQ" customClass="SelectClassesTableViewCellSelected">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="ats-VD-BqQ" customClass="SelectClassesTableViewCellSelected">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ats-VD-BqQ" id="JeM-js-4UE">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="71.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CLASS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yw7-Ux-Eam">
-                        <rect key="frame" x="56" y="8" width="256" height="42"/>
-                        <animations/>
+                        <rect key="frame" x="56" y="8" width="256" height="34.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="39" id="e9b-LG-E9e"/>
                         </constraints>
@@ -31,24 +30,21 @@
                         </variation>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dt2-mv-eiU">
-                        <rect key="frame" x="0.0" y="0.0" width="48" height="71"/>
-                        <animations/>
+                        <rect key="frame" x="0.0" y="0.0" width="48" height="63.5"/>
                         <color key="backgroundColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="48" id="JYd-Mc-5oh"/>
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Disclosure-Gray.png" translatesAutoresizingMaskIntoConstraints="NO" id="kbn-Bc-c5M">
-                        <rect key="frame" x="293" y="27" width="11" height="18"/>
-                        <animations/>
+                        <rect key="frame" x="293" y="23" width="11" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="DHP-DD-M6t"/>
                             <constraint firstAttribute="width" constant="11" id="Os3-RS-9fk"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a status that is two lines long. It will go onto a second line." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rc-zK-8XD">
-                        <rect key="frame" x="56" y="42" width="229" height="18"/>
-                        <animations/>
+                        <rect key="frame" x="56" y="34.5" width="229" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="3xJ-Ub-V4R"/>
                             <constraint firstAttribute="width" constant="229" id="Bv7-B9-I5u"/>
@@ -65,12 +61,10 @@
                         </variation>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WbP-D0-NZN">
-                        <rect key="frame" x="0.0" y="0.0" width="48" height="71"/>
-                        <animations/>
+                        <rect key="frame" x="0.0" y="0.0" width="48" height="63.5"/>
                         <state key="normal" image="Check-White.png"/>
                     </button>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="WbP-D0-NZN" firstAttribute="top" secondItem="dt2-mv-eiU" secondAttribute="top" id="6X0-pQ-0hm"/>
                     <constraint firstItem="kbn-Bc-c5M" firstAttribute="centerY" secondItem="JeM-js-4UE" secondAttribute="centerY" id="7cp-PM-t84"/>
@@ -115,7 +109,6 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="activeButton" destination="WbP-D0-NZN" id="0zp-Un-3b4"/>
                 <outlet property="classLabel" destination="Yw7-Ux-Eam" id="ZVs-H0-iy5"/>

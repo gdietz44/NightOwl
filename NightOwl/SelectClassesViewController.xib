@@ -38,58 +38,86 @@
                         <constraint firstAttribute="height" constant="1" id="ORG-pm-f1u"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BGh-gm-djR">
-                    <rect key="frame" x="0.0" y="459" width="320" height="60"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Adb-QA-XZ6">
+                    <rect key="frame" x="0.0" y="449" width="320" height="70"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1u-Ux-Rv3">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
-                            <state key="normal" title="Find NightOwls">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="findNightOwlsButtonClicked:" destination="-1" eventType="touchUpInside" id="O8l-vy-MIq"/>
-                            </connections>
-                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BGh-gm-djR">
+                            <rect key="frame" x="70" y="10" width="180" height="50"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1u-Ux-Rv3">
+                                    <rect key="frame" x="0.0" y="0.0" width="180" height="50"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                    <state key="normal" title="Find NightOwls">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="findNightOwlsButtonClicked:" destination="-1" eventType="touchUpInside" id="O8l-vy-MIq"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="O1u-Ux-Rv3" secondAttribute="trailing" id="5cI-Xy-P95"/>
+                                <constraint firstItem="O1u-Ux-Rv3" firstAttribute="height" secondItem="BGh-gm-djR" secondAttribute="height" id="6ti-72-lYj"/>
+                                <constraint firstAttribute="width" constant="180" id="DQ5-Fc-3Re"/>
+                                <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerY" secondItem="BGh-gm-djR" secondAttribute="centerY" id="Epa-j2-bZh"/>
+                                <constraint firstItem="O1u-Ux-Rv3" firstAttribute="width" secondItem="BGh-gm-djR" secondAttribute="width" id="Lhr-Da-WSf"/>
+                                <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerX" secondItem="BGh-gm-djR" secondAttribute="centerX" id="OTG-nt-CnU"/>
+                                <constraint firstAttribute="height" constant="50" id="bpU-8F-lQ5"/>
+                                <constraint firstItem="O1u-Ux-Rv3" firstAttribute="leading" secondItem="BGh-gm-djR" secondAttribute="leading" id="tFB-Qs-YL1"/>
+                                <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerX" secondItem="BGh-gm-djR" secondAttribute="centerX" id="u5P-Op-J7h"/>
+                                <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerY" secondItem="BGh-gm-djR" secondAttribute="centerY" id="wgI-2h-qxy"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="5cI-Xy-P95"/>
+                                    <exclude reference="Epa-j2-bZh"/>
+                                    <exclude reference="tFB-Qs-YL1"/>
+                                    <exclude reference="u5P-Op-J7h"/>
+                                </mask>
+                            </variation>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9A1-jA-OYG">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.64705882349999999" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="LhJ-Cl-amS"/>
+                            </constraints>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="O1u-Ux-Rv3" secondAttribute="trailing" id="5cI-Xy-P95"/>
-                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="height" secondItem="BGh-gm-djR" secondAttribute="height" id="6ti-72-lYj"/>
-                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerY" secondItem="BGh-gm-djR" secondAttribute="centerY" id="Epa-j2-bZh"/>
-                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="width" secondItem="BGh-gm-djR" secondAttribute="width" id="Lhr-Da-WSf"/>
-                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerX" secondItem="BGh-gm-djR" secondAttribute="centerX" id="OTG-nt-CnU"/>
-                        <constraint firstAttribute="height" constant="60" id="bpU-8F-lQ5"/>
-                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="leading" secondItem="BGh-gm-djR" secondAttribute="leading" id="tFB-Qs-YL1"/>
-                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerX" secondItem="BGh-gm-djR" secondAttribute="centerX" id="u5P-Op-J7h"/>
-                        <constraint firstItem="O1u-Ux-Rv3" firstAttribute="centerY" secondItem="BGh-gm-djR" secondAttribute="centerY" id="wgI-2h-qxy"/>
+                        <constraint firstItem="9A1-jA-OYG" firstAttribute="top" secondItem="Adb-QA-XZ6" secondAttribute="top" id="D7L-Z8-pV6"/>
+                        <constraint firstItem="BGh-gm-djR" firstAttribute="centerX" secondItem="Adb-QA-XZ6" secondAttribute="centerX" id="KTP-XJ-BcJ"/>
+                        <constraint firstItem="9A1-jA-OYG" firstAttribute="leading" secondItem="Adb-QA-XZ6" secondAttribute="leading" id="NMw-19-Fr9"/>
+                        <constraint firstItem="BGh-gm-djR" firstAttribute="leading" secondItem="Adb-QA-XZ6" secondAttribute="leading" constant="69" id="lA0-3F-toh"/>
+                        <constraint firstAttribute="trailing" secondItem="9A1-jA-OYG" secondAttribute="trailing" id="lY3-8c-hbe"/>
+                        <constraint firstAttribute="height" constant="70" id="rQd-Sg-Duo"/>
+                        <constraint firstItem="BGh-gm-djR" firstAttribute="centerY" secondItem="Adb-QA-XZ6" secondAttribute="centerY" id="tTL-HD-vb1"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="5cI-Xy-P95"/>
-                            <exclude reference="Epa-j2-bZh"/>
-                            <exclude reference="tFB-Qs-YL1"/>
-                            <exclude reference="u5P-Op-J7h"/>
+                            <exclude reference="lA0-3F-toh"/>
                         </mask>
                     </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="Adb-QA-XZ6" secondAttribute="bottom" constant="49" id="5H7-lk-kjZ"/>
                 <constraint firstAttribute="trailing" secondItem="VIB-Bc-HRB" secondAttribute="trailing" id="6gP-di-nRe"/>
                 <constraint firstItem="VIB-Bc-HRB" firstAttribute="top" secondItem="f0a-yC-TUp" secondAttribute="bottom" id="7ny-xf-Qsf"/>
                 <constraint firstItem="lgS-K1-cuu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="BST-dt-rbd"/>
                 <constraint firstItem="lgS-K1-cuu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="36" id="Bpc-0r-u3d"/>
                 <constraint firstItem="VIB-Bc-HRB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LP2-6A-Vzd"/>
-                <constraint firstItem="BGh-gm-djR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QaQ-hV-7M3"/>
-                <constraint firstItem="BGh-gm-djR" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RPZ-uG-jq9"/>
                 <constraint firstItem="VIB-Bc-HRB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RXu-5T-Nka"/>
                 <constraint firstItem="f0a-yC-TUp" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="VkR-Ms-LY2"/>
                 <constraint firstItem="f0a-yC-TUp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WI0-eU-9b6"/>
-                <constraint firstAttribute="bottom" secondItem="BGh-gm-djR" secondAttribute="bottom" constant="49" id="fBz-vK-rzq"/>
+                <constraint firstAttribute="trailing" secondItem="Adb-QA-XZ6" secondAttribute="trailing" id="Z5f-Co-yJ4"/>
                 <constraint firstItem="f0a-yC-TUp" firstAttribute="top" secondItem="VIB-Bc-HRB" secondAttribute="top" id="l2o-0T-fuF"/>
                 <constraint firstItem="f0a-yC-TUp" firstAttribute="top" secondItem="lgS-K1-cuu" secondAttribute="bottom" constant="36" id="rVi-Fk-gaZ"/>
                 <constraint firstItem="VIB-Bc-HRB" firstAttribute="top" secondItem="lgS-K1-cuu" secondAttribute="bottom" constant="32" id="yTl-jp-MTx"/>
+                <constraint firstItem="Adb-QA-XZ6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yaK-u0-jfI"/>
                 <constraint firstAttribute="bottom" secondItem="VIB-Bc-HRB" secondAttribute="bottom" id="zDA-fs-kSm"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

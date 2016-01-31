@@ -339,6 +339,7 @@
 		857D70101BEF48B800639EE1 /* NightOwl */ = {
 			isa = PBXGroup;
 			children = (
+				85954BF41C5DD56400BB31A3 /* Unused Files */,
 				858BCB791C515E71009E8205 /* Frameworks */,
 				857D704E1BEF52A800639EE1 /* HomeTab */,
 				857D705F1BF020DF00639EE1 /* Messages */,
@@ -391,15 +392,6 @@
 				85A8463C1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.h */,
 				85A8463D1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.m */,
 				85A8463E1BF1636D0027D236 /* SelectClassesTableViewCellUnselected.xib */,
-				85BB14E41BFEACB90032E88B /* SelectClassesTableViewCellSelected.h */,
-				85BB14E51BFEACB90032E88B /* SelectClassesTableViewCellSelected.m */,
-				85BB14E61BFEACB90032E88B /* SelectClassesTableViewCellSelected.xib */,
-				85BB15041BFF07B00032E88B /* SetLocationStatusViewController.h */,
-				85BB15051BFF07B00032E88B /* SetLocationStatusViewController.m */,
-				85BB15061BFF07B00032E88B /* SetLocationStatusViewController.xib */,
-				85DA58741C04EFEE007D57FD /* UpdateLocationStatusViewController.h */,
-				85DA58751C04EFEE007D57FD /* UpdateLocationStatusViewController.m */,
-				85DA58761C04EFEE007D57FD /* UpdateLocationStatusViewController.xib */,
 				85C75BAC1C051ED9006F63BB /* FindNightOwlsViewController.h */,
 				85C75BAD1C051ED9006F63BB /* FindNightOwlsViewController.m */,
 				85C75BAE1C051ED9006F63BB /* FindNightOwlsViewController.xib */,
@@ -531,6 +523,22 @@
 			name = "Lookback-Resources";
 			path = "lookback/Lookback-Resources";
 			sourceTree = SOURCE_ROOT;
+		};
+		85954BF41C5DD56400BB31A3 /* Unused Files */ = {
+			isa = PBXGroup;
+			children = (
+				85BB14E41BFEACB90032E88B /* SelectClassesTableViewCellSelected.h */,
+				85BB14E51BFEACB90032E88B /* SelectClassesTableViewCellSelected.m */,
+				85BB14E61BFEACB90032E88B /* SelectClassesTableViewCellSelected.xib */,
+				85BB15041BFF07B00032E88B /* SetLocationStatusViewController.h */,
+				85BB15051BFF07B00032E88B /* SetLocationStatusViewController.m */,
+				85BB15061BFF07B00032E88B /* SetLocationStatusViewController.xib */,
+				85DA58741C04EFEE007D57FD /* UpdateLocationStatusViewController.h */,
+				85DA58751C04EFEE007D57FD /* UpdateLocationStatusViewController.m */,
+				85DA58761C04EFEE007D57FD /* UpdateLocationStatusViewController.xib */,
+			);
+			name = "Unused Files";
+			sourceTree = "<group>";
 		};
 		85CD240F1C071E0F00B6E173 /* Profile Images */ = {
 			isa = PBXGroup;
