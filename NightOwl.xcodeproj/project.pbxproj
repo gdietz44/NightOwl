@@ -125,6 +125,15 @@
 		85CD244B1C071E5800B6E173 /* Shirin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 85CD242C1C071E5800B6E173 /* Shirin.jpg */; };
 		85CD244C1C071E5800B6E173 /* Steph.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 85CD242D1C071E5800B6E173 /* Steph.jpg */; };
 		85CD244D1C071E5800B6E173 /* Xavier.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 85CD242E1C071E5800B6E173 /* Xavier.jpg */; };
+		85D057DF1C614E0300E5B47D /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85D057DC1C614E0300E5B47D /* LoginViewController.xib */; };
+		85D057E01C614E0300E5B47D /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D057DE1C614E0300E5B47D /* LoginViewController.m */; };
+		85D057E41C614E3C00E5B47D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85D057E21C614E3C00E5B47D /* Parse.framework */; };
+		85D057E61C614E7E00E5B47D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85D057E51C614E7E00E5B47D /* CFNetwork.framework */; };
+		85D057E81C614E8800E5B47D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85D057E71C614E8800E5B47D /* CoreGraphics.framework */; };
+		85D057EA1C614E9D00E5B47D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85D057E91C614E9D00E5B47D /* Security.framework */; };
+		85D057EC1C614EA300E5B47D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85D057EB1C614EA300E5B47D /* StoreKit.framework */; };
+		85D057EE1C614EC700E5B47D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 85D057ED1C614EC700E5B47D /* libsqlite3.tbd */; };
+		85D057F01C614F6700E5B47D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85D057EF1C614F6700E5B47D /* Bolts.framework */; };
 		85DA58731BFFABC9007D57FD /* MultiLineFieldTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85DA58721BFFABC9007D57FD /* MultiLineFieldTextView.m */; };
 		85DA58771C04EFEE007D57FD /* UpdateLocationStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85DA58751C04EFEE007D57FD /* UpdateLocationStatusViewController.m */; };
 		85DA58781C04EFEE007D57FD /* UpdateLocationStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85DA58761C04EFEE007D57FD /* UpdateLocationStatusViewController.xib */; };
@@ -360,6 +369,16 @@
 		85CD242C1C071E5800B6E173 /* Shirin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Shirin.jpg; sourceTree = "<group>"; };
 		85CD242D1C071E5800B6E173 /* Steph.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Steph.jpg; sourceTree = "<group>"; };
 		85CD242E1C071E5800B6E173 /* Xavier.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Xavier.jpg; sourceTree = "<group>"; };
+		85D057DC1C614E0300E5B47D /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		85D057DD1C614E0300E5B47D /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		85D057DE1C614E0300E5B47D /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		85D057E21C614E3C00E5B47D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		85D057E51C614E7E00E5B47D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		85D057E71C614E8800E5B47D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		85D057E91C614E9D00E5B47D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		85D057EB1C614EA300E5B47D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		85D057ED1C614EC700E5B47D /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		85D057EF1C614F6700E5B47D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		85DA58711BFFABC9007D57FD /* MultiLineFieldTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiLineFieldTextView.h; sourceTree = "<group>"; };
 		85DA58721BFFABC9007D57FD /* MultiLineFieldTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiLineFieldTextView.m; sourceTree = "<group>"; };
 		85DA58741C04EFEE007D57FD /* UpdateLocationStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateLocationStatusViewController.h; sourceTree = "<group>"; };
@@ -373,6 +392,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85D057EE1C614EC700E5B47D /* libsqlite3.tbd in Frameworks */,
+				85D057EC1C614EA300E5B47D /* StoreKit.framework in Frameworks */,
+				85D057EA1C614E9D00E5B47D /* Security.framework in Frameworks */,
+				85D057E81C614E8800E5B47D /* CoreGraphics.framework in Frameworks */,
+				85D057E61C614E7E00E5B47D /* CFNetwork.framework in Frameworks */,
 				582B46951C5ECB3700536744 /* Accelerate.framework in Frameworks */,
 				582B46931C5ECB3000536744 /* CoreBluetooth.framework in Frameworks */,
 				858BCB931C515FE3009E8205 /* SystemConfiguration.framework in Frameworks */,
@@ -383,6 +407,7 @@
 				582B468B1C5ECAC300536744 /* libicucore.tbd in Frameworks */,
 				582B46891C5ECA8D00536744 /* GLKit.framework in Frameworks */,
 				582B46871C5ECA8600536744 /* CoreText.framework in Frameworks */,
+				85D057F01C614F6700E5B47D /* Bolts.framework in Frameworks */,
 				582B46851C5ECA7E00536744 /* CoreLocation.framework in Frameworks */,
 				582B46831C5ECA7000536744 /* CoreData.framework in Frameworks */,
 				582B46811C5EC81800536744 /* GoogleMaps.framework in Frameworks */,
@@ -391,6 +416,7 @@
 				858BCB8B1C515FE3009E8205 /* CoreImage.framework in Frameworks */,
 				858BCB8C1C515FE3009E8205 /* CoreMedia.framework in Frameworks */,
 				858BCB8D1C515FE3009E8205 /* CoreVideo.framework in Frameworks */,
+				85D057E41C614E3C00E5B47D /* Parse.framework in Frameworks */,
 				858BCB8E1C515FE3009E8205 /* ImageIO.framework in Frameworks */,
 				858BCB8F1C515FE3009E8205 /* MediaPlayer.framework in Frameworks */,
 				858BCB901C515FE3009E8205 /* MessageUI.framework in Frameworks */,
@@ -419,6 +445,11 @@
 		6AA567AE9CFA97EE98E88449 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				85D057ED1C614EC700E5B47D /* libsqlite3.tbd */,
+				85D057EB1C614EA300E5B47D /* StoreKit.framework */,
+				85D057E91C614E9D00E5B47D /* Security.framework */,
+				85D057E71C614E8800E5B47D /* CoreGraphics.framework */,
+				85D057E51C614E7E00E5B47D /* CFNetwork.framework */,
 				582B46941C5ECB3700536744 /* Accelerate.framework */,
 				582B46921C5ECB3000536744 /* CoreBluetooth.framework */,
 				582B46901C5ECADB00536744 /* OpenGLES.framework */,
@@ -529,6 +560,8 @@
 		857D70051BEF48B700639EE1 = {
 			isa = PBXGroup;
 			children = (
+				85D057EF1C614F6700E5B47D /* Bolts.framework */,
+				85D057E21C614E3C00E5B47D /* Parse.framework */,
 				857D70101BEF48B800639EE1 /* NightOwl */,
 				857D702A1BEF48B800639EE1 /* NightOwlTests */,
 				857D70351BEF48B800639EE1 /* NightOwlUITests */,
@@ -633,6 +666,9 @@
 		857D704F1BEF52C000639EE1 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				85D057DC1C614E0300E5B47D /* LoginViewController.xib */,
+				85D057DD1C614E0300E5B47D /* LoginViewController.h */,
+				85D057DE1C614E0300E5B47D /* LoginViewController.m */,
 				857D70491BEF529200639EE1 /* noTabBarController.h */,
 				857D704A1BEF529200639EE1 /* noTabBarController.m */,
 				857D706B1BF024DA00639EE1 /* noHomeNavigationController.h */,
@@ -941,6 +977,7 @@
 				857BF18E1C09714E006BAF2A /* noun_29899_cc.png in Resources */,
 				857D701E1BEF48B800639EE1 /* Assets.xcassets in Resources */,
 				857BF18C1C0936AA006BAF2A /* SendAMessageViewController.xib in Resources */,
+				85D057DF1C614E0300E5B47D /* LoginViewController.xib in Resources */,
 				85BB14E31BFEAAD50032E88B /* Disclosure-Gray.png in Resources */,
 				85CD24381C071E5800B6E173 /* Chris.jpg in Resources */,
 				85CD24401C071E5800B6E173 /* John.jpg in Resources */,
@@ -1014,6 +1051,7 @@
 				857D70471BEF490100639EE1 /* SelectClassesViewController.m in Sources */,
 				85C55FAE1BFB0BFC008CCC6B /* ClassListParser.m in Sources */,
 				857D70631BF0211C00639EE1 /* MessagesViewController.m in Sources */,
+				85D057E01C614E0300E5B47D /* LoginViewController.m in Sources */,
 				85C75BBA1C059C81006F63BB /* FindNightOwlTableViewCell.m in Sources */,
 				85C55FB61BFB3343008CCC6B /* noMeNavigationController.m in Sources */,
 				857BF1971C0976E2006BAF2A /* Message.m in Sources */,
@@ -1161,10 +1199,12 @@
 					"<Multiple",
 					"values>",
 					Pods/GoogleMaps/Frameworks,
+					"$(PROJECT_DIR)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
 					lookback/HD,
-					"Pods/GoogleMaps/Frameworks/**",
+					Pods/GoogleMaps/Frameworks,
+					"$(PROJECT_DIR)/**",
 				);
 				INFOPLIST_FILE = NightOwl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1188,10 +1228,12 @@
 					"<Multiple",
 					"values>",
 					Pods/GoogleMaps/Frameworks,
+					"$(PROJECT_DIR)/**",
 				);
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
 					lookback/Safe,
 					"Pods/GoogleMaps/Frameworks/**",
+					"$(PROJECT_DIR)/**",
 				);
 				INFOPLIST_FILE = NightOwl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
