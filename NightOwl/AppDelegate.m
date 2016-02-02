@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "noTabBarController.h"
+#import "LoginViewController.h"
 #import <Lookback/Lookback.h>
 
 @import GoogleMaps;
@@ -22,8 +22,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     noTabBarController *notbc = [[noTabBarController alloc] init];
     self.window.rootViewController = notbc;
+    
+    self.tabBarController = notbc;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     [Lookback_Weak setupWithAppToken:@"ohdshJX2zNXBCzoeX"];
@@ -38,6 +42,12 @@
         [defaults synchronize];
     }
     [GMSServices provideAPIKey:@"AIzaSyDc3lx4F8nTMTdwswL54UVfwIg8STI-gpg"];
+    
+    // Add the login view controller as the root controller of the app window
+    LoginViewController *loginVC = [[LoginViewController alloc]init];
+    [self.window setRootViewController:loginVC];
+    // Above is new login code
+    
     return YES;
 }
 
