@@ -59,9 +59,13 @@ install_resource()
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "GoogleMaps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
+  install_resource "Lookback/lookback/Lookback-Resources/Lookback.bundle"
+  install_resource "Parse/Parse/Resources/en.lproj"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "GoogleMaps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
+  install_resource "Lookback/lookback/Lookback-Resources/Lookback.bundle"
+  install_resource "Parse/Parse/Resources/en.lproj"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
