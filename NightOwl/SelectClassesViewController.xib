@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectClassesViewController">
             <connections>
+                <outlet property="locationField" destination="EWR-JP-a9I" id="wrp-5c-f7p"/>
                 <outlet property="tableView" destination="VIB-Bc-HRB" id="MyL-pe-UJc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="hZn-U2-byj"/>
             </connections>
@@ -25,10 +26,6 @@
                     <color key="textColor" red="0.50196078430000002" green="0.35686274509999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </label>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VIB-Bc-HRB">
-                    <rect key="frame" x="0.0" y="186" width="320" height="382"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f0a-yC-TUp">
                     <rect key="frame" x="0.0" y="148" width="320" height="1"/>
                     <color key="backgroundColor" red="0.64705882349999999" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -49,7 +46,7 @@
                             <rect key="frame" x="80" y="4" width="232" height="30"/>
                             <color key="textColor" red="0.6470588235294118" green="0.63921568627450975" blue="0.63921568627450975" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -70,6 +67,10 @@
                         <constraint firstAttribute="height" constant="1" id="nbp-hD-WCM"/>
                     </constraints>
                 </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VIB-Bc-HRB">
+                    <rect key="frame" x="0.0" y="187" width="320" height="332"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -84,13 +85,13 @@
                 <constraint firstItem="f0a-yC-TUp" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="VkR-Ms-LY2"/>
                 <constraint firstItem="f0a-yC-TUp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WI0-eU-9b6"/>
                 <constraint firstItem="VG0-Rj-XrM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Y9h-VQ-pIo"/>
-                <constraint firstItem="VIB-Bc-HRB" firstAttribute="top" secondItem="VG0-Rj-XrM" secondAttribute="bottom" constant="-1" id="h7M-xw-gSk"/>
+                <constraint firstItem="VIB-Bc-HRB" firstAttribute="top" secondItem="VG0-Rj-XrM" secondAttribute="bottom" id="h7M-xw-gSk"/>
                 <constraint firstItem="f0a-yC-TUp" firstAttribute="top" secondItem="VIB-Bc-HRB" secondAttribute="top" id="l2o-0T-fuF"/>
                 <constraint firstItem="VG0-Rj-XrM" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mrL-WP-M85"/>
                 <constraint firstItem="fXs-yC-o4g" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nxG-49-drS"/>
                 <constraint firstItem="f0a-yC-TUp" firstAttribute="top" secondItem="lgS-K1-cuu" secondAttribute="bottom" constant="36" id="rVi-Fk-gaZ"/>
                 <constraint firstItem="VIB-Bc-HRB" firstAttribute="top" secondItem="lgS-K1-cuu" secondAttribute="bottom" constant="32" id="yTl-jp-MTx"/>
-                <constraint firstAttribute="bottom" secondItem="VIB-Bc-HRB" secondAttribute="bottom" id="zDA-fs-kSm"/>
+                <constraint firstAttribute="bottom" secondItem="VIB-Bc-HRB" secondAttribute="bottom" constant="49" id="zDA-fs-kSm"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <variation key="default">

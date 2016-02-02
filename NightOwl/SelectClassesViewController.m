@@ -24,15 +24,14 @@ static NSString* const SelectedClassCell = @"SelectClassesSelectedWithTextFieldT
 static NSUInteger const MaxStatusLength = 40;
 
 
-@interface SelectClassesViewController () <UITableViewDataSource, UITableViewDelegate, SetLocationStatusViewControllerDelegate, noModalNavigationControllerDelegate, UpdateLocationStatusViewControllerDelegate, UITextViewDelegate>
-@property (weak, nonatomic) IBOutlet UIButton *button;
+@interface SelectClassesViewController () <UITableViewDataSource, UITableViewDelegate, SetLocationStatusViewControllerDelegate, noModalNavigationControllerDelegate, UpdateLocationStatusViewControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) id<SelectClassesViewControllerDelegate> delegate;
 @property (nonatomic) NSArray *currentClasses;
 @property (nonatomic) NSMutableDictionary *classInfo;
 @property (nonatomic) NSUInteger activeClasses;
 @property (nonatomic) NSString *location;
+@property (weak, nonatomic) IBOutlet UITextField *locationField;
 @end
 
 @implementation SelectClassesViewController {
@@ -56,22 +55,6 @@ static NSUInteger const MaxStatusLength = 40;
 - (void)viewDidLoad {
     [super viewDidLoad];
     _placesClient = [[GMSPlacesClient alloc] init];
-    [[[CLLocationManager alloc] init] requestWhenInUseAuthorization];
-    [_placesClient currentPlaceWithCallback:^(GMSPlaceLikelihoodList *likelihoodList, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Current Place error %@", [error localizedDescription]);
-            return;
-        }
-        
-        for (GMSPlaceLikelihood *likelihood in likelihoodList.likelihoods) {
-            GMSPlace* place = likelihood.place;
-            NSLog(@"Current Place name %@ at likelihood %g", place.name, likelihood.likelihood);
-            NSLog(@"Current Place address %@", place.formattedAddress);
-            NSLog(@"Current Place attributions %@", place.attributions);
-            NSLog(@"Current PlaceID %@", place.placeID);
-        }
-        
-    }];
     
     self.location = @"";
     
@@ -84,6 +67,26 @@ static NSUInteger const MaxStatusLength = 40;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.classInfo = [[NSMutableDictionary alloc] init];
+    
+    self.locationField.delegate = self;
+    
+    [[[CLLocationManager alloc] init] requestWhenInUseAuthorization];
+    [_placesClient currentPlaceWithCallback:^(GMSPlaceLikelihoodList *likelihoodList, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Current Place error %@", [error localizedDescription]);
+            return;
+        }
+        
+        for (GMSPlaceLikelihood *likelihood in likelihoodList.likelihoods) {
+            GMSPlace* place = likelihood.place;
+            if([place.types containsObject:@"establishment"] && ![place.name  isEqual: @"Stanford University"]) {
+                self.location = place.name;
+                self.locationField.text = place.name;
+                break;
+            }
+        }
+        
+    }];
 }
 
 -(void)viewDidLayoutSubviews
@@ -115,11 +118,22 @@ static NSUInteger const MaxStatusLength = 40;
         }
     }
     
+    if (self.currentClasses.count == 0) {
+        UILabel *backgroundView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,self.tableView.bounds.size.width,self.tableView.bounds.size.height)];
+        backgroundView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+        backgroundView.text = @"Go to Me tab to add your classes.";
+        backgroundView.textColor = [UIColor colorWithRed:165.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1];
+        backgroundView.textAlignment = NSTextAlignmentCenter;
+        self.tableView.backgroundView = backgroundView;
+    } else {
+        self.tableView.backgroundView = nil;
+    }
     
+    self.locationField.text = self.location;
     
-    self.buttonView.layer.cornerRadius = 8;
+//    self.buttonView.layer.cornerRadius = 8;
+//    [self setButtonColor];
     
-    [self setButtonColor];
     [self.tableView reloadData];
 }
 
@@ -148,8 +162,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if([cell isKindOfClass:[SelectClassesSelectedWithTextFieldTableViewCell class]]) {
-        NSString *key = [(SelectClassesSelectedWithTextFieldTableViewCell *)cell getName];
-        [self findNightOwlsForClass:key];
+        if([self.location isEqual:@""]) {
+            
+        } else {
+            NSString *key = [(SelectClassesSelectedWithTextFieldTableViewCell *)cell getName];
+            [self findNightOwlsForClass:key];
+        }
 //        UpdateLocationStatusViewController* ulsvc = [[UpdateLocationStatusViewController alloc] initWithDelegate:self classTitle:key currLocation:self.location currStatus:((EnrolledClass *)[self.classInfo objectForKey:key]).status];
 //        noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:ulsvc withDelegate:self];
 //        [self.navigationController presentViewController:modal animated:YES completion:nil];
@@ -163,7 +181,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //        noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:slsvc withDelegate:self];
 //        [self.navigationController presentViewController:modal animated:YES completion:nil];
     }
-    [self setButtonColor];
+//    [self setButtonColor];
     [tableView reloadData];
 }
 
@@ -205,21 +223,22 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark Private Methods
-- (void)setButtonColor {
-    if (self.activeClasses > 0) {
-        self.buttonView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
-        self.buttonView.layer.masksToBounds = NO;
-        self.buttonView.layer.shadowOffset = CGSizeMake(5, 5);
-        self.buttonView.layer.shadowRadius = 5;
-        self.buttonView.layer.shadowOpacity = 0.5;
-        self.button.enabled = YES;
-    } else {
-        self.buttonView.backgroundColor = [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1];
-        self.buttonView.layer.masksToBounds = YES;
-        self.buttonView.layer.shadowOffset = CGSizeMake(0, 0);
-        self.button.enabled = NO;
-    }
-}
+//- (void)setButtonColor {
+//    if (self.activeClasses > 0) {
+//        self.buttonView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
+//        self.buttonView.layer.masksToBounds = NO;
+//        self.buttonView.layer.shadowOffset = CGSizeMake(5, 5);
+//        self.buttonView.layer.shadowRadius = 5;
+//        self.buttonView.layer.shadowOpacity = 0.5;
+//        self.button.enabled = YES;
+//    } else {
+//        self.buttonView.backgroundColor = [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1];
+//        self.buttonView.layer.masksToBounds = YES;
+//        self.buttonView.layer.shadowOffset = CGSizeMake(0, 0);
+//        self.button.enabled = NO;
+//    }
+//}
+
 
 - (void)alertSelectedOkForClass:(NSString *)className {
     ((EnrolledClass *)[self.classInfo objectForKey:className]).active = NO;
@@ -227,7 +246,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.activeClasses == 0) {
         self.location = @"";
     }
-    [self setButtonColor];
+//    [self setButtonColor];
     [self.tableView reloadData];
 }
 
@@ -251,6 +270,18 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (void)showLocationRequiredAlert {
+    NSString *actionTitle = [NSString stringWithFormat:@"A location is required."];
+    NSString *actionMessage = [NSString stringWithFormat:@"Please enter your current location in the location field."];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:actionTitle message:actionMessage preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:okAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)findNightOwlsForClass:(NSString *)class {
     NSMutableArray *activeClasses = [[NSMutableArray alloc] initWithCapacity:self.activeClasses];
     for (id key in [self.classInfo allKeys]) {
@@ -263,7 +294,17 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.navigationController pushViewController:fnovc animated:YES];
 }
 
-#pragma mark TextViewDleegate Methods
+#pragma mark TextFieldDelegate Methods
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.location = self.locationField.text;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark TextViewDelegate Methods
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string {
     if([string isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
@@ -306,7 +347,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.activeClasses == 0) {
         self.location = @"";
     }
-    [self setButtonColor];
+//    [self setButtonColor];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
