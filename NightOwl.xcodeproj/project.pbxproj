@@ -666,9 +666,9 @@
 		857D704F1BEF52C000639EE1 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				85D057DC1C614E0300E5B47D /* LoginViewController.xib */,
 				85D057DD1C614E0300E5B47D /* LoginViewController.h */,
 				85D057DE1C614E0300E5B47D /* LoginViewController.m */,
+				85D057DC1C614E0300E5B47D /* LoginViewController.xib */,
 				857D70491BEF529200639EE1 /* noTabBarController.h */,
 				857D704A1BEF529200639EE1 /* noTabBarController.m */,
 				857D706B1BF024DA00639EE1 /* noHomeNavigationController.h */,

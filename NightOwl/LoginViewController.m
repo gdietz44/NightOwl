@@ -27,7 +27,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
     createAccountMode = false;
     _firstNameTextField.hidden = true;
     _lastNameTextField.hidden = true;
-//    _firstNameTextField.frame.size.height = 0.0;
+    _emailField.hidden = true;
 }
 
 - (IBAction)registerAction:(UIButton *)sender {
@@ -45,18 +45,23 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
 - (void)slideLoginFieldsDown {
     _firstNameTextField.hidden = false;
     _lastNameTextField.hidden = false;
+    _emailField.hidden = false;
     _firstNameTextField.alpha = 0.0;
     _lastNameTextField.alpha = 0.0;
+    _emailField.alpha = 0.0;
     
     [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         _firstNameTextField.alpha = 1.0;
         _lastNameTextField.alpha = 1.0;
+        _emailField.alpha = 1.0;
         
-        self.usernameTopPositionConstraint.constant = self.usernameTopPositionConstraint.constant + 2*SPACE_BETWEEN_TEXT_FIELDS;
+        self.usernameTopPositionConstraint.constant = self.usernameTopPositionConstraint.constant + 3 *SPACE_BETWEEN_TEXT_FIELDS;
         [self.view layoutIfNeeded];
         
     } completion:^(BOOL finished) {
-        // Need anything here?
+        _firstNameTextField.hidden = false;
+        _lastNameTextField.hidden = false;
+        _emailField.hidden = false;
         
     }];
 }
@@ -65,13 +70,15 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
     [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         _firstNameTextField.alpha = 0.0;
         _lastNameTextField.alpha = 0.0;
+        _emailField.alpha = 0.0;
         
-        self.usernameTopPositionConstraint.constant = self.usernameTopPositionConstraint.constant - 2*SPACE_BETWEEN_TEXT_FIELDS;
+        self.usernameTopPositionConstraint.constant = self.usernameTopPositionConstraint.constant - 3 *SPACE_BETWEEN_TEXT_FIELDS;
         [self.view layoutIfNeeded];
         
     } completion:^(BOOL finished) {
         _firstNameTextField.hidden = true;
         _lastNameTextField.hidden = true;
+        _emailField.hidden = true;
     }];
 }
 
@@ -84,10 +91,11 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
      1) Verify all fields are not empty
      2) Send info to server to register a new account
      */
-    if ([self isValidTextField :_firstNameTextField ] &&
-        [self isValidTextField :_lastNameTextField ] &&
-        [self isValidTextField :_usernameTextField ] &&
-        [self isValidTextField :_passwordTextField ]) {
+    if ([self isValidTextField:_firstNameTextField ] &&
+        [self isValidTextField:_lastNameTextField ] &&
+        [self isValidTextField:_emailField] &&
+        [self isValidTextField:_usernameTextField ] &&
+        [self isValidTextField:_passwordTextField ]) {
         // These fields are valid, continue adding the user!
     }
     
@@ -96,7 +104,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
 - (bool)isValidTextField:(UITextField *)tfield {
     return ([tfield.text length] > 0 ||
             tfield.text != nil ||
-            [tfield.text isEqual:@""] == FALSE);
+            ![tfield.text isEqual:@""]);
 }
 
 - (void)didReceiveMemoryWarning {
