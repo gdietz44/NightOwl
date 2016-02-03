@@ -10,6 +10,18 @@
 
 @interface LoginViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+
+@property (weak, nonatomic) IBOutlet UIButton *signInButton;
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *usernameTopPositionConstraint;
+
 - (IBAction)uiSignInAction:(id)sender;
 
 @end
+
+

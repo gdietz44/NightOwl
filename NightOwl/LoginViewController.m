@@ -15,9 +15,88 @@
 
 @implementation LoginViewController
 
+bool createAccountMode = false;
+int SPACE_BETWEEN_TEXT_FIELDS = 36;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self layoutFieldsAndButtons];
+}
+
+- (void)layoutFieldsAndButtons {
+    createAccountMode = false;
+    _firstNameTextField.hidden = true;
+    _lastNameTextField.hidden = true;
+//    _firstNameTextField.frame.size.height = 0.0;
+}
+
+- (IBAction)registerAction:(UIButton *)sender {
+    if (!createAccountMode) {
+        createAccountMode = true;
+        [self slideLoginFieldsDown];
+    } else {
+        createAccountMode = false;
+//        [self registerNewAccountAction];
+        [self slideLoginFieldsUp];
+    }
+    
+}
+
+- (void)slideLoginFieldsDown {
+    _firstNameTextField.hidden = false;
+    _lastNameTextField.hidden = false;
+    _firstNameTextField.alpha = 0.0;
+    _lastNameTextField.alpha = 0.0;
+    
+    [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        _firstNameTextField.alpha = 1.0;
+        _lastNameTextField.alpha = 1.0;
+        
+        self.usernameTopPositionConstraint.constant = self.usernameTopPositionConstraint.constant + 2*SPACE_BETWEEN_TEXT_FIELDS;
+        [self.view layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        // Need anything here?
+        
+    }];
+}
+
+- (void)slideLoginFieldsUp {
+    [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        _firstNameTextField.alpha = 0.0;
+        _lastNameTextField.alpha = 0.0;
+        
+        self.usernameTopPositionConstraint.constant = self.usernameTopPositionConstraint.constant - 2*SPACE_BETWEEN_TEXT_FIELDS;
+        [self.view layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        _firstNameTextField.hidden = true;
+        _lastNameTextField.hidden = true;
+    }];
+}
+
+- (void)registerNewAccountAction {
+    /*
+     This action will happen when the user has clicked register after the name fields
+     have become visible.
+     
+     Actions to take here: (NOT YET COMPLETED)
+     1) Verify all fields are not empty
+     2) Send info to server to register a new account
+     */
+    if ([self isValidTextField :_firstNameTextField ] &&
+        [self isValidTextField :_lastNameTextField ] &&
+        [self isValidTextField :_usernameTextField ] &&
+        [self isValidTextField :_passwordTextField ]) {
+        // These fields are valid, continue adding the user!
+    }
+    
+}
+        
+- (bool)isValidTextField:(UITextField *)tfield {
+    return ([tfield.text length] > 0 ||
+            tfield.text != nil ||
+            [tfield.text isEqual:@""] == FALSE);
 }
 
 - (void)didReceiveMemoryWarning {
