@@ -8,8 +8,9 @@
 
 #import "LoginViewController.h"
 #import "AppDelegate.h"
+#import <Parse/Parse.h>
 
-@interface LoginViewController ()
+@interface LoginViewController () <UITextFieldDelegate>
 
 @end
 
@@ -20,6 +21,13 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.firstNameTextField.delegate = self;
+    self.lastNameTextField.delegate = self;
+    self.emailField.delegate = self;
+    self.usernameTextField.delegate = self;
+    self.passwordTextField.delegate = self;
+    
     [self layoutFieldsAndButtons];
 }
 
@@ -30,14 +38,18 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
     _emailField.hidden = true;
 }
 
+
 - (IBAction)registerAction:(UIButton *)sender {
     if (!createAccountMode) {
         createAccountMode = true;
         [self slideLoginFieldsDown];
     } else {
         createAccountMode = false;
-//        [self registerNewAccountAction];
-        [self slideLoginFieldsUp];
+        if([self allFieldsValid]) {
+            [self registerNewAccountAction];
+        } else {
+            [self slideLoginFieldsUp];
+        }
     }
     
 }
@@ -91,13 +103,24 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
      1) Verify all fields are not empty
      2) Send info to server to register a new account
      */
-    if ([self isValidTextField:_firstNameTextField ] &&
-        [self isValidTextField:_lastNameTextField ] &&
-        [self isValidTextField:_emailField] &&
-        [self isValidTextField:_usernameTextField ] &&
-        [self isValidTextField:_passwordTextField ]) {
-        // These fields are valid, continue adding the user!
-    }
+
+    PFUser *user = [PFUser user];
+    user.username = self.usernameTextField.text;
+    user.password = self.passwordTextField.text;
+    user.email = self.emailField.text;
+    
+    // other fields can be set just like with PFObject
+    user[@"firstName"] = self.firstNameTextField.text;
+    user[@"lastName"] = self.lastNameTextField.text;
+    
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            [self uiSignInAction:nil];
+        } else {
+            NSString *errorString = [error userInfo][@"error"];
+            NSLog(@"%@", errorString);
+        }
+    }];
     
 }
         
@@ -107,9 +130,33 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
             ![tfield.text isEqual:@""]);
 }
 
+- (BOOL)allFieldsValid {
+    return ([self isValidTextField:_firstNameTextField ] &&
+    [self isValidTextField:_lastNameTextField ] &&
+    [self isValidTextField:_emailField] &&
+    [self isValidTextField:_usernameTextField ] &&
+            [self isValidTextField:_passwordTextField ]);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark Text Field Delegate
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ([textField isEqual:self.firstNameTextField]) {
+        [self.lastNameTextField becomeFirstResponder];
+    } else if ([textField isEqual:self.lastNameTextField]) {
+        [self.emailField becomeFirstResponder];
+    } else if ([textField isEqual:self.emailField]) {
+        [self.usernameTextField becomeFirstResponder];
+    } else if ([textField isEqual:self.usernameTextField]) {
+        [self.passwordTextField becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+    }
+    return NO;
 }
 
 /*
@@ -123,7 +170,18 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
 */
 
 - (IBAction)uiSignInAction:(id)sender {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate.window setRootViewController:appDelegate.tabBarController];
+    [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text
+                                    block:^(PFUser *user, NSError *error) {
+                                        if (user) {
+                                            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                                            [appDelegate.window setRootViewController:appDelegate.tabBarController];
+                                        } else {
+                                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There was an error logging in." message:error.localizedFailureReason preferredStyle:UIAlertControllerStyleAlert];
+                                            UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                                                             handler:^(UIAlertAction * action) {}];
+                                            
+                                            [alert addAction:okAction];
+                                        }
+                                    }];
 }
 @end
