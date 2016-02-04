@@ -34,14 +34,14 @@
     [Lookback_Weak setupWithAppToken:@"ohdshJX2zNXBCzoeX"];
     [Lookback_Weak sharedLookback].shakeToRecord = YES;
     [Lookback_Weak sharedLookback].feedbackBubbleVisible = NO;
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-    {
-        NSArray *classes = @[@"CS 147", @"ECON 1", @"MATH 51"];
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:classes forKey:@"Classes"];
-        [defaults setBool:YES forKey:@"HasLaunchedOnce"];
-        [defaults synchronize];
-    }
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+//    {
+//        NSArray *classes = @[@"CS 147", @"ECON 1", @"MATH 51"];
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        [defaults setObject:classes forKey:@"Classes"];
+//        [defaults setBool:YES forKey:@"HasLaunchedOnce"];
+//        [defaults synchronize];
+//    }
     [GMSServices provideAPIKey:@"AIzaSyDc3lx4F8nTMTdwswL54UVfwIg8STI-gpg"];
     
     [Parse setApplicationId:@"dqKW6eDem7T9sfx1qVidDr4Mw2pR21Yl2PXuHMni"
