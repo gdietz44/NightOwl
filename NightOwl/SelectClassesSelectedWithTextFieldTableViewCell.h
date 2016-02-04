@@ -13,6 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *activeButton;
 @property (weak, nonatomic) IBOutlet MultiLineFieldTextView *statusLabel;
 - (NSString *)getName;
-- (void)configureCell:(NSString *)className withStatus:(NSString *)status;
+- (void)configureCell:(NSString *)className withStatus:(NSString *)status withIndex:(NSUInteger)index;
 
 @end

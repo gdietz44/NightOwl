@@ -163,7 +163,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if([cell isKindOfClass:[SelectClassesSelectedWithTextFieldTableViewCell class]]) {
         if([self.location isEqual:@""]) {
-            
+            [self showLocationRequiredAlert];
         } else {
             NSString *key = [(SelectClassesSelectedWithTextFieldTableViewCell *)cell getName];
             [self findNightOwlsForClass:key];
@@ -209,7 +209,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         cell.statusLabel.delegate = self;
         cell.activeButton.tag = indexPath.row;
         [cell.activeButton addTarget:self action:@selector(deactivateButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [cell configureCell:classTitle withStatus:classObj.status];
+        [cell configureCell:classTitle withStatus:classObj.status withIndex:indexPath.row];
         return cell;
     } else {
         SelectClassesTableViewCellUnselected *cell = [tableView dequeueReusableCellWithIdentifier:UnselectedClassCell];
@@ -242,10 +242,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)alertSelectedOkForClass:(NSString *)className {
     ((EnrolledClass *)[self.classInfo objectForKey:className]).active = NO;
+    ((EnrolledClass *)[self.classInfo objectForKey:className]).status = @"";
     self.activeClasses--;
-    if (self.activeClasses == 0) {
-        self.location = @"";
-    }
 //    [self setButtonColor];
     [self.tableView reloadData];
 }
@@ -305,6 +303,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark TextViewDelegate Methods
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    NSUInteger tag = textView.tag;
+    NSString *className = [self.currentClasses objectAtIndex:tag];
+    ((EnrolledClass *)[self.classInfo objectForKey:className]).status = textView.text;
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string {
     if([string isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
@@ -343,10 +347,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)updateLocationStatusViewController:(UpdateLocationStatusViewController *)selectClassesViewController
                         didDeactivateClass:(NSString *)selectedClass {
     ((EnrolledClass *)[self.classInfo objectForKey:selectedClass]).active = NO;
+    ((EnrolledClass *)[self.classInfo objectForKey:selectedClass]).status = @"";
     self.activeClasses--;
-    if (self.activeClasses == 0) {
-        self.location = @"";
-    }
 //    [self setButtonColor];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }

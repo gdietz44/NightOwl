@@ -30,11 +30,12 @@
     return self.classLabel.text;
 }
 
-- (void)configureCell:(NSString *)className withStatus:(NSString *)status {
+- (void)configureCell:(NSString *)className withStatus:(NSString *)status withIndex:(NSUInteger)index {
     [self.statusLabel setPlaceholderText:@"eg Finished everything but problem 7"];
     self.statusLabel.contentInset = UIEdgeInsetsMake(-4, 0, 0, 0);
     self.classLabel.text = className;
     self.statusLabel.text = status;
+    self.statusLabel.tag = index;
 }
 
 @end
