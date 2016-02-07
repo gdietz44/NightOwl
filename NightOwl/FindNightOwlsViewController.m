@@ -15,11 +15,14 @@
 #import "noModalNavigationController.h"
 #import "Message.h"
 
+#import "ConversationViewController.h"
+
 @import CoreLocation;
 
 static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
 
-@interface FindNightOwlsViewController ()<HorizontalPickerViewDataSource,HorizontalPickerViewDelegate, UITableViewDataSource, UITableViewDelegate, SendAMessageViewControllerDelegate, noModalNavigationControllerDelegate> {
+@interface FindNightOwlsViewController ()<HorizontalPickerViewDataSource,HorizontalPickerViewDelegate, UITableViewDataSource, UITableViewDelegate, SendAMessageViewControllerDelegate, noModalNavigationControllerDelegate,
+    ConversationViewControllerDelegate> {
     BOOL firstAppearance;
     NSUInteger startIndex;
 }
@@ -255,15 +258,58 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         index += self.withinAMile + self.withinHalfAMile + self.withinAQuarterMile;
     }
     User *user = [self.visibleUsers objectAtIndex:index];
-    SendAMessageViewController *samvc = [[SendAMessageViewController alloc] initWithDelegate:self userToContact:user];
-    noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:samvc withDelegate:self];
-    [self.navigationController presentViewController:modal animated:YES completion:nil];
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    
+    /* build fake conversation - really just the person's status! --EN 2/6 */
+    NSMutableDictionary *convo = [[NSMutableDictionary alloc] initWithCapacity:1];
+    Message *tempMessage = [[Message alloc] initWithUser:user message:user.status];
+    NSMutableArray *messages = [[NSMutableArray alloc] init];
+    [messages addObject:tempMessage];
+    [convo setObject:messages forKey:user.name];
+    
+    ConversationViewController *fnovc = [[ConversationViewController alloc] initWithDelegate:self withConversation:[convo objectForKey:user.name] withUser:user withAutoresponse:false];
+    
+    
+    [self.navigationController pushViewController:fnovc animated:YES];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    
+    
+    /* Below: old (and functional) code that used to send a message */
+//    SendAMessageViewController *samvc = [[SendAMessageViewController alloc] initWithDelegate:self userToContact:user];
+//    noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:samvc withDelegate:self];
+//    [self.navigationController presentViewController:modal animated:YES completion:nil];
+//    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
            editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleNone;
+}
+
+// TODO: Do something real with the below method?
+#pragma mark ConversationViewControllerDelegate Method
+- (void)conversationViewController:(ConversationViewController *)conversationViewController
+             didUpdateConversation:(NSArray *)conversation
+                          withUser:(User *)user {
+    // Do nothing for now? What's the point of hooking up everything when it most likely will change with parse messaging?
+    
+//    Message *message = [conversation lastObject];
+    
+    if (conversation.count <= 1) {
+        return;
+    }
+    
+    Message *message = [[Message alloc] initWithUser:user message:((Message*)[conversation lastObject]).message];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Conversation Began" object:message];
+    
+    /*
+    [self.messageData.conversations setObject:conversation forKey:user.name];
+    [self.messageData.contactedUsers removeObjectAtIndex:[self.messageData.contactedUsers indexOfObject:user]];
+    [self.messageData.contactedUsers insertObject:user atIndex:0];
+    [self.tableView reloadData];
+     */
 }
 
 #pragma mark noModalNavigationControllerDelegate Methods

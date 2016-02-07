@@ -25,6 +25,7 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageTextViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *messageView;
 @property (nonatomic) User* otherUser;
+@property (nonatomic) bool autoresponse;
 @property (weak, nonatomic) id<ConversationViewControllerDelegate> delegate;
 @end
 
@@ -32,13 +33,15 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 
 - (id)initWithDelegate:(id<ConversationViewControllerDelegate>)delegate
       withConversation:(NSArray *)convo
-              withUser:(User *)user {
+              withUser:(User *)user
+      withAutoresponse:(bool *)autoresponse {
     if (self = [super init]) {
         self.delegate = delegate;
         self.currentConversation = [[NSMutableArray alloc] initWithArray:convo];
         self.title = user.name;
         self.otherUser = user;
         self.initialScrollDone = NO;
+        self.autoresponse = autoresponse;
     }
     return self;
 }
@@ -168,7 +171,9 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
     [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     self.messageTextView.text = @"";
     [self setButtonColor];
-    [self performSelector:@selector(otherUserSendMessage) withObject:nil afterDelay:3];
+    if (self.autoresponse) {
+        [self performSelector:@selector(otherUserSendMessage) withObject:nil afterDelay:3];
+    }
 }
 
 

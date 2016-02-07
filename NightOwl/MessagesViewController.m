@@ -99,7 +99,7 @@ heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
 -(void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     User *user =[self.messageData.contactedUsers objectAtIndex:indexPath.row];
-    ConversationViewController *fnovc = [[ConversationViewController alloc] initWithDelegate:self withConversation:[self.messageData.conversations objectForKey:user.name] withUser:user];
+    ConversationViewController *fnovc = [[ConversationViewController alloc] initWithDelegate:self withConversation:[self.messageData.conversations objectForKey:user.name] withUser:user withAutoresponse:YES];
     [self.navigationController pushViewController:fnovc animated:YES];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }

@@ -21,5 +21,6 @@
 @interface ConversationViewController : UIViewController
 - (id)initWithDelegate:(id<ConversationViewControllerDelegate>)delegate
           withConversation:(NSArray *)convo
-              withUser:(User *)user;
+              withUser:(User *)user
+      withAutoresponse: (BOOL *)autoresponse;
 @end

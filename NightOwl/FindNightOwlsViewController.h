@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MessageData.h"
 
 @interface FindNightOwlsViewController : UIViewController
 
