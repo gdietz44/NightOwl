@@ -115,15 +115,20 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
-            [self uiSignInAction:nil];
+            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate.window setRootViewController:appDelegate.tabBarController];
         } else {
-            NSString *errorString = [error userInfo][@"error"];
-            NSLog(@"%@", errorString);
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There was an error registering." message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action) {}];
+            
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:nil];
         }
     }];
     
 }
-        
+
 - (bool)isValidTextField:(UITextField *)tfield {
     return ([tfield.text length] > 0 ||
             tfield.text != nil ||
@@ -176,12 +181,14 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
                                             AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                             [appDelegate.window setRootViewController:appDelegate.tabBarController];
                                         } else {
-                                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There was an error logging in." message:error.localizedFailureReason preferredStyle:UIAlertControllerStyleAlert];
+                                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There was an error logging in." message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
                                             UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                                                              handler:^(UIAlertAction * action) {}];
                                             
                                             [alert addAction:okAction];
+                                            [self presentViewController:alert animated:YES completion:nil];
                                         }
                                     }];
 }
+
 @end
