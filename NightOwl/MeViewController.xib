@@ -11,6 +11,7 @@
                 <outlet property="cancelButton" destination="w1T-PS-Qhv" id="JPs-7d-gDn"/>
                 <outlet property="deleteButton" destination="bS9-wU-haB" id="nKV-H2-7x4"/>
                 <outlet property="editButton" destination="F2L-IR-zWb" id="x1g-tM-ITP"/>
+                <outlet property="nameField" destination="1i0-jN-Ga8" id="N45-xh-bBk"/>
                 <outlet property="profileImageView" destination="6Rh-ds-2mg" id="e9d-7H-STC"/>
                 <outlet property="tableView" destination="I17-yZ-l5X" id="kdJ-b6-eFW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

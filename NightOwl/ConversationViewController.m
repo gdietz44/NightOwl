@@ -25,7 +25,7 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageTextViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *messageView;
 @property (nonatomic) User* otherUser;
-@property (nonatomic) bool autoresponse;
+@property (nonatomic) BOOL autoresponse;
 @property (weak, nonatomic) id<ConversationViewControllerDelegate> delegate;
 @end
 
@@ -34,7 +34,7 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 - (id)initWithDelegate:(id<ConversationViewControllerDelegate>)delegate
       withConversation:(NSArray *)convo
               withUser:(User *)user
-      withAutoresponse:(bool *)autoresponse {
+      withAutoresponse:(BOOL)autoresponse {
     if (self = [super init]) {
         self.delegate = delegate;
         self.currentConversation = [[NSMutableArray alloc] initWithArray:convo];
@@ -164,6 +164,10 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 
 #pragma mark Action Methods
 - (IBAction)sendButtonWasPressed:(id)sender {
+    if ([self.currentConversation count] == 0) {
+        Message *message = [[Message alloc] initWithUser:self.otherUser message:self.messageTextView.text];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Conversation Began" object:message];
+    }
     Message *message = [[Message alloc] initWithUser:nil message:self.messageTextView.text];
     [self.currentConversation addObject:message];
     [self.tableView reloadData];

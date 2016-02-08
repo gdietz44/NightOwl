@@ -48,8 +48,13 @@
                   clientKey:@"6go2iDjclJJN603K3msUNbY6j7vW6VaLKL5GiITf"];
     
     // Add the login view controller as the root controller of the app window
-    LoginViewController *loginVC = [[LoginViewController alloc]init];
-    [self.window setRootViewController:loginVC];
+    if (![PFUser currentUser]) {
+        LoginViewController *loginVC = [[LoginViewController alloc]init];
+        [self.window setRootViewController:loginVC];
+    } else {
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate.window setRootViewController:appDelegate.tabBarController];
+    }
     // Above is new login code
     
     return YES;

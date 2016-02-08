@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,6 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="76s-xk-tdB">
                         <rect key="frame" x="4" y="4" width="36" height="36"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="36" id="bBA-aZ-wyY"/>
                             <constraint firstAttribute="height" constant="36" id="tB4-OY-Iwl"/>
@@ -25,14 +24,12 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GriffinDProfilePic.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="exv-Xs-R3p">
                         <rect key="frame" x="280" y="4" width="36" height="36"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="6Ha-gN-q8v"/>
                             <constraint firstAttribute="width" constant="36" id="jS6-0c-clJ"/>
                         </constraints>
                     </imageView>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="76s-xk-tdB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-4" id="LA2-57-iU9"/>
                     <constraint firstAttribute="trailingMargin" secondItem="exv-Xs-R3p" secondAttribute="trailing" constant="-4" id="MWA-ad-TNG"/>
@@ -40,7 +37,6 @@
                     <constraint firstItem="exv-Xs-R3p" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="nVv-tI-qjt"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="meImageView" destination="exv-Xs-R3p" id="3Mw-6p-EZK"/>
                 <outlet property="otherUserImageView" destination="76s-xk-tdB" id="64k-YS-y2B"/>

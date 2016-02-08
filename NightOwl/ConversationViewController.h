@@ -22,5 +22,5 @@
 - (id)initWithDelegate:(id<ConversationViewControllerDelegate>)delegate
           withConversation:(NSArray *)convo
               withUser:(User *)user
-      withAutoresponse: (BOOL *)autoresponse;
+      withAutoresponse: (BOOL)autoresponse;
 @end

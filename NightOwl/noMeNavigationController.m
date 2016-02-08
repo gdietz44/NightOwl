@@ -10,6 +10,7 @@
 #import "noModalNavigationController.h"
 #import "MeViewController.h"
 #import "AddClassesViewController.h"
+#import <Parse/Parse.h>
 
 @interface noMeNavigationController () <MeViewControllerDelegate, AddClassesViewControllerDelegate, noModalNavigationControllerDelegate>
 
@@ -51,15 +52,19 @@
                      didAddClass:(NSString *)class {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *classesArr = [defaults objectForKey:@"Classes"];
+    PFUser* currentUser = [PFUser currentUser];
     if(classesArr && ![classesArr containsObject:class]) {
         NSMutableArray *newClasses = [NSMutableArray arrayWithArray:classesArr];
         [newClasses addObject:class];
         NSArray *sorted = [newClasses sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
         [defaults setObject:sorted forKey:@"Classes"];
+        [currentUser setObject:sorted forKey:@"currentClasses"];
     } else if (![classesArr containsObject:class]) {
         NSArray *newClasses = [NSArray arrayWithObject:class];
         [defaults setObject:newClasses forKey:@"Classes"];
+        [currentUser setObject:newClasses forKey:@"currentClasses"];
     }
+    [currentUser saveInBackground];
     [defaults synchronize];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

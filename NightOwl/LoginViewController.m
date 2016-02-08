@@ -112,6 +112,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
     // other fields can be set just like with PFObject
     user[@"firstName"] = self.firstNameTextField.text;
     user[@"lastName"] = self.lastNameTextField.text;
+    user[@"currentClasses"] = @[];
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
@@ -178,6 +179,9 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
     [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text
                                     block:^(PFUser *user, NSError *error) {
                                         if (user) {
+                                            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                            [defaults setObject:[user objectForKey:@"currentClasses"] forKey:@"Classes"];
+                                            [defaults synchronize];
                                             AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                             [appDelegate.window setRootViewController:appDelegate.tabBarController];
                                         } else {

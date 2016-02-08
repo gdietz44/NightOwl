@@ -8,6 +8,7 @@
 
 #import "MeViewController.h"
 #import "AddAClassTableViewCell.h"
+#import <Parse/Parse.h>
 
 static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 
@@ -17,7 +18,9 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UILabel *nameField;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+@property (nonatomic) PFUser *currentUser;
 @property (weak, nonatomic) id<MeViewControllerDelegate> delegate;
 @property (nonatomic) NSArray *currentClasses;
 @property (nonatomic) NSMutableArray *cellsSelectedToDelete;
@@ -39,6 +42,8 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.currentUser = [PFUser currentUser];
     
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"More-Gray"] style:UIBarButtonItemStyleDone target:self action:nil]; //add Action
     self.navigationItem.rightBarButtonItem = button;
@@ -62,6 +67,36 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 
 
 - (void)viewWillAppear:(BOOL)animated {
+    NSString *firstName = [self.currentUser objectForKey:@"firstName"];
+    NSString *lastInitial = [[self.currentUser objectForKey:@"lastName"] substringToIndex:1];
+    NSString *name = [NSString stringWithFormat:@"%@ %@.", firstName, lastInitial];
+    self.nameField.text = name;
+    
+    UIImage *profileImage = [self.currentUser objectForKey:@"profilePicture"];
+    if (profileImage == nil) {
+        NSString *initials = [NSString stringWithFormat:@"%@%@", [firstName substringToIndex:1], lastInitial];
+        CGSize size  = self.profileImageView.frame.size;
+        
+        UIGraphicsBeginImageContext(size);
+        
+        CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1.0].CGColor);
+        CGContextFillRect(UIGraphicsGetCurrentContext(), self.profileImageView.bounds);
+        
+        CGSize textSize = [initials sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:48], NSForegroundColorAttributeName : [UIColor whiteColor]}];
+        
+        [initials drawAtPoint:CGPointMake((self.profileImageView.bounds.size.width / 2) - (textSize.width / 2), (self.profileImageView.bounds.size.height / 2) - (textSize.height / 2)) withAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:48], NSForegroundColorAttributeName : [UIColor whiteColor]}];
+        
+        // transfer image
+        CGContextSetShouldAntialias(UIGraphicsGetCurrentContext(), YES);
+        CGContextSetAllowsAntialiasing(UIGraphicsGetCurrentContext(), YES);
+        
+        profileImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+    }
+    self.profileImageView.contentMode = UIViewContentModeCenter;
+    self.profileImageView.image = profileImage;
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.currentClasses = [defaults objectForKey:@"Classes"];
     [self updateButtonsToMatchTableState];
@@ -110,6 +145,8 @@ didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
         NSMutableArray *tempArr = [NSMutableArray arrayWithArray:self.currentClasses];
         [tempArr removeObjectAtIndex:indexPath.row];
         self.currentClasses = tempArr;
+        [self.currentUser setObject:self.currentClasses forKey:@"currentClasses"];
+        [self.currentUser saveInBackground];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:self.currentClasses forKey:@"Classes"];
         [defaults synchronize];
@@ -163,6 +200,8 @@ didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
         NSMutableArray *tempArr = [NSMutableArray arrayWithArray:self.currentClasses];
         [tempArr removeObjectsAtIndexes:indicesOfItemsToDelete];
         self.currentClasses = tempArr;
+        [self.currentUser setObject:self.currentClasses forKey:@"currentClasses"];
+        [self.currentUser saveInBackground];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:self.currentClasses forKey:@"Classes"];
         [defaults synchronize];

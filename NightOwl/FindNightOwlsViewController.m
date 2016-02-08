@@ -262,10 +262,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     /* build fake conversation - really just the person's status! --EN 2/6 */
     NSMutableDictionary *convo = [[NSMutableDictionary alloc] initWithCapacity:1];
-    Message *tempMessage = [[Message alloc] initWithUser:user message:user.status];
-    NSMutableArray *messages = [[NSMutableArray alloc] init];
-    [messages addObject:tempMessage];
-    [convo setObject:messages forKey:user.name];
+//    Message *tempMessage = [[Message alloc] initWithUser:user message:user.status];
+//    NSMutableArray *messages = [[NSMutableArray alloc] init];
+//    [messages addObject:tempMessage];
+    [convo setObject:@[] forKey:user.name];
     
     ConversationViewController *fnovc = [[ConversationViewController alloc] initWithDelegate:self withConversation:[convo objectForKey:user.name] withUser:user withAutoresponse:false];
     
