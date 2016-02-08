@@ -101,7 +101,7 @@ static NSUInteger const MaxStatusLength = 40;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBar.topItem.title = @"Select Classes";
+    self.navigationController.navigationBar.topItem.title = @"NightOwl";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.currentClasses = [defaults objectForKey:@"Classes"];
     for (id className in self.currentClasses) {
@@ -264,7 +264,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                                          handler:^(UIAlertAction * action) {}];
     
     [alert addAction:noAction];
-    
+    [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -276,7 +276,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                                       handler:^(UIAlertAction * action) {}];
     
     [alert addAction:okAction];
-    
+    [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

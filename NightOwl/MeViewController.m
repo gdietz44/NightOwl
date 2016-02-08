@@ -12,15 +12,18 @@
 
 static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 
-@interface MeViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MeViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UILabel *nameField;
+@property (weak, nonatomic) IBOutlet UIImageView *textImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UIButton *profilePictureButton;
 @property (nonatomic) PFUser *currentUser;
+@property (nonatomic) UIImage *profileImage;
 @property (weak, nonatomic) id<MeViewControllerDelegate> delegate;
 @property (nonatomic) NSArray *currentClasses;
 @property (nonatomic) NSMutableArray *cellsSelectedToDelete;
@@ -60,9 +63,26 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 49.0, 0.0);
 
+    self.profilePictureButton.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+    self.profilePictureButton.layer.masksToBounds = YES;
+    self.profilePictureButton.layer.borderWidth = 0;
+    
+    self.textImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+    self.textImageView.layer.masksToBounds = YES;
+    self.textImageView.layer.borderWidth = 0;
+    
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
+    
+    PFFile *file = [self.currentUser objectForKey:@"profilePicture"];
+    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if(!error) {
+            self.profileImage = [UIImage imageWithData:data];
+            self.profileImageView.image = self.profileImage;
+            self.textImageView.hidden = YES;
+        }
+    }];
 }
 
 
@@ -72,30 +92,31 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
     NSString *name = [NSString stringWithFormat:@"%@ %@.", firstName, lastInitial];
     self.nameField.text = name;
     
-    UIImage *profileImage = [self.currentUser objectForKey:@"profilePicture"];
-    if (profileImage == nil) {
+    if (self.profileImage == nil) {
         NSString *initials = [NSString stringWithFormat:@"%@%@", [firstName substringToIndex:1], lastInitial];
-        CGSize size  = self.profileImageView.frame.size;
+        CGSize size  = self.textImageView.frame.size;
         
         UIGraphicsBeginImageContext(size);
         
         CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1.0].CGColor);
-        CGContextFillRect(UIGraphicsGetCurrentContext(), self.profileImageView.bounds);
+        CGContextFillRect(UIGraphicsGetCurrentContext(), self.textImageView.bounds);
         
         CGSize textSize = [initials sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:48], NSForegroundColorAttributeName : [UIColor whiteColor]}];
         
-        [initials drawAtPoint:CGPointMake((self.profileImageView.bounds.size.width / 2) - (textSize.width / 2), (self.profileImageView.bounds.size.height / 2) - (textSize.height / 2)) withAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:48], NSForegroundColorAttributeName : [UIColor whiteColor]}];
+        [initials drawAtPoint:CGPointMake((self.textImageView.bounds.size.width / 2) - (textSize.width / 2), (self.textImageView.bounds.size.height / 2) - (textSize.height / 2)) withAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:48], NSForegroundColorAttributeName : [UIColor whiteColor]}];
         
         // transfer image
         CGContextSetShouldAntialias(UIGraphicsGetCurrentContext(), YES);
         CGContextSetAllowsAntialiasing(UIGraphicsGetCurrentContext(), YES);
         
-        profileImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIImage *textImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        
+        self.textImageView.image = textImage;
+        self.textImageView.contentMode = UIViewContentModeCenter;
+    } else {
+        self.profileImageView.image = self.profileImage;
+        self.textImageView.hidden = YES;
     }
-    self.profileImageView.contentMode = UIViewContentModeCenter;
-    self.profileImageView.image = profileImage;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.currentClasses = [defaults objectForKey:@"Classes"];
@@ -166,6 +187,83 @@ didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     return cell;
 }
 
+#pragma mark Profile Image
+- (IBAction)addImage:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add a New Profile Picture" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* existingAction = [UIAlertAction actionWithTitle:@"Choose Existing Photo" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action) {
+                                                         [self chooseExistingPhoto];
+                                                     }];
+    
+    [alert addAction:existingAction];
+    UIAlertAction* takeAction = [UIAlertAction actionWithTitle:@"Take Photo" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                             [self takePhoto];
+                                                         }];
+    
+    [alert addAction:takeAction];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:cancelAction];
+    
+    [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - ActionSheet delegates
+
+- (void)takePhoto {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIImagePickerController *pickerView =[[UIImagePickerController alloc] init];
+        
+        pickerView.navigationBar.barTintColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
+        pickerView.navigationBar.tintColor = [UIColor whiteColor];
+        [pickerView.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+        pickerView.navigationBar.translucent = NO;
+        pickerView.navigationBar.barStyle = UIBarStyleBlack;
+        
+        pickerView.allowsEditing = YES;
+        pickerView.delegate = self;
+        pickerView.sourceType = UIImagePickerControllerSourceTypeCamera;
+        pickerView.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+        [self presentViewController:pickerView animated:YES completion:nil];
+    }
+}
+
+- (void) chooseExistingPhoto {
+    UIImagePickerController *pickerView = [[UIImagePickerController alloc] init];
+    
+    pickerView.navigationBar.barTintColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
+    pickerView.navigationBar.tintColor = [UIColor whiteColor];
+    [pickerView.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    pickerView.navigationBar.translucent = NO;
+    pickerView.navigationBar.barStyle = UIBarStyleBlack;
+    
+    pickerView.allowsEditing = YES;
+    pickerView.delegate = self;
+    [pickerView setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    [self presentViewController:pickerView animated:YES completion:nil];
+}
+
+#pragma mark - PickerDelegates
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    
+    [self dismissViewControllerAnimated:YES completion:nil];;
+    
+    UIImage * image = [info valueForKey:UIImagePickerControllerEditedImage];
+    self.textImageView.hidden = YES;
+    self.profileImageView.image = image;
+    
+    NSData *imageData = UIImagePNGRepresentation(image);
+    PFFile *imageFile = [PFFile fileWithName:@"image.png" data:imageData];
+    
+    [self.currentUser setObject:imageFile forKey:@"profilePicture"];
+    [self.currentUser saveInBackground];
+    
+}
 
 #pragma mark Actions
 - (IBAction)addClassButtonSelected:(id)sender {
@@ -250,7 +348,7 @@ didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
                                                      handler:^(UIAlertAction * action) {}];
     
     [alert addAction:cancelAction];
-
+    [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

@@ -24,6 +24,7 @@
 		856130381C1042B8003E69D7 /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 856130371C1042B8003E69D7 /* SplashScreen.png */; };
 		856130411C1046B9003E69D7 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8561303F1C1046B9003E69D7 /* logo@2x.png */; };
 		856130421C1046B9003E69D7 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 856130401C1046B9003E69D7 /* logo@3x.png */; };
+		85670A771C69430700820A78 /* Disclosure-Purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 85670A761C69430700820A78 /* Disclosure-Purple.png */; };
 		857BF18B1C0936AA006BAF2A /* SendAMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 857BF1891C0936AA006BAF2A /* SendAMessageViewController.m */; };
 		857BF18C1C0936AA006BAF2A /* SendAMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 857BF18A1C0936AA006BAF2A /* SendAMessageViewController.xib */; };
 		857BF18E1C09714E006BAF2A /* noun_29899_cc.png in Resources */ = {isa = PBXBuildFile; fileRef = 857BF18D1C09714E006BAF2A /* noun_29899_cc.png */; };
@@ -234,6 +235,7 @@
 		856130371C1042B8003E69D7 /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashScreen.png; sourceTree = "<group>"; };
 		8561303F1C1046B9003E69D7 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		856130401C1046B9003E69D7 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
+		85670A761C69430700820A78 /* Disclosure-Purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Disclosure-Purple.png"; sourceTree = "<group>"; };
 		857BF1881C0936AA006BAF2A /* SendAMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendAMessageViewController.h; sourceTree = "<group>"; };
 		857BF1891C0936AA006BAF2A /* SendAMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendAMessageViewController.m; sourceTree = "<group>"; };
 		857BF18A1C0936AA006BAF2A /* SendAMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendAMessageViewController.xib; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 		857D70501BEFD0D800639EE1 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				85670A761C69430700820A78 /* Disclosure-Purple.png */,
 				8561303F1C1046B9003E69D7 /* logo@2x.png */,
 				856130401C1046B9003E69D7 /* logo@3x.png */,
 				856130371C1042B8003E69D7 /* SplashScreen.png */,
@@ -954,6 +957,7 @@
 				857D705A1BEFD26200639EE1 /* Home-Gray0.5x.png in Resources */,
 				85CD24341C071E5800B6E173 /* Arun.jpg in Resources */,
 				85CD244C1C071E5800B6E173 /* Steph.jpg in Resources */,
+				85670A771C69430700820A78 /* Disclosure-Purple.png in Resources */,
 				85CD24461C071E5800B6E173 /* Miguel.jpg in Resources */,
 				85C55FB31BFB2EA0008CCC6B /* AddClassesViewController.xib in Resources */,
 				85CD243D1C071E5800B6E173 /* Ian.jpg in Resources */,

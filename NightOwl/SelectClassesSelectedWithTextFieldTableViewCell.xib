@@ -46,8 +46,9 @@
                             <constraint firstAttribute="trailing" secondItem="c6X-7d-zky" secondAttribute="trailing" id="rYd-HY-H33"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Disclosure-Gray.png" translatesAutoresizingMaskIntoConstraints="NO" id="c3K-7w-Ulq">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Disclosure-Purple.png" translatesAutoresizingMaskIntoConstraints="NO" id="c3K-7w-Ulq">
                         <rect key="frame" x="293" y="34" width="11" height="18"/>
+                        <color key="tintColor" red="0.41960784309999999" green="0.27058823529999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="11" id="1Yq-PN-ZJt"/>
                             <constraint firstAttribute="height" constant="18" id="ypM-u6-oav"/>
@@ -107,6 +108,6 @@
     </objects>
     <resources>
         <image name="Check-White.png" width="18" height="16"/>
-        <image name="Disclosure-Gray.png" width="11" height="18"/>
+        <image name="Disclosure-Purple.png" width="21" height="36"/>
     </resources>
 </document>

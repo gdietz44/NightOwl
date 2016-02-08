@@ -8,6 +8,7 @@
 
 #import "ConversationTableViewCell.h"
 #import "User.h"
+#import <Parse/Parse.h>
 
 #define kMessageWidth 200
 #define kBufferWidth 44
@@ -15,6 +16,7 @@
 @interface ConversationTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *otherUserImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *meImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (nonatomic) UITextView *messageView;
 @end
 
@@ -99,6 +101,31 @@
         self.meImageView.hidden = YES;
     } else {
         self.meImageView.hidden = NO;
+        PFUser *currentUser = [PFUser currentUser];
+        UIImage *profileImage = [currentUser objectForKey:@"profilePicture"];
+        if (profileImage == nil) {
+            NSString *initials = [NSString stringWithFormat:@"%@%@", [[currentUser objectForKey:@"firstName"] substringToIndex:1], [[currentUser objectForKey:@"lastName"] substringToIndex:1]];
+            CGSize size  = self.profilePicture.frame.size;
+            
+            UIGraphicsBeginImageContext(size);
+            
+            CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1.0].CGColor);
+            CGContextFillRect(UIGraphicsGetCurrentContext(), self.profilePicture.bounds);
+            
+            CGSize textSize = [initials sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:16], NSForegroundColorAttributeName : [UIColor whiteColor]}];
+            
+            [initials drawAtPoint:CGPointMake((self.profilePicture.bounds.size.width / 2) - (textSize.width / 2), (self.profilePicture.bounds.size.height / 2) - (textSize.height / 2)) withAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:16], NSForegroundColorAttributeName : [UIColor whiteColor]}];
+            
+            // transfer image
+            CGContextSetShouldAntialias(UIGraphicsGetCurrentContext(), YES);
+            CGContextSetAllowsAntialiasing(UIGraphicsGetCurrentContext(), YES);
+            
+            profileImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+        }
+        self.profilePicture.contentMode = UIViewContentModeCenter;
+        self.profilePicture.image = profileImage;
         self.otherUserImageView.hidden = YES;
     }
 }

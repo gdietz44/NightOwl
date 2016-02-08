@@ -124,6 +124,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
                                                              handler:^(UIAlertAction * action) {}];
             
             [alert addAction:okAction];
+            [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
             [self presentViewController:alert animated:YES completion:nil];
         }
     }];
@@ -190,6 +191,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
                                                                                              handler:^(UIAlertAction * action) {}];
                                             
                                             [alert addAction:okAction];
+                                            [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
                                             [self presentViewController:alert animated:YES completion:nil];
                                         }
                                     }];

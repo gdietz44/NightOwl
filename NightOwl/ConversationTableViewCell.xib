@@ -40,6 +40,7 @@
             <connections>
                 <outlet property="meImageView" destination="exv-Xs-R3p" id="3Mw-6p-EZK"/>
                 <outlet property="otherUserImageView" destination="76s-xk-tdB" id="64k-YS-y2B"/>
+                <outlet property="profilePicture" destination="exv-Xs-R3p" id="5rj-6v-Lsv"/>
             </connections>
             <point key="canvasLocation" x="232" y="354"/>
         </tableViewCell>
