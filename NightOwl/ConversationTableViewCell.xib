@@ -22,7 +22,7 @@
                             <constraint firstAttribute="height" constant="36" id="tB4-OY-Iwl"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GriffinDProfilePic.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="exv-Xs-R3p">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="exv-Xs-R3p">
                         <rect key="frame" x="280" y="4" width="36" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="6Ha-gN-q8v"/>
@@ -45,7 +45,4 @@
             <point key="canvasLocation" x="232" y="354"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="GriffinDProfilePic.jpg" width="1536" height="1536"/>
-    </resources>
 </document>

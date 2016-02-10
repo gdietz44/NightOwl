@@ -32,7 +32,7 @@
     // Configure the view for the selected state
 }
 
-- (void)configureCellWithMessage:(Message *)messageObj {
+- (void)configureCellWithMessage:(Message *)messageObj profileImage:(UIImage *)image {
     self.meImageView.layer.cornerRadius = self.meImageView.frame.size.height /2;
     self.meImageView.layer.masksToBounds = YES;
     self.meImageView.layer.borderWidth = 0;
@@ -101,9 +101,12 @@
         self.meImageView.hidden = YES;
     } else {
         self.meImageView.hidden = NO;
-        PFUser *currentUser = [PFUser currentUser];
-        UIImage *profileImage = [currentUser objectForKey:@"profilePicture"];
-        if (profileImage == nil) {
+        self.profilePicture.contentMode = UIViewContentModeCenter;
+        if (image) {
+            self.profilePicture.image = image;
+            self.profilePicture.contentMode = UIViewContentModeScaleToFill;
+        } else {
+            PFUser *currentUser = [PFUser currentUser];
             NSString *initials = [NSString stringWithFormat:@"%@%@", [[currentUser objectForKey:@"firstName"] substringToIndex:1], [[currentUser objectForKey:@"lastName"] substringToIndex:1]];
             CGSize size  = self.profilePicture.frame.size;
             
@@ -120,12 +123,12 @@
             CGContextSetShouldAntialias(UIGraphicsGetCurrentContext(), YES);
             CGContextSetAllowsAntialiasing(UIGraphicsGetCurrentContext(), YES);
             
-            profileImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIImage *profileImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             
+            self.profilePicture.image = profileImage;
+            self.profilePicture.contentMode = UIViewContentModeCenter;
         }
-        self.profilePicture.contentMode = UIViewContentModeCenter;
-        self.profilePicture.image = profileImage;
         self.otherUserImageView.hidden = YES;
     }
 }

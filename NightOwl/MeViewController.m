@@ -80,6 +80,7 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
         if(!error) {
             self.profileImage = [UIImage imageWithData:data];
             self.profileImageView.image = self.profileImage;
+            self.profileImageView.contentMode = UIViewContentModeScaleToFill;
             self.textImageView.hidden = YES;
         }
     }];
@@ -251,10 +252,11 @@ didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     
-    [self dismissViewControllerAnimated:YES completion:nil];;
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     UIImage * image = [info valueForKey:UIImagePickerControllerEditedImage];
     self.textImageView.hidden = YES;
+    self.profileImage = image;
     self.profileImageView.image = image;
     
     NSData *imageData = UIImagePNGRepresentation(image);

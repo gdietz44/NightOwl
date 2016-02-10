@@ -8,10 +8,12 @@
 
 #import "ConversationViewController.h"
 #import "ConversationTableViewCell.h"
+#import <Parse/Parse.h>
 
 #define FONT_SIZE 14.0f
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
+#define PROFILE_IMAGE_DIMENSIONS 36
 
 static NSString* const ConversationCell = @"ConversationTableViewCell";
 
@@ -26,6 +28,7 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 @property (weak, nonatomic) IBOutlet UIView *messageView;
 @property (nonatomic) User* otherUser;
 @property (nonatomic) BOOL autoresponse;
+@property (nonatomic) UIImage *profileImage;
 @property (weak, nonatomic) id<ConversationViewControllerDelegate> delegate;
 @end
 
@@ -82,6 +85,8 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+
+    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -93,6 +98,18 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
             [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
     }
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    PFUser *currentUser = [PFUser currentUser];
+    PFFile *file = [currentUser objectForKey:@"profilePicture"];
+    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if(!error) {
+            self.profileImage = [UIImage imageWithData:data];
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -141,7 +158,7 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:ConversationCell owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    [cell configureCellWithMessage:[self.currentConversation objectAtIndex:indexPath.row]];
+    [cell configureCellWithMessage:[self.currentConversation objectAtIndex:indexPath.row] profileImage:self.profileImage];
     return cell;
 }
 

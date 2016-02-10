@@ -11,5 +11,5 @@
 
 @interface ConversationTableViewCell : UITableViewCell
 - (CGSize)getMessageSize;
-- (void)configureCellWithMessage:(Message *)messageObj;
+- (void)configureCellWithMessage:(Message *)messageObj profileImage:(UIImage *)image;
 @end
