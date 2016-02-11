@@ -251,9 +251,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 -(void)deactivateButtonClicked:(UIButton*)sender
 {
     NSString *key = [self.currentClasses objectAtIndex:sender.tag];
-    NSString *actionTitle = [NSString stringWithFormat:@"Deactivate for %@?", key];
-    NSString *actionMessage = [NSString stringWithFormat:@"Are you sure you are done working on %@?", key];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:actionTitle message:actionMessage preferredStyle:UIAlertControllerStyleActionSheet];
+    NSString *actionTitle = [NSString stringWithFormat:@"Done working on %@?", key];
+//    NSString *actionMessage = [NSString stringWithFormat:@"Are you sure you are done with %@?", key];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:actionTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * action) {
                                                          [self alertSelectedOkForClass:key];
