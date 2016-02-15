@@ -11,6 +11,7 @@
 #import "ConversationViewController.h"
 #import "Message.h"
 #import "User.h"
+#import <Parse/Parse.h>
 
 static NSString* const MessageCell = @"MessageTableViewCell";
 
@@ -164,6 +165,7 @@ selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     Message *message = notification.object;
     User *otherUser = message.sender;
     message.sender = nil;
+    
     if ([self.messageData.contactedUsers containsObject:otherUser]) {
         NSMutableArray *conversation = [self.messageData.conversations objectForKey:otherUser.name];
         [conversation addObject:message];
@@ -176,5 +178,13 @@ selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
         [self.messageData.contactedUsers insertObject:otherUser atIndex:0];
     }
     [self.tableView reloadData];
+    
 }
 @end
+
+
+
+
+
+
+
