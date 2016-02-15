@@ -21,7 +21,7 @@
                             <constraint firstAttribute="height" constant="39" id="k3G-Ro-q6t"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
-                        <color key="textColor" red="0.64705882349999999" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.41960784309999999" green="0.27058823529999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                         <variation key="default">
                             <mask key="constraints">
