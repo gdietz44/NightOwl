@@ -23,4 +23,10 @@
           withConversation:(NSArray *)convo
               withUser:(User *)user
       withAutoresponse: (BOOL)autoresponse;
+
+@property (nonatomic) NSMutableArray *currentConversation;
+
+- (void)reloadTable;
+
 @end
+

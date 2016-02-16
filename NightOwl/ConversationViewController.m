@@ -20,7 +20,7 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 @interface ConversationViewController () <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *messageTextView;
-@property (nonatomic) NSMutableArray *currentConversation;
+//@property (nonatomic) NSMutableArray *currentConversation;
 @property (nonatomic) BOOL initialScrollDone;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageViewBottomConstraint;
@@ -127,6 +127,11 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)reloadTable
+{
+    [self.tableView reloadData];
 }
 
 
