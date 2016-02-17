@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import <Parse/Parse.h>
 
 #import "SelectClassesViewController.h"
 #import "SelectClassesTableViewCellUnselected.h"
@@ -24,14 +25,17 @@ static NSString* const SelectedClassCell = @"SelectClassesSelectedWithTextFieldT
 static NSUInteger const MaxStatusLength = 40;
 
 
-@interface SelectClassesViewController () <UITableViewDataSource, UITableViewDelegate, SetLocationStatusViewControllerDelegate, noModalNavigationControllerDelegate, UpdateLocationStatusViewControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
+@interface SelectClassesViewController () <UITableViewDataSource, UITableViewDelegate, SetLocationStatusViewControllerDelegate, noModalNavigationControllerDelegate, UpdateLocationStatusViewControllerDelegate, UITextViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) id<SelectClassesViewControllerDelegate> delegate;
 @property (nonatomic) NSArray *currentClasses;
+@property (nonatomic) NSMutableArray *activeClassesArr;
 @property (nonatomic) NSMutableDictionary *classInfo;
 @property (nonatomic) NSUInteger activeClasses;
 @property (nonatomic) NSString *location;
 @property (weak, nonatomic) IBOutlet UITextField *locationField;
+@property (nonatomic) PFUser *currentUser;
+@property (nonatomic) NSMutableArray* statuses;
 @end
 
 @implementation SelectClassesViewController {
@@ -57,6 +61,7 @@ static NSUInteger const MaxStatusLength = 40;
     _placesClient = [[GMSPlacesClient alloc] init];
     
     self.location = @"";
+    self.currentUser = [PFUser currentUser];
     
     UINib *unselectedCellNib = [UINib nibWithNibName:UnselectedClassCell bundle:[NSBundle mainBundle]];
     [self.tableView registerNib:unselectedCellNib forCellReuseIdentifier:UnselectedClassCell];
@@ -67,26 +72,10 @@ static NSUInteger const MaxStatusLength = 40;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.classInfo = [[NSMutableDictionary alloc] init];
+    self.activeClassesArr = [[NSMutableArray alloc] init];
+    self.statuses = [[NSMutableArray alloc] init];
     
     self.locationField.delegate = self;
-    
-    [[[CLLocationManager alloc] init] requestWhenInUseAuthorization];
-    [_placesClient currentPlaceWithCallback:^(GMSPlaceLikelihoodList *likelihoodList, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Current Place error %@", [error localizedDescription]);
-            return;
-        }
-        
-        for (GMSPlaceLikelihood *likelihood in likelihoodList.likelihoods) {
-            GMSPlace* place = likelihood.place;
-            if([place.types containsObject:@"establishment"] && ![place.name  isEqual: @"Stanford University"]) {
-                self.location = place.name;
-                self.locationField.text = place.name;
-                break;
-            }
-        }
-        
-    }];
 }
 
 -(void)viewDidLayoutSubviews
@@ -101,22 +90,64 @@ static NSUInteger const MaxStatusLength = 40;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    
+    CLLocationManager *lm = [[CLLocationManager alloc] init];
+    [lm requestWhenInUseAuthorization];
+    lm.delegate = self;
+    lm.desiredAccuracy = kCLLocationAccuracyBest;
+    lm.distanceFilter = kCLDistanceFilterNone;
+    [lm startUpdatingLocation];
+    CLLocation *location = [lm location];
+    CLLocationCoordinate2D coord = [location coordinate];
+    self.currentUser[@"latitude"] = [NSNumber numberWithDouble:coord.latitude];
+    self.currentUser[@"longitude"] = [NSNumber numberWithDouble:coord.longitude];
+    
+    [_placesClient currentPlaceWithCallback:^(GMSPlaceLikelihoodList *likelihoodList, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Current Place error %@", [error localizedDescription]);
+            return;
+        }
+        
+        for (GMSPlaceLikelihood *likelihood in likelihoodList.likelihoods) {
+            GMSPlace* place = likelihood.place;
+            if([place.types containsObject:@"establishment"] && ![place.name  isEqual: @"Stanford University"]) {
+                self.location = place.name;
+                self.locationField.text = place.name;
+                self.currentUser[@"locationName"] = place.name;
+                [self.currentUser saveInBackground];
+                break;
+            }
+        }
+        
+    }];
+
     self.navigationController.navigationBar.topItem.title = @"NightOwl";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.currentClasses = [defaults objectForKey:@"Classes"];
+    self.currentUser[@"currentClasses"] = self.currentClasses;
     for (id className in self.currentClasses) {
         if (![self.classInfo objectForKey:className]) {
             [self.classInfo setObject:[[EnrolledClass alloc] initWithClass:className] forKey:className];
         }
     }
+   
     self.activeClasses = 0;
+    [self.activeClassesArr removeAllObjects];
+    [self.statuses removeAllObjects];
     for (id key in [self.classInfo allKeys]) {
         if (![self.currentClasses containsObject:key]) {
             [self.classInfo removeObjectForKey:key];
         } else if (((EnrolledClass *)[self.classInfo objectForKey:key]).active) {
+            [self.activeClassesArr addObject:key];
+            [self.statuses addObject:((EnrolledClass *)[self.classInfo objectForKey:key]).status];
             self.activeClasses++;
         }
     }
+    self.currentUser[@"activeClasses"] = self.activeClassesArr;
+    self.currentUser[@"statuses"] = self.statuses;
+    [self.currentUser saveInBackground];
     
     if (self.currentClasses.count == 0) {
         UILabel *backgroundView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,self.tableView.bounds.size.width,self.tableView.bounds.size.height)];
@@ -173,6 +204,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //        [self.navigationController presentViewController:modal animated:YES completion:nil];
     } else {
         NSString *key = [(SelectClassesTableViewCellUnselected *)cell getName];
+///WORKING HERE> NEED TO NOT ACTIVATE CLASS YET BUT MAKE CELLE THE ACTIVE CELL
+        
+        
         ((EnrolledClass *)[self.classInfo objectForKey:key]).active = YES;
         self.activeClasses++;
         [self.tableView reloadData];
@@ -223,28 +257,15 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark Private Methods
-//- (void)setButtonColor {
-//    if (self.activeClasses > 0) {
-//        self.buttonView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
-//        self.buttonView.layer.masksToBounds = NO;
-//        self.buttonView.layer.shadowOffset = CGSizeMake(5, 5);
-//        self.buttonView.layer.shadowRadius = 5;
-//        self.buttonView.layer.shadowOpacity = 0.5;
-//        self.button.enabled = YES;
-//    } else {
-//        self.buttonView.backgroundColor = [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1];
-//        self.buttonView.layer.masksToBounds = YES;
-//        self.buttonView.layer.shadowOffset = CGSizeMake(0, 0);
-//        self.button.enabled = NO;
-//    }
-//}
-
 
 - (void)alertSelectedOkForClass:(NSString *)className {
     ((EnrolledClass *)[self.classInfo objectForKey:className]).active = NO;
     ((EnrolledClass *)[self.classInfo objectForKey:className]).status = @"";
     self.activeClasses--;
-//    [self setButtonColor];
+    [self.statuses removeObjectAtIndex:[self.activeClassesArr indexOfObject:className]];
+    [self.activeClassesArr removeObject:className];
+    self.currentUser[@"activeClasses"] = self.activeClassesArr;
+    [self.currentUser saveInBackground];
     [self.tableView reloadData];
 }
 
@@ -252,7 +273,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 {
     NSString *key = [self.currentClasses objectAtIndex:sender.tag];
     NSString *actionTitle = [NSString stringWithFormat:@"Done working on %@?", key];
-//    NSString *actionMessage = [NSString stringWithFormat:@"Are you sure you are done with %@?", key];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:actionTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * action) {
@@ -295,6 +315,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark TextFieldDelegate Methods
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     self.location = self.locationField.text;
+    self.currentUser[@"locationName"] = self.location;
+    [self.currentUser saveInBackground];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -306,7 +328,24 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)textViewDidEndEditing:(UITextView *)textView {
     NSUInteger tag = textView.tag;
     NSString *className = [self.currentClasses objectAtIndex:tag];
-    ((EnrolledClass *)[self.classInfo objectForKey:className]).status = textView.text;
+    if ([textView.text isEqual:@""]) {
+        ((EnrolledClass *)[self.classInfo objectForKey:className]).active = NO;
+        self.activeClasses--;
+        [self.tableView reloadData];
+    } else {
+        ((EnrolledClass *)[self.classInfo objectForKey:className]).status = textView.text;
+        if([self.activeClassesArr containsObject:className]) {
+            [self.statuses replaceObjectAtIndex:[self.activeClassesArr indexOfObject:className] withObject:textView.text];
+            self.currentUser[@"statuses"] = self.statuses;
+        } else {
+            [self.activeClassesArr addObject:className];
+            [self.statuses addObject:textView.text];
+            
+            self.currentUser[@"activeClasses"] = self.activeClassesArr;
+            self.currentUser[@"statuses"] = self.statuses;
+        }
+        [self.currentUser saveInBackground];
+    }
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string {

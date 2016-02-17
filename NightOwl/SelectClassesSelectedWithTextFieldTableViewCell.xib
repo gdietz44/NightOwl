@@ -54,8 +54,8 @@
                             <constraint firstAttribute="height" constant="18" id="ypM-u6-oav"/>
                         </constraints>
                     </imageView>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" text="Add a status (e.g. Almost done. Want to check?) max 50 characters" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yZZ-q3-6rd" customClass="MultiLineFieldTextView">
-                        <rect key="frame" x="56" y="42" width="221" height="36"/>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" text="Add a status (e.g. Almost done. Want to check?) max 50 characters" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yZZ-q3-6rd" customClass="MultiLineFieldTextView">
+                        <rect key="frame" x="56" y="42" width="221" height="35"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="f0r-E3-yY2"/>
                         </constraints>
