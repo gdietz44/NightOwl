@@ -47,6 +47,12 @@
     [Parse setApplicationId:@"dqKW6eDem7T9sfx1qVidDr4Mw2pR21Yl2PXuHMni"
                   clientKey:@"6go2iDjclJJN603K3msUNbY6j7vW6VaLKL5GiITf"];
     
+    /* THIS IS TEMP CODE to force a new login */
+    LoginViewController *loginVC = [[LoginViewController alloc]init];
+    [self.window setRootViewController:loginVC];
+    /* END TEMP CODE */
+    
+    /* Comment for now - just need to get a valid session and we don't have a logout button yet
     // Add the login view controller as the root controller of the app window
     if (![PFUser currentUser]) {
         LoginViewController *loginVC = [[LoginViewController alloc]init];
@@ -56,6 +62,7 @@
         [appDelegate.window setRootViewController:appDelegate.tabBarController];
     }
     // Above is new login code
+     */
     
     return YES;
 }

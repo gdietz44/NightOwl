@@ -20,7 +20,7 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 @interface ConversationViewController () <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *messageTextView;
-@property (nonatomic) NSMutableArray *currentConversation;
+//@property (nonatomic) NSMutableArray *currentConversation;
 @property (nonatomic) BOOL initialScrollDone;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageViewBottomConstraint;
@@ -129,6 +129,11 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)reloadTable
+{
+    [self.tableView reloadData];
+}
+
 
 #pragma mark - TableViewDelegate/DataSource Methods
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -181,6 +186,8 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 
 #pragma mark Action Methods
 - (IBAction)sendButtonWasPressed:(id)sender {
+    
+    // Code pre Parse-messaging (Pre 2/14)
     if ([self.currentConversation count] == 0) {
         Message *message = [[Message alloc] initWithUser:self.otherUser message:self.messageTextView.text];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Conversation Began" object:message];
@@ -195,6 +202,29 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
     if (self.autoresponse) {
         [self performSelector:@selector(otherUserSendMessage) withObject:nil afterDelay:3];
     }
+    
+    // Code for Parse messaging (Post 2/14)
+    PFUser *currentUser = [PFUser currentUser];
+    
+    // Create new message object
+    PFObject *newMessageObject = [[PFObject alloc] initWithClassName:@"Message"];
+    
+    // Set text in message object
+    newMessageObject[@"text"] = message.message;
+    newMessageObject[@"sender"] = currentUser.username;
+    newMessageObject[@"recipient"] = self.otherUser.name;
+    
+    // Save message to cloud
+    [newMessageObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded) {
+            // Do something?
+            NSLog(@"Message saved: %@", message.message);
+        } else {
+            // Do something else? Log for now
+            NSLog(@"%@", error.description);
+        }
+    }];
+    
 }
 
 

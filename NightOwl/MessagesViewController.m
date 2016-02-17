@@ -11,6 +11,7 @@
 #import "ConversationViewController.h"
 #import "Message.h"
 #import "User.h"
+#import <Parse/Parse.h>
 
 static NSString* const MessageCell = @"MessageTableViewCell";
 
@@ -96,10 +97,70 @@ heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     }
 }
 
+-(ConversationViewController*) getCVC:(User*) user {
+    NSArray *conversation = [self getConversation:user];
+    return [[ConversationViewController alloc] initWithDelegate:self withConversation:conversation withUser:user withAutoresponse:YES];
+}
+
+-(NSArray*) getConversation:(User*) user {
+//    return [self.messageData.conversations objectForKey:user.name];
+    
+    PFUser *currentUser = [PFUser currentUser];
+    
+    PFQuery *fromMeQuery = [[PFQuery alloc] initWithClassName:@"Message"];
+    PFQuery *toMeQuery = [[PFQuery alloc] initWithClassName:@"Message"];
+    
+    // from me to other user
+    [fromMeQuery whereKey:@"sender" equalTo:currentUser.username];
+    [fromMeQuery whereKey:@"recipient" equalTo:user.name];
+    
+    // from other user to me
+    [toMeQuery whereKey:@"sender" equalTo:user.name];
+    [toMeQuery whereKey:@"recipient" equalTo:currentUser.username];
+    
+    NSLog(@"Searching for messages to/from %@ and %@", currentUser.username, user.name);
+    
+    // combine as or query
+    PFQuery *fullQuery = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:fromMeQuery, toMeQuery, nil]];
+    
+    NSMutableArray *msgs = [[NSMutableArray alloc] initWithCapacity:16];
+    
+
+    [fullQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        NSLog(@"Query resulting in %lu results", objects.count);
+        
+        for (int i=0; i!=objects.count; i++) {
+            NSString *msgText = ((PFObject*)(objects[i]))[@"text"];
+            NSString *sender = ((PFObject*)(objects[i]))[@"sender"];
+            
+            User *newUser;
+            if (sender == currentUser.username) {
+                newUser = nil;
+            } else {
+                //TODO - populate this properly
+                newUser = [[User alloc] initWithName:sender status:nil locationName:nil latitude:0.0 longitude:0.0 imageName:nil contacted:YES sharedClasses:nil];
+            }
+            
+            Message *message = [[Message alloc] initWithUser:newUser message:msgText];
+            [msgs addObject:message];
+        }
+        
+        ((ConversationViewController*)self.navigationController.visibleViewController).currentConversation = msgs;
+        [(ConversationViewController*)self.navigationController.visibleViewController reloadTable];
+        [self.tableView reloadData];
+        
+    }];
+    
+    return msgs;
+}
+
 -(void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     User *user =[self.messageData.contactedUsers objectAtIndex:indexPath.row];
-    ConversationViewController *fnovc = [[ConversationViewController alloc] initWithDelegate:self withConversation:[self.messageData.conversations objectForKey:user.name] withUser:user withAutoresponse:YES];
+    
+    ConversationViewController *fnovc = [self getCVC:user];
+    
+//    ConversationViewController *fnovc = [[ConversationViewController alloc] initWithDelegate:self withConversation:[self.messageData.conversations objectForKey:user.name] withUser:user withAutoresponse:YES];
     [self.navigationController pushViewController:fnovc animated:YES];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
@@ -164,6 +225,7 @@ selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     Message *message = notification.object;
     User *otherUser = message.sender;
     message.sender = nil;
+    
     if ([self.messageData.contactedUsers containsObject:otherUser]) {
         NSMutableArray *conversation = [self.messageData.conversations objectForKey:otherUser.name];
         [conversation addObject:message];
@@ -176,5 +238,13 @@ selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
         [self.messageData.contactedUsers insertObject:otherUser atIndex:0];
     }
     [self.tableView reloadData];
+    
 }
 @end
+
+
+
+
+
+
+
