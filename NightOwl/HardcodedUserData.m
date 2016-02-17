@@ -35,7 +35,7 @@
                     [sharedClasses addObject:[currentClasses objectAtIndex:index.integerValue]];
                 }
             }
-            User *newUser = [[User alloc] initWithName:name status:status locationName:locationName latitude:latitude.doubleValue longitude:longitude.doubleValue imageName:imageName contacted:NO sharedClasses:sharedClasses];
+            User *newUser = [[User alloc] initWithName:name username:name status:status locationName:locationName latitude:latitude.doubleValue longitude:longitude.doubleValue imageName:imageName contacted:NO sharedClasses:sharedClasses];
             [mutableUsers addObject:newUser];
         }
         self.users = mutableUsers;

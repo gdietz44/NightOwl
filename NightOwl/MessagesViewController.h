@@ -11,4 +11,5 @@
 
 @interface MessagesViewController : UIViewController
 @property (nonatomic) MessageData *messageData;
+- (void) loadData;
 @end

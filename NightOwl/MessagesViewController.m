@@ -28,13 +28,21 @@ static NSString* const MessageCell = @"MessageTableViewCell";
     if (self = [super initWithNibName:NSStringFromClass([self class]) bundle:[NSBundle mainBundle]]) {
         self.title = @"Messages";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageSent:) name:@"Conversation Began" object:nil];
-        self.messageData = [[MessageData alloc] init];
     }
     return self;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     return [super initWithNibName:nil bundle:nil];
+}
+
+/*
+ * Can't be called in init anymore - what if we're not logged in?
+ * This method is visible in the header so we can call it from up the chain in the appropriate
+ * place.
+ */
+- (void) loadData {
+    self.messageData = [[MessageData alloc] init];
 }
 
 - (void)viewDidLoad {
@@ -93,18 +101,23 @@ heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     if(self.searchController.isActive) {
         return [self.searchResults count];
     } else {
-        return self.messageData.conversations.count;
+        return self.messageData.contactedUsers.count;
     }
 }
 
+/*
+ * Populate the ConversationViewController from Parse data.
+ */
 -(ConversationViewController*) getCVC:(User*) user {
     NSArray *conversation = [self getConversation:user];
-    return [[ConversationViewController alloc] initWithDelegate:self withConversation:conversation withUser:user withAutoresponse:YES];
+    return [[ConversationViewController alloc] initWithDelegate:self withConversation:conversation withUser:user withAutoresponse:NO];
 }
 
+/*
+ * Get the conversation between us and specified user.
+ * Array is ordered by time, oldest is @index 0
+ */
 -(NSArray*) getConversation:(User*) user {
-//    return [self.messageData.conversations objectForKey:user.name];
-    
     PFUser *currentUser = [PFUser currentUser];
     
     PFQuery *fromMeQuery = [[PFQuery alloc] initWithClassName:@"Message"];
@@ -112,20 +125,21 @@ heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
     // from me to other user
     [fromMeQuery whereKey:@"sender" equalTo:currentUser.username];
-    [fromMeQuery whereKey:@"recipient" equalTo:user.name];
+    [fromMeQuery whereKey:@"recipient" equalTo:user.username];
     
     // from other user to me
-    [toMeQuery whereKey:@"sender" equalTo:user.name];
+    [toMeQuery whereKey:@"sender" equalTo:user.username];
     [toMeQuery whereKey:@"recipient" equalTo:currentUser.username];
     
-    NSLog(@"Searching for messages to/from %@ and %@", currentUser.username, user.name);
+    NSLog(@"Searching for messages to/from %@ and %@", currentUser.username, user.username);
     
     // combine as or query
     PFQuery *fullQuery = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:fromMeQuery, toMeQuery, nil]];
+    [fullQuery orderByAscending:@"createdAt"];
     
     NSMutableArray *msgs = [[NSMutableArray alloc] initWithCapacity:16];
     
-
+    // get the updated conversation - do not rely on what has been gathered in case you've received a new message? Should be changed eventually
     [fullQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         NSLog(@"Query resulting in %lu results", objects.count);
         
@@ -137,8 +151,7 @@ heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
             if (sender == currentUser.username) {
                 newUser = nil;
             } else {
-                //TODO - populate this properly
-                newUser = [[User alloc] initWithName:sender status:nil locationName:nil latitude:0.0 longitude:0.0 imageName:nil contacted:YES sharedClasses:nil];
+                newUser = user;
             }
             
             Message *message = [[Message alloc] initWithUser:newUser message:msgText];
@@ -156,11 +169,10 @@ heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
 
 -(void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    User *user =[self.messageData.contactedUsers objectAtIndex:indexPath.row];
+    User *user = (self.searchController.isActive) ? [self.searchResults objectAtIndex:indexPath.row] : [self.messageData.contactedUsers objectAtIndex:indexPath.row];
     
     ConversationViewController *fnovc = [self getCVC:user];
     
-//    ConversationViewController *fnovc = [[ConversationViewController alloc] initWithDelegate:self withConversation:[self.messageData.conversations objectForKey:user.name] withUser:user withAutoresponse:YES];
     [self.navigationController pushViewController:fnovc animated:YES];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
@@ -173,9 +185,38 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         cell = [nib objectAtIndex:0];
     }
     User *user = (self.searchController.isActive) ? [self.searchResults objectAtIndex:indexPath.row] : [self.messageData.contactedUsers objectAtIndex:indexPath.row];
-    NSArray *conversation = [self.messageData.conversations objectForKey:user.name];
+    
+    NSArray *conversation = [self.messageData.conversations objectForKey:user.username];
     NSString *mostRecentMessage = ((Message *)[conversation lastObject]).message;
     [cell configureCellWithUser:user.name sharedClasses:[user.sharedClasses componentsJoinedByString:@", "] message:mostRecentMessage image:user.image];
+    
+    // IMPORTANT ** if you don't keep track of this, we will continually call
+    // reloadRowsAtIndexPath, which calls cellForRowAtIndexPath, which creates
+    // a recursive spiral into hell **
+    if (!user.imageDownloaded) {
+        
+        PFQuery *query = [PFUser query];
+        [query whereKey:@"username" equalTo:user.username];
+        PFUser *otherUser = (PFUser *)[query getFirstObject];
+        if (otherUser) {
+            PFFile *file = [otherUser objectForKey:@"profilePicture"];
+            [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if (!error) {
+                    user.image = [UIImage imageWithData:data];
+                    [self.tableView beginUpdates];
+                    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    [self.tableView endUpdates];
+                    
+                    // IMPORTANT ** if you don't keep track of this, we will continually call
+                    // reloadRowsAtIndexPath, which calls cellForRowAtIndexPath, which creates
+                    // a recursive spiral into hell **
+                    user.imageDownloaded = true;
+                }
+
+            }];
+        }
+    }
+    
     [cell setNeedsUpdateConstraints];
     return cell;
 }
@@ -214,7 +255,7 @@ selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
 - (void)conversationViewController:(ConversationViewController *)conversationViewController
              didUpdateConversation:(NSArray *)conversation
                           withUser:(User *)user {
-    [self.messageData.conversations setObject:conversation forKey:user.name];
+    [self.messageData.conversations setObject:conversation forKey:user.username];
     [self.messageData.contactedUsers removeObjectAtIndex:[self.messageData.contactedUsers indexOfObject:user]];
     [self.messageData.contactedUsers insertObject:user atIndex:0];
     [self.tableView reloadData];
@@ -227,14 +268,14 @@ selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     message.sender = nil;
     
     if ([self.messageData.contactedUsers containsObject:otherUser]) {
-        NSMutableArray *conversation = [self.messageData.conversations objectForKey:otherUser.name];
+        NSMutableArray *conversation = [self.messageData.conversations objectForKey:otherUser.username];
         [conversation addObject:message];
-        [self.messageData.conversations setObject:conversation forKey:otherUser.name];
+        [self.messageData.conversations setObject:conversation forKey:otherUser.username];
         [self.messageData.contactedUsers removeObjectAtIndex:[self.messageData.contactedUsers indexOfObject:otherUser]];
         [self.messageData.contactedUsers insertObject:otherUser atIndex:0];
     } else {
         NSMutableArray *conversation = [[NSMutableArray alloc] initWithObjects:message, nil];
-        [self.messageData.conversations setObject:conversation forKey:otherUser.name];
+        [self.messageData.conversations setObject:conversation forKey:otherUser.username];
         [self.messageData.contactedUsers insertObject:otherUser atIndex:0];
     }
     [self.tableView reloadData];

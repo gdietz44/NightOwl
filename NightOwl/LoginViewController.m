@@ -117,6 +117,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate.tabBarController.messagesController loadData];
             [appDelegate.window setRootViewController:appDelegate.tabBarController];
         } else {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There was an error registering." message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
@@ -184,6 +185,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
                                             [defaults setObject:[user objectForKey:@"currentClasses"] forKey:@"Classes"];
                                             [defaults synchronize];
                                             AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                                            [appDelegate.tabBarController.messagesController loadData];
                                             [appDelegate.window setRootViewController:appDelegate.tabBarController];
                                         } else {
                                             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There was an error logging in." message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];

@@ -27,6 +27,7 @@
         noMessagesTabNavigationController *messagesNav = [[noMessagesTabNavigationController alloc] init];
         messagesNav.tabBarItem.title = @"Messages";
         messagesNav.tabBarItem.image = [UIImage imageNamed:@"Messages-Gray0.5x.png"];
+        self.messagesController = messagesNav;
         
         noMeNavigationController *meNav = [[noMeNavigationController alloc] init];
         meNav.tabBarItem.title = @"Me";
@@ -42,6 +43,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.delegate = self;
+}
+
+- (void) loadMessageData {
+    [self.messagesController loadData];
 }
 
 - (void)didReceiveMemoryWarning {

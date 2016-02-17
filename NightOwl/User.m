@@ -10,6 +10,7 @@
 
 @implementation User
 - (id)initWithName:(NSString *)name
+          username:(NSString *)username
             status:(NSString *)status
       locationName:(NSString *)locationName
           latitude:(double)latitude
@@ -20,12 +21,14 @@
     if (self = [super init]) {
         self.contacted = contacted;
         self.name = name;
+        self.username = username;
         self.status = status;
         self.locationName = locationName;
         self.coordinates = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
         self.distance = [self.coordinates distanceFromLocation:[[CLLocation alloc] initWithLatitude:37.426256 longitude:-122.171715]];
         self.image = [UIImage imageNamed:imageName];
         self.sharedClasses = sharedClasses;
+        self.imageDownloaded = false;
     }
     return self;
 }

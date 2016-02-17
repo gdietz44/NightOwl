@@ -24,6 +24,16 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    // Comment for now - just need to get a valid session and we don't have a logout button yet
+    [Parse setApplicationId:@"dqKW6eDem7T9sfx1qVidDr4Mw2pR21Yl2PXuHMni"
+                  clientKey:@"6go2iDjclJJN603K3msUNbY6j7vW6VaLKL5GiITf"];
+    
+    // Force login to make new users and stuff and things
+    if ([PFUser currentUser]) {
+        [PFUser logOut];
+    }
+    
+    
     noTabBarController *notbc = [[noTabBarController alloc] init];
     self.window.rootViewController = notbc;
     
@@ -44,25 +54,24 @@
 //    }
     [GMSServices provideAPIKey:@"AIzaSyDc3lx4F8nTMTdwswL54UVfwIg8STI-gpg"];
     
-    [Parse setApplicationId:@"dqKW6eDem7T9sfx1qVidDr4Mw2pR21Yl2PXuHMni"
-                  clientKey:@"6go2iDjclJJN603K3msUNbY6j7vW6VaLKL5GiITf"];
+//    [Parse setApplicationId:@"dqKW6eDem7T9sfx1qVidDr4Mw2pR21Yl2PXuHMni"
+//                  clientKey:@"6go2iDjclJJN603K3msUNbY6j7vW6VaLKL5GiITf"];
     
     /* THIS IS TEMP CODE to force a new login */
-    LoginViewController *loginVC = [[LoginViewController alloc]init];
-    [self.window setRootViewController:loginVC];
+//    LoginViewController *loginVC = [[LoginViewController alloc]init];
+//    [self.window setRootViewController:loginVC];
     /* END TEMP CODE */
     
-    /* Comment for now - just need to get a valid session and we don't have a logout button yet
     // Add the login view controller as the root controller of the app window
     if (![PFUser currentUser]) {
         LoginViewController *loginVC = [[LoginViewController alloc]init];
         [self.window setRootViewController:loginVC];
     } else {
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate.tabBarController.messagesController loadData];
         [appDelegate.window setRootViewController:appDelegate.tabBarController];
     }
     // Above is new login code
-     */
     
     return YES;
 }

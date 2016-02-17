@@ -10,4 +10,6 @@
 
 @interface noMessagesTabNavigationController : UINavigationController
 
+- (void) loadData;
+
 @end

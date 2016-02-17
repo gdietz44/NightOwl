@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "noMessagesTabNavigationController.h"
 
 @interface noTabBarController : UITabBarController <UITabBarControllerDelegate>
+
+@property (nonatomic) noMessagesTabNavigationController *messagesController;
 
 @end

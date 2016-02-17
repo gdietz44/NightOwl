@@ -12,6 +12,7 @@
 
 @interface User : NSObject
 @property (nonatomic) NSString *name;
+@property (nonatomic) NSString *username;
 @property (nonatomic) NSString *status;
 @property (nonatomic) NSString *locationName;
 @property (nonatomic) CLLocation *coordinates;
@@ -19,8 +20,10 @@
 @property (nonatomic) UIImage *image;
 @property (nonatomic) BOOL contacted;
 @property (nonatomic) NSArray *sharedClasses;
+@property (nonatomic) BOOL imageDownloaded;
 
 - (id)initWithName:(NSString *)name
+          username:(NSString *)username
             status:(NSString *)status
       locationName:(NSString *)locationName
           latitude:(double)latitude

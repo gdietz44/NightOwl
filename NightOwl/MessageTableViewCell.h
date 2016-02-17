@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MessageTableViewCell : UITableViewCell
+
 - (void)configureCellWithUser:(NSString *)user
                 sharedClasses:(NSString *)sharedClasses
                       message:(NSString *)status

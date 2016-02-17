@@ -44,7 +44,7 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
         self.title = user.name;
         self.otherUser = user;
         self.initialScrollDone = NO;
-        self.autoresponse = autoresponse;
+        self.autoresponse = NO;
     }
     return self;
 }
@@ -206,13 +206,24 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
     // Code for Parse messaging (Post 2/14)
     PFUser *currentUser = [PFUser currentUser];
     
+    PFQuery *query = [PFUser query];
+    [query whereKey:@"username" equalTo:self.otherUser.username];
+    PFUser *otherUser = (PFUser*)[query getFirstObject];
+
+    
     // Create new message object
     PFObject *newMessageObject = [[PFObject alloc] initWithClassName:@"Message"];
     
     // Set text in message object
     newMessageObject[@"text"] = message.message;
     newMessageObject[@"sender"] = currentUser.username;
-    newMessageObject[@"recipient"] = self.otherUser.name;
+    newMessageObject[@"recipient"] = self.otherUser.username;
+    
+    newMessageObject[@"sendingUser"] = currentUser;
+    
+    if (otherUser) {
+        newMessageObject[@"receivingUser"] = otherUser;
+    }
     
     // Save message to cloud
     [newMessageObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {

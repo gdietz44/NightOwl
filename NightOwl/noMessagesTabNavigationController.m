@@ -10,11 +10,14 @@
 #import "MessagesViewController.h"
 @interface noMessagesTabNavigationController ()
 
+@property (nonatomic) MessagesViewController *mvc;
+
 @end
 
 @implementation noMessagesTabNavigationController
 - (id)init {
     MessagesViewController* mvc = [[MessagesViewController alloc] init];
+    self.mvc = mvc;
     if (self = [super initWithRootViewController:mvc]) {
         self.navigationBar.barTintColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
         self.navigationBar.tintColor = [UIColor whiteColor];
@@ -23,6 +26,10 @@
         self.navigationBar.barStyle = UIBarStyleBlack;
     }
     return self;
+}
+
+- (void) loadData {
+    [self.mvc loadData];
 }
 
 - (void)viewDidLoad {
