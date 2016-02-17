@@ -12,11 +12,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OXK-ih-3au" id="MfD-q3-ajU">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="85.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CLASS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sT-4v-1ev">
-                        <rect key="frame" x="56" y="8" width="256" height="33.5"/>
+                        <rect key="frame" x="56" y="8" width="256" height="34"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="39" id="k3G-Ro-q6t"/>
                         </constraints>
@@ -30,10 +30,10 @@
                         </variation>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b37-lz-2YN">
-                        <rect key="frame" x="0.0" y="0.0" width="48" height="85.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="48" height="86"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6X-7d-zky">
-                                <rect key="frame" x="0.0" y="0.0" width="48" height="85.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="48" height="86"/>
                                 <state key="normal" image="Check-White.png"/>
                             </button>
                         </subviews>
@@ -54,8 +54,8 @@
                             <constraint firstAttribute="height" constant="18" id="ypM-u6-oav"/>
                         </constraints>
                     </imageView>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" text="Add a status (e.g. Almost done. Want to check?) max 50 characters" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yZZ-q3-6rd" customClass="MultiLineFieldTextView">
-                        <rect key="frame" x="56" y="41.5" width="221" height="36"/>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" text="Add a status (e.g. Almost done. Want to check?) max 50 characters" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yZZ-q3-6rd" customClass="MultiLineFieldTextView">
+                        <rect key="frame" x="56" y="42" width="221" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="f0r-E3-yY2"/>
                         </constraints>
