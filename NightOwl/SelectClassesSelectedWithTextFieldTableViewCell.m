@@ -10,6 +10,8 @@
 
 @interface SelectClassesSelectedWithTextFieldTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *classLabel;
+@property (weak, nonatomic) IBOutlet UIView *activeView;
+@property (weak, nonatomic) IBOutlet UIImageView *disclosureView;
 
 
 @end
@@ -36,6 +38,21 @@
     self.classLabel.text = className;
     self.statusLabel.text = status;
     self.statusLabel.tag = index;
+    if ([status isEqual:@""]) {
+        self.disclosureView.image = [UIImage imageNamed:@"Disclosure-Gray.png"];
+        self.classLabel.textColor = [UIColor colorWithRed:165.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1];
+        self.activeButton.hidden = YES;
+        self.activeButton.enabled = NO;
+        self.activeView.backgroundColor = [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1];
+        self.statusLabel.layer.borderColor = [UIColor colorWithRed:165.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1].CGColor;
+    } else {
+        self.disclosureView.image = [UIImage imageNamed:@"Disclosure-Purple.png"];
+        self.classLabel.textColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
+        self.activeButton.hidden = NO;
+        self.activeButton.enabled = YES;
+        self.activeView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1];
+        self.statusLabel.layer.borderColor = [UIColor colorWithRed:165.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1].CGColor;
+    }
 }
 
 @end

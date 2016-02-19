@@ -100,7 +100,9 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="activeButton" destination="c6X-7d-zky" id="CyD-jc-fMc"/>
+                <outlet property="activeView" destination="b37-lz-2YN" id="kQ0-Br-Igw"/>
                 <outlet property="classLabel" destination="6sT-4v-1ev" id="UwI-sB-gYY"/>
+                <outlet property="disclosureView" destination="c3K-7w-Ulq" id="h35-S7-n7N"/>
                 <outlet property="statusLabel" destination="yZZ-q3-6rd" id="vUv-0b-HTC"/>
             </connections>
             <point key="canvasLocation" x="260" y="343"/>

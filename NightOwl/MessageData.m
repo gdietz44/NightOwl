@@ -63,7 +63,7 @@
                     [query whereKey:@"username" equalTo:otherUsername];
                     PFUser *otherUser = (PFUser *)[query getFirstObject];
                     
-                    newUser = [[User alloc] initWithName:otherUser[@"firstName"] username:otherUser[@"username"] status:nil locationName:otherUser[@"locationName"] latitude:[[otherUser valueForKey:@"lattitude"] doubleValue] longitude:[[otherUser valueForKey:@"longitude"] doubleValue] imageName:nil contacted:YES sharedClasses:nil];
+                    newUser = [[User alloc] initWithName:otherUser[@"firstName"] username:otherUser[@"username"] statuses:nil locationName:otherUser[@"locationName"] latitude:[[otherUser valueForKey:@"lattitude"] doubleValue] longitude:[[otherUser valueForKey:@"longitude"] doubleValue] imageName:nil contacted:YES sharedClasses:nil];
                     [userDict setObject:newUser forKey:otherUsername];
                     [self.contactedUsers addObject:newUser];
                 } else {

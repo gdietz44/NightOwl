@@ -6,6 +6,7 @@
 //  Copyright © 2015 Stanford University. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "FindNightOwlsViewController.h"
 #import "FindNightOwlTableViewCell.h"
 #import "HorizontalPickerView.h"
@@ -14,7 +15,6 @@
 #import "SendAMessageViewController.h"
 #import "noModalNavigationController.h"
 #import "Message.h"
-
 #import "ConversationViewController.h"
 
 @import CoreLocation;
@@ -29,20 +29,70 @@ static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
 @property (weak, nonatomic) IBOutlet HorizontalPickerView *horizontalPicker;
 @property (nonatomic) NSArray *classes;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic) HardcodedUserData *userData;
+@property (nonatomic) NSMutableArray *userData;
+@property (nonatomic) NSMutableDictionary *userImages;
 @property (nonatomic) CLLocationCoordinate2D location;
 @property (nonatomic) NSArray *visibleUsers;
 @property (nonatomic) NSUInteger withinHalfAMile;
 @property (nonatomic) NSUInteger withinAQuarterMile;
 @property (nonatomic) NSUInteger withinAMile;
+
 @end
 
 @implementation FindNightOwlsViewController
 #pragma mark Initialization
-- (id)initWithClassList:(NSArray *)activeClasses highlightedClassIndex:(NSUInteger)index {
+- (id)initWithClassList:(NSArray *)activeClasses highlightedClassIndex:(NSUInteger)index currentLocation:(CLLocationCoordinate2D)currentLocation {
     if (self = [super init]) {
         self.classes = activeClasses;
         startIndex = index;
+        self.userData = [[NSMutableArray alloc] init];
+        NSMutableArray *subqueries = [[NSMutableArray alloc] init];
+        for (NSString* className in activeClasses) {
+            PFQuery *query = [[PFUser query] whereKey:@"activeClasses" equalTo:className];
+            [subqueries addObject:query];
+        }
+        PFUser *currentUser = [PFUser currentUser];
+        PFQuery *query = [PFQuery orQueryWithSubqueries:subqueries];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+            for (int i = 0; i < [results count]; i++) {
+                PFUser* user = [results objectAtIndex:i];
+                if(user[@"username"] == currentUser[@"username"]) {
+                    continue;
+                }
+                User *newUser = [[User alloc] init];
+                
+                newUser.name = [NSString stringWithFormat:@"%@ %@.", user[@"firstName"], [[user objectForKey:@"lastName"] substringToIndex:1]];
+                newUser.locationName = user[@"locationName"];
+                newUser.coordinates = [[CLLocation alloc] initWithLatitude:[user[@"latitude"] floatValue] longitude:[user[@"longitude"] floatValue]];
+                newUser.distance = [[[CLLocation alloc] initWithLatitude:currentLocation.latitude longitude:currentLocation.longitude] distanceFromLocation:newUser.coordinates];
+
+                NSMutableArray *sharedClasses = [[NSMutableArray alloc] init];
+                NSMutableArray *statuses = [[NSMutableArray alloc] init];
+                for (int i = 0; i < [user[@"activeClasses"] count]; i++) {
+                    NSString *className = [user[@"activeClasses"] objectAtIndex:i];
+                    if([self.classes containsObject:className]) {
+                        NSUInteger index = [user[@"activeClasses"] indexOfObject:className];
+                        [sharedClasses addObject:className];
+                        [statuses addObject:[user[@"statuses"] objectAtIndex:index]];
+                    }
+                }
+                newUser.sharedClasses = sharedClasses;
+                newUser.statuses = statuses;
+                PFFile *file = [user objectForKey:@"profilePicture"];
+                [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    if (!error) {
+                        newUser.image = [UIImage imageWithData:data];
+                        newUser.imageDownloaded = true;
+                        [self.tableView reloadData];
+                    }
+                    
+                }];
+                [self.userData addObject:newUser];
+            }
+            [self.horizontalPicker selectItem:[self.horizontalPicker selectedItem] animated:NO];
+            [self.tableView reloadData];
+        }];
+                
     }
     return self;
 }
@@ -82,7 +132,7 @@ static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
     swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.tableView addGestureRecognizer:swipeRight];
     
-    self.userData = [[HardcodedUserData alloc] init];
+//    self.userData = [[HardcodedUserData alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -116,7 +166,7 @@ static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
 
 - (void)pickerView:(HorizontalPickerView *)pickerView
      didSelectItem:(NSInteger)item {
-    NSArray *unsortedArr = [self.userData.users filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(User* userObject, NSDictionary *bindings) {
+    NSArray *unsortedArr = [self.userData filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(User* userObject, NSDictionary *bindings) {
         return [userObject.sharedClasses containsObject:[NSString stringWithFormat:@"%@",[self.classes objectAtIndex:item]]];
     }]];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"distance"
@@ -242,7 +292,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     }
     User *user = [self.visibleUsers objectAtIndex:index];
     NSString *title = [NSString stringWithFormat:@"%@ @ %@",user.name,user.locationName];
-    [cell configureCellWithTitle:title status:user.status image:user.image];
+    NSString *className = [self.classes objectAtIndex:[self.horizontalPicker selectedItem]];
+    NSInteger classIndex = [user.sharedClasses indexOfObject:className];
+    NSString *status = [user.sharedClasses objectAtIndex:classIndex];
+    [cell configureCellWithTitle:title status:status image:user.image];
     [cell setNeedsUpdateConstraints];
     return cell;
 }

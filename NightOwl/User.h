@@ -13,7 +13,7 @@
 @interface User : NSObject
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *username;
-@property (nonatomic) NSString *status;
+@property (nonatomic) NSArray *statuses;
 @property (nonatomic) NSString *locationName;
 @property (nonatomic) CLLocation *coordinates;
 @property (nonatomic) CLLocationDistance distance;
@@ -24,7 +24,7 @@
 
 - (id)initWithName:(NSString *)name
           username:(NSString *)username
-            status:(NSString *)status
+          statuses:(NSArray *)statuses
       locationName:(NSString *)locationName
           latitude:(double)latitude
          longitude:(double)longitude

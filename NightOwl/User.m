@@ -11,7 +11,7 @@
 @implementation User
 - (id)initWithName:(NSString *)name
           username:(NSString *)username
-            status:(NSString *)status
+          statuses:(NSArray *)statuses
       locationName:(NSString *)locationName
           latitude:(double)latitude
          longitude:(double)longitude
@@ -22,7 +22,7 @@
         self.contacted = contacted;
         self.name = name;
         self.username = username;
-        self.status = status;
+        self.statuses = statuses;
         self.locationName = locationName;
         self.coordinates = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
         self.distance = [self.coordinates distanceFromLocation:[[CLLocation alloc] initWithLatitude:37.426256 longitude:-122.171715]];

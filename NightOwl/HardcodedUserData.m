@@ -24,7 +24,6 @@
         NSMutableArray *mutableUsers = [[NSMutableArray alloc] initWithCapacity:[names count]];
         for (int i = 0; i < [names count]; i++) {
             NSString *name = [names objectAtIndex:i];
-            NSString *status = [statuses objectAtIndex:i];
             NSString *locationName = [locations objectAtIndex:i];
             NSNumber *latitude = [latitudes objectAtIndex:i];
             NSNumber *longitude = [longitiudes objectAtIndex:i];
@@ -35,7 +34,7 @@
                     [sharedClasses addObject:[currentClasses objectAtIndex:index.integerValue]];
                 }
             }
-            User *newUser = [[User alloc] initWithName:name username:name status:status locationName:locationName latitude:latitude.doubleValue longitude:longitude.doubleValue imageName:imageName contacted:NO sharedClasses:sharedClasses];
+            User *newUser = [[User alloc] initWithName:name username:name statuses:statuses locationName:locationName latitude:latitude.doubleValue longitude:longitude.doubleValue imageName:imageName contacted:NO sharedClasses:sharedClasses];
             [mutableUsers addObject:newUser];
         }
         self.users = mutableUsers;

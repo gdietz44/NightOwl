@@ -36,6 +36,9 @@ static NSUInteger const MaxStatusLength = 40;
 @property (weak, nonatomic) IBOutlet UITextField *locationField;
 @property (nonatomic) PFUser *currentUser;
 @property (nonatomic) NSMutableArray* statuses;
+@property (nonatomic) CLLocationManager *lm;
+@property (nonatomic) NSInteger editCellIndex;
+@property (nonatomic) CLLocationCoordinate2D coord;
 @end
 
 @implementation SelectClassesViewController {
@@ -74,7 +77,7 @@ static NSUInteger const MaxStatusLength = 40;
     self.classInfo = [[NSMutableDictionary alloc] init];
     self.activeClassesArr = [[NSMutableArray alloc] init];
     self.statuses = [[NSMutableArray alloc] init];
-    
+    self.editCellIndex = -1;
     self.locationField.delegate = self;
 }
 
@@ -93,35 +96,13 @@ static NSUInteger const MaxStatusLength = 40;
     [super viewWillAppear:animated];
     
     
-    CLLocationManager *lm = [[CLLocationManager alloc] init];
-    [lm requestWhenInUseAuthorization];
-    lm.delegate = self;
-    lm.desiredAccuracy = kCLLocationAccuracyBest;
-    lm.distanceFilter = kCLDistanceFilterNone;
-    [lm startUpdatingLocation];
-    CLLocation *location = [lm location];
-    CLLocationCoordinate2D coord = [location coordinate];
-    self.currentUser[@"latitude"] = [NSNumber numberWithDouble:coord.latitude];
-    self.currentUser[@"longitude"] = [NSNumber numberWithDouble:coord.longitude];
-    
-    [_placesClient currentPlaceWithCallback:^(GMSPlaceLikelihoodList *likelihoodList, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Current Place error %@", [error localizedDescription]);
-            return;
-        }
-        
-        for (GMSPlaceLikelihood *likelihood in likelihoodList.likelihoods) {
-            GMSPlace* place = likelihood.place;
-            if([place.types containsObject:@"establishment"] && ![place.name  isEqual: @"Stanford University"]) {
-                self.location = place.name;
-                self.locationField.text = place.name;
-                self.currentUser[@"locationName"] = place.name;
-                [self.currentUser saveInBackground];
-                break;
-            }
-        }
-        
-    }];
+    self.lm = [[CLLocationManager alloc] init];
+    [self.lm requestWhenInUseAuthorization];
+    self.lm.delegate = self;
+    self.lm.desiredAccuracy = kCLLocationAccuracyBest;
+    self.lm.distanceFilter = kCLDistanceFilterNone;
+    [self.lm startMonitoringSignificantLocationChanges];
+    [self.lm startUpdatingLocation];
 
     self.navigationController.navigationBar.topItem.title = @"NightOwl";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -165,7 +146,7 @@ static NSUInteger const MaxStatusLength = 40;
 //    self.buttonView.layer.cornerRadius = 8;
 //    [self setButtonColor];
     
-    [self.tableView reloadData];
+    [self reloadTable];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -174,6 +155,8 @@ static NSUInteger const MaxStatusLength = 40;
 }
 
 #pragma mark Delegate Methods
+
+
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
     #pragma unused(tableView)
@@ -199,24 +182,13 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             NSString *key = [(SelectClassesSelectedWithTextFieldTableViewCell *)cell getName];
             [self findNightOwlsForClass:key];
         }
-//        UpdateLocationStatusViewController* ulsvc = [[UpdateLocationStatusViewController alloc] initWithDelegate:self classTitle:key currLocation:self.location currStatus:((EnrolledClass *)[self.classInfo objectForKey:key]).status];
-//        noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:ulsvc withDelegate:self];
-//        [self.navigationController presentViewController:modal animated:YES completion:nil];
     } else {
         NSString *key = [(SelectClassesTableViewCellUnselected *)cell getName];
-///WORKING HERE> NEED TO NOT ACTIVATE CLASS YET BUT MAKE CELLE THE ACTIVE CELL
-        
-        
         ((EnrolledClass *)[self.classInfo objectForKey:key]).active = YES;
         self.activeClasses++;
-        [self.tableView reloadData];
-        //        NSString *key = [(SelectClassesTableViewCellUnselected *)cell getName];
-//        SetLocationStatusViewController* slsvc = [[SetLocationStatusViewController alloc] initWithDelegate:self classTitle:key currLocation:self.location];
-//        noModalNavigationController *modal = [[noModalNavigationController alloc] initWithRootViewController:slsvc withDelegate:self];
-//        [self.navigationController presentViewController:modal animated:YES completion:nil];
+        self.editCellIndex = indexPath.row;
     }
-//    [self setButtonColor];
-    [tableView reloadData];
+    [self reloadTable];
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -244,6 +216,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         cell.activeButton.tag = indexPath.row;
         [cell.activeButton addTarget:self action:@selector(deactivateButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cell configureCell:classTitle withStatus:classObj.status withIndex:indexPath.row];
+        if(self.editCellIndex == indexPath.row) {
+            [cell.statusLabel becomeFirstResponder];
+        }
         return cell;
     } else {
         SelectClassesTableViewCellUnselected *cell = [tableView dequeueReusableCellWithIdentifier:UnselectedClassCell];
@@ -256,7 +231,41 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+#pragma mark CLLocationManagerDelegate Methods
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    self.coord = [[locations lastObject] coordinate];
+    self.currentUser[@"latitude"] = [NSNumber numberWithDouble:self.coord.latitude];
+    self.currentUser[@"longitude"] = [NSNumber numberWithDouble:self.coord.longitude];
+    [_placesClient currentPlaceWithCallback:^(GMSPlaceLikelihoodList *likelihoodList, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Current Place error %@", [error localizedDescription]);
+            [self.currentUser saveInBackground];
+            return;
+        }
+        
+        for (GMSPlaceLikelihood *likelihood in likelihoodList.likelihoods) {
+            GMSPlace* place = likelihood.place;
+            if([place.types containsObject:@"establishment"] && ![place.name  isEqual: @"Stanford University"]) {
+                self.location = place.name;
+                self.locationField.text = place.name;
+                self.currentUser[@"locationName"] = place.name;
+                [self.currentUser saveInBackground];
+                break;
+            }
+        }
+        
+    }];
+}
+
+
 #pragma mark Private Methods
+- (void)reloadTable {
+    [self.tableView reloadData];
+    NSIndexPath *index = [NSIndexPath indexPathForRow:self.editCellIndex inSection:0];
+    SelectClassesSelectedWithTextFieldTableViewCell *cell = [self.tableView cellForRowAtIndexPath:index];
+    [cell.statusLabel becomeFirstResponder];
+}
 
 - (void)alertSelectedOkForClass:(NSString *)className {
     ((EnrolledClass *)[self.classInfo objectForKey:className]).active = NO;
@@ -265,8 +274,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.statuses removeObjectAtIndex:[self.activeClassesArr indexOfObject:className]];
     [self.activeClassesArr removeObject:className];
     self.currentUser[@"activeClasses"] = self.activeClassesArr;
+    self.currentUser[@"statuses"] = self.statuses;
     [self.currentUser saveInBackground];
-    [self.tableView reloadData];
+    [self reloadTable];
 }
 
 -(void)deactivateButtonClicked:(UIButton*)sender
@@ -308,7 +318,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
     [activeClasses sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    FindNightOwlsViewController *fnovc = [[FindNightOwlsViewController alloc] initWithClassList:activeClasses highlightedClassIndex:[activeClasses indexOfObject:class]];
+    FindNightOwlsViewController *fnovc = [[FindNightOwlsViewController alloc] initWithClassList:activeClasses highlightedClassIndex:[activeClasses indexOfObject:class] currentLocation:self.coord];
     [self.navigationController pushViewController:fnovc animated:YES];
 }
 
@@ -327,11 +337,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark TextViewDelegate Methods
 - (void)textViewDidEndEditing:(UITextView *)textView {
     NSUInteger tag = textView.tag;
+    self.editCellIndex = -1;
     NSString *className = [self.currentClasses objectAtIndex:tag];
     if ([textView.text isEqual:@""]) {
         ((EnrolledClass *)[self.classInfo objectForKey:className]).active = NO;
         self.activeClasses--;
-        [self.tableView reloadData];
+        [self reloadTable];
     } else {
         ((EnrolledClass *)[self.classInfo objectForKey:className]).status = textView.text;
         if([self.activeClassesArr containsObject:className]) {
@@ -345,10 +356,13 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             self.currentUser[@"statuses"] = self.statuses;
         }
         [self.currentUser saveInBackground];
+        [self reloadTable];
     }
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string {
+- (BOOL)textView:(UITextView *)textView
+shouldChangeTextInRange:(NSRange)range
+ replacementText:(NSString *)string {
     if([string isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;

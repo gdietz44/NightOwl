@@ -11,6 +11,6 @@
 
 @interface FindNightOwlsViewController : UIViewController
 
-- (id)initWithClassList:(NSArray *)activeClasses highlightedClassIndex:(NSUInteger)index;
+- (id)initWithClassList:(NSArray *)activeClasses highlightedClassIndex:(NSUInteger)index currentLocation:(CLLocationCoordinate2D)currentLocation;
 
 @end
