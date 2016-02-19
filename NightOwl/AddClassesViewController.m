@@ -13,10 +13,10 @@
 
 static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 
-@interface AddClassesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate>
+@interface AddClassesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) id<AddClassesViewControllerDelegate> delegate;
-@property (strong, nonatomic) UISearchController *searchController;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusBarBackgroundHeight;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) ClassListParser *classListParser;
 @property (nonatomic) NSArray *searchResults;
@@ -47,18 +47,14 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
     
     self.title = @"Add A Class";
     
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.delegate = self;
-    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.searchBar.delegate = self;
+    self.searchBar.showsCancelButton = YES;
+    self.searchBar.returnKeyType = UIReturnKeyDone;
+
     self.definesPresentationContext = YES;
     
     self.statusBarBackgroundHeight.constant = 0;
     [self.view setNeedsUpdateConstraints];
-    
-    [self.searchController.searchBar sizeToFit];
     
     UINib *cellNib = [UINib nibWithNibName:AddAClassCell bundle:[NSBundle mainBundle]];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:AddAClassCell];
@@ -74,7 +70,7 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 
 #pragma mark TableViewDelegate and DataSource Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if(!self.searchController.isActive) {
+    if([self.searchBar.text isEqual:@""]) {
         return [self.classListParser.classList.subjectArr count];
     } else {
         return 1;
@@ -84,7 +80,7 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
 #pragma unused(tableView)
-    if(!self.searchController.isActive) {
+    if([self.searchBar.text isEqual:@""]) {
         NSString *key = [self.classListParser.classList.subjectArr objectAtIndex:(NSUInteger)section];
         NSNumber *sectionSize = [self.classListParser.classList.subjectCountMap objectForKey:key];
         if(sectionSize) {
@@ -97,7 +93,7 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if(!self.searchController.isActive) {
+    if([self.searchBar.text isEqual:@""]) {
         return [self.classListParser.classList.subjectArr objectAtIndex:(NSUInteger)section];
     } else {
         return nil;
@@ -113,7 +109,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AddAClassTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSString *class = [cell getClassName];
-    [self.searchController.searchBar resignFirstResponder];
     [self.delegate AddClassesViewController:self didAddClass:class];
 }
 
@@ -124,7 +119,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:AddAClassCell owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    if(!self.searchController.isActive) {
+    if([self.searchBar.text isEqual:@""]) {
         NSString *key = [self.classListParser.classList.subjectArr objectAtIndex:(NSUInteger)indexPath.section];
         NSArray *sectionArr = [self.classListParser.classList.subjectCodeMap objectForKey:key];
         NSString *cellText = [[key stringByAppendingString:@" "] stringByAppendingString:[sectionArr objectAtIndex:(NSUInteger)indexPath.row]];
@@ -138,35 +133,20 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     return cell;
 }
 
-
-#pragma mark UISearchResultsUpdating Methods
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
-{
-    NSString *searchString = searchController.searchBar.text;
-    [self searchForText:searchString];
+#pragma mark UISearchDelegate Methods
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self searchForText:searchText];
     [self.tableView reloadData];
 }
 
-#pragma mark UISearchDelegate Methods
-- (void)searchBar:(UISearchBar *)searchBar
-selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
-    [self updateSearchResultsForSearchController:self.searchController];
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.text = @"";
+    [self.tableView reloadData];
+    [self.searchBar resignFirstResponder];
 }
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    self.tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
-    self.statusBarBackgroundHeight.constant = 20;
-    [self.view setNeedsUpdateConstraints];
-}
-
-- (void)didDismissSearchController:(UISearchController *)searchController {
-    self.statusBarBackgroundHeight.constant = 0;
-    [self.view setNeedsUpdateConstraints];
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
-
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark Private Methods
@@ -175,10 +155,6 @@ selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     NSArray *data = self.classListParser.classList.classArr;
     searchText = [searchText stringByReplacingOccurrencesOfString:@" " withString:@""];
     self.searchResults = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@", searchText]];
-}
-
--(void)dealloc {
-    [self.searchController.view removeFromSuperview];
 }
 
 @end
