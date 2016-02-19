@@ -27,12 +27,7 @@
     // Comment for now - just need to get a valid session and we don't have a logout button yet
     [Parse setApplicationId:@"dqKW6eDem7T9sfx1qVidDr4Mw2pR21Yl2PXuHMni"
                   clientKey:@"6go2iDjclJJN603K3msUNbY6j7vW6VaLKL5GiITf"];
-    
-    // Force login to make new users and stuff and things
-    if ([PFUser currentUser]) {
-        [PFUser logOut];
-    }
-    
+       
     
     noTabBarController *notbc = [[noTabBarController alloc] init];
     self.window.rootViewController = notbc;

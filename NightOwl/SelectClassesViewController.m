@@ -38,6 +38,7 @@ static NSUInteger const MaxStatusLength = 40;
 @property (nonatomic) NSMutableArray* statuses;
 @property (nonatomic) CLLocationManager *lm;
 @property (nonatomic) NSInteger editCellIndex;
+@property (nonatomic) UITapGestureRecognizer *tapGesture;
 @property (nonatomic) CLLocationCoordinate2D coord;
 @end
 
@@ -65,6 +66,8 @@ static NSUInteger const MaxStatusLength = 40;
     
     self.location = @"";
     self.currentUser = [PFUser currentUser];
+    
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
     
     UINib *unselectedCellNib = [UINib nibWithNibName:UnselectedClassCell bundle:[NSBundle mainBundle]];
     [self.tableView registerNib:unselectedCellNib forCellReuseIdentifier:UnselectedClassCell];
@@ -324,9 +327,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark TextFieldDelegate Methods
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self.view removeGestureRecognizer:self.tapGesture];
     self.location = self.locationField.text;
     self.currentUser[@"locationName"] = self.location;
     [self.currentUser saveInBackground];
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self.view addGestureRecognizer:self.tapGesture];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -336,6 +344,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark TextViewDelegate Methods
 - (void)textViewDidEndEditing:(UITextView *)textView {
+    [self.view removeGestureRecognizer:self.tapGesture];
+    textView.layer.borderColor = [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1].CGColor;
     NSUInteger tag = textView.tag;
     self.editCellIndex = -1;
     NSString *className = [self.currentClasses objectAtIndex:tag];
@@ -358,6 +368,11 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         [self.currentUser saveInBackground];
         [self reloadTable];
     }
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    [self.view addGestureRecognizer:self.tapGesture];
+    textView.layer.borderColor = [UIColor colorWithRed:165.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1].CGColor;
 }
 
 - (BOOL)textView:(UITextView *)textView
