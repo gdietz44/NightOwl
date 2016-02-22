@@ -106,7 +106,6 @@ static NSUInteger const MaxStatusLength = 40;
     [self.lm startMonitoringSignificantLocationChanges];
     [self.lm stopUpdatingLocation];
     [self.lm startUpdatingLocation];
-    NSLog(@"CLLocationManager is %@", self.lm);
     
     self.navigationController.navigationBar.topItem.title = @"NightOwl";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
