@@ -98,15 +98,16 @@ static NSUInteger const MaxStatusLength = 40;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    
     self.lm = [[CLLocationManager alloc] init];
     [self.lm requestWhenInUseAuthorization];
     self.lm.delegate = self;
     self.lm.desiredAccuracy = kCLLocationAccuracyBest;
     self.lm.distanceFilter = kCLDistanceFilterNone;
     [self.lm startMonitoringSignificantLocationChanges];
+    [self.lm stopUpdatingLocation];
     [self.lm startUpdatingLocation];
-
+    NSLog(@"CLLocationManager is %@", self.lm);
+    
     self.navigationController.navigationBar.topItem.title = @"NightOwl";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.currentClasses = [defaults objectForKey:@"Classes"];
@@ -146,9 +147,6 @@ static NSUInteger const MaxStatusLength = 40;
     
     self.locationField.text = self.location;
     
-//    self.buttonView.layer.cornerRadius = 8;
-//    [self setButtonColor];
-    
     [self reloadTable];
 }
 
@@ -186,10 +184,23 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             [self findNightOwlsForClass:key];
         }
     } else {
-        NSString *key = [(SelectClassesTableViewCellUnselected *)cell getName];
-        ((EnrolledClass *)[self.classInfo objectForKey:key]).active = YES;
-        self.activeClasses++;
-        self.editCellIndex = indexPath.row;
+        if([self.locationField.text isEqual:@""]) {
+            NSString *actionTitle = [NSString stringWithFormat:@"You must enter a location before becoming available in your classes."];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:actionTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [self.locationField becomeFirstResponder];
+                                                              }];
+            
+            [alert addAction:okAction];
+            [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
+            [self presentViewController:alert animated:YES completion:nil];
+        } else {
+            NSString *key = [(SelectClassesTableViewCellUnselected *)cell getName];
+            ((EnrolledClass *)[self.classInfo objectForKey:key]).active = YES;
+            self.activeClasses++;
+            self.editCellIndex = indexPath.row;
+        }
     }
     [self reloadTable];
 }
@@ -327,6 +338,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark TextFieldDelegate Methods
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    textField.layer.borderWidth = 1.0;
+    textField.layer.cornerRadius = 5;
+    textField.layer.borderColor = [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1].CGColor;
     [self.view removeGestureRecognizer:self.tapGesture];
     self.location = self.locationField.text;
     self.currentUser[@"locationName"] = self.location;
@@ -334,6 +348,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textField.layer.borderWidth = 1.0;
+    textField.layer.cornerRadius = 5;
+    textField.layer.borderColor = [UIColor colorWithRed:165.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1].CGColor;
     [self.view addGestureRecognizer:self.tapGesture];
 }
 
@@ -365,8 +382,20 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             self.currentUser[@"activeClasses"] = self.activeClassesArr;
             self.currentUser[@"statuses"] = self.statuses;
         }
-        [self.currentUser saveInBackground];
         [self reloadTable];
+        if (!self.currentUser[@"hasPreviouslyActivated"]) {
+            [self.currentUser setObject:@YES forKey:@"hasPreviouslyActivated"];
+            NSString *actionMessage = [NSString stringWithFormat:@"You and your status are now visible to other NightOwls in %@",className];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Heads Up!" message:actionMessage preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"Got it!" style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action) {
+                                                             }];
+            
+            [alert addAction:okAction];
+            [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        [self.currentUser saveInBackground];
     }
 }
 

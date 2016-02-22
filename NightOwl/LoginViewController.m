@@ -186,6 +186,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
                                             [defaults synchronize];
                                             AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                             [appDelegate.tabBarController.messagesController loadData];
+                                            [appDelegate.tabBarController setSelectedIndex:0];
                                             [appDelegate.window setRootViewController:appDelegate.tabBarController];
                                         } else {
                                             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There was an error logging in." message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];

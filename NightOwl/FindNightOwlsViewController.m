@@ -131,8 +131,6 @@ static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
     UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(increasePicker)];
     swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.tableView addGestureRecognizer:swipeRight];
-    
-//    self.userData = [[HardcodedUserData alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

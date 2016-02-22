@@ -9,6 +9,8 @@
 #import "MeViewController.h"
 #import "AddAClassTableViewCell.h"
 #import <Parse/Parse.h>
+#import "AppDelegate.h"
+#import "LoginViewController.h"
 
 static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 
@@ -48,7 +50,7 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
     
     self.currentUser = [PFUser currentUser];
     
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"More-Gray"] style:UIBarButtonItemStyleDone target:self action:nil]; //add Action
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Log Out" style:UIBarButtonItemStyleDone target:self action:@selector(logOut)];
     self.navigationItem.rightBarButtonItem = button;
     
     UINib *cellNib = [UINib nibWithNibName:AddAClassCell bundle:[NSBundle mainBundle]];
@@ -88,6 +90,7 @@ static NSString* const AddAClassCell = @"AddAClassTableViewCell";
 
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.currentUser = [PFUser currentUser];
     NSString *firstName = [self.currentUser objectForKey:@"firstName"];
     NSString *lastInitial = [[self.currentUser objectForKey:@"lastName"] substringToIndex:1];
     NSString *name = [NSString stringWithFormat:@"%@ %@.", firstName, lastInitial];
@@ -348,6 +351,25 @@ didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     [alert addAction:okAction];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:cancelAction];
+    [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)logOut {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure you want to log out?" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"Yes, Log Out" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action) {
+                                                         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                                                         LoginViewController *loginVC = [[LoginViewController alloc]init];
+                                                         [appDelegate.window setRootViewController:loginVC];
+                                                         [PFUser logOut];
+                                                     }];
+    
+    [alert addAction:okAction];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {}];
     
     [alert addAction:cancelAction];
     [alert.view setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
