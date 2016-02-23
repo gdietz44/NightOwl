@@ -405,7 +405,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         [self reloadTable];
         if ([self.currentUser[@"hasPreviouslyActivated"] isEqual:@NO]) {
             [self.currentUser setObject:@YES forKey:@"hasPreviouslyActivated"];
-            NSString *actionMessage = [NSString stringWithFormat:@"You and your status are now visible to other NightOwls in %@ and any class with a purple check is also visible.",className];
+            NSString *actionMessage = [NSString stringWithFormat:@"You and your status are now visible to other NightOwls in %@, as indicated by a purple check!",className];
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Heads Up!" message:actionMessage preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"Got it!" style:UIAlertActionStyleDefault
                                                              handler:^(UIAlertAction * action) {
