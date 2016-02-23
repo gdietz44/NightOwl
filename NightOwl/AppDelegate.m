@@ -34,6 +34,9 @@
     
     self.tabBarController = notbc;
     
+    [[UITextField appearance] setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
+    [[UITextView appearance] setTintColor:[UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:1]];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     [Lookback_Weak setupWithAppToken:@"ohdshJX2zNXBCzoeX"];
