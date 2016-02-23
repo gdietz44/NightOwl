@@ -38,8 +38,10 @@ static NSUInteger const MaxStatusLength = 40;
 @property (nonatomic) NSMutableArray* statuses;
 @property (nonatomic) CLLocationManager *lm;
 @property (nonatomic) NSInteger editCellIndex;
+@property (nonatomic) NSInteger topCellIndex;
 @property (nonatomic) UITapGestureRecognizer *tapGesture;
 @property (nonatomic) CLLocationCoordinate2D coord;
+@property (nonatomic) BOOL autoFillLocation;
 @end
 
 @implementation SelectClassesViewController {
@@ -65,6 +67,7 @@ static NSUInteger const MaxStatusLength = 40;
     _placesClient = [[GMSPlacesClient alloc] init];
     
     self.location = @"";
+    self.autoFillLocation = YES;
     self.currentUser = [PFUser currentUser];
     
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
@@ -143,7 +146,7 @@ static NSUInteger const MaxStatusLength = 40;
     } else {
         self.tableView.backgroundView = nil;
     }
-    
+    self.locationField.layer.borderColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:0.2].CGColor;
     self.locationField.text = self.location;
     
     [self reloadTable];
@@ -199,6 +202,11 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             ((EnrolledClass *)[self.classInfo objectForKey:key]).active = YES;
             self.activeClasses++;
             self.editCellIndex = indexPath.row;
+            NSArray* indexPaths = [tableView indexPathsForVisibleRows];
+            if (indexPaths) {
+                NSArray* sortedIndexPaths = [indexPaths sortedArrayUsingSelector:@selector(compare:)];
+                self.topCellIndex = [(NSIndexPath*)[sortedIndexPaths objectAtIndex:0] row];
+            }
         }
     }
     [self reloadTable];
@@ -250,25 +258,27 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.coord = [[locations lastObject] coordinate];
     self.currentUser[@"latitude"] = [NSNumber numberWithDouble:self.coord.latitude];
     self.currentUser[@"longitude"] = [NSNumber numberWithDouble:self.coord.longitude];
-    [_placesClient currentPlaceWithCallback:^(GMSPlaceLikelihoodList *likelihoodList, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Current Place error %@", [error localizedDescription]);
-            [self.currentUser saveInBackground];
-            return;
-        }
-        
-        for (GMSPlaceLikelihood *likelihood in likelihoodList.likelihoods) {
-            GMSPlace* place = likelihood.place;
-            if([place.types containsObject:@"establishment"] && ![place.name  isEqual: @"Stanford University"]) {
-                self.location = place.name;
-                self.locationField.text = place.name;
-                self.currentUser[@"locationName"] = place.name;
+    if(self.autoFillLocation) {
+        [_placesClient currentPlaceWithCallback:^(GMSPlaceLikelihoodList *likelihoodList, NSError *error) {
+            if (error != nil) {
+                NSLog(@"Current Place error %@", [error localizedDescription]);
                 [self.currentUser saveInBackground];
-                break;
+                return;
             }
-        }
-        
-    }];
+            if(self.autoFillLocation) {
+                for (GMSPlaceLikelihood *likelihood in likelihoodList.likelihoods) {
+                    GMSPlace* place = likelihood.place;
+                    if([place.types containsObject:@"establishment"] && ![place.name  isEqual: @"Stanford University"]) {
+                        self.location = place.name;
+                        self.locationField.text = place.name;
+                        self.currentUser[@"locationName"] = place.name;
+                        [self.currentUser saveInBackground];
+                        break;
+                    }
+                }
+            }
+        }];
+    }
 }
 
 
@@ -339,17 +349,23 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     textField.layer.borderWidth = 1.0;
     textField.layer.cornerRadius = 5;
-    textField.layer.borderColor = [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1].CGColor;
+    textField.layer.borderColor = [UIColor colorWithRed:128.0/255.0 green:91.0/255.0 blue:160.0/255.0 alpha:0.2].CGColor;
     [self.view removeGestureRecognizer:self.tapGesture];
     self.location = self.locationField.text;
+    if ([self.locationField.text isEqual:@""]) {
+        self.autoFillLocation = YES;
+    } else {
+        self.autoFillLocation = NO;
+    }
     self.currentUser[@"locationName"] = self.location;
     [self.currentUser saveInBackground];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    textField.layer.borderWidth = 1.0;
+    textField.layer.borderWidth = 2.0;
     textField.layer.cornerRadius = 5;
     textField.layer.borderColor = [UIColor colorWithRed:165.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1].CGColor;
+    self.autoFillLocation = NO;
     [self.view addGestureRecognizer:self.tapGesture];
 }
 
@@ -361,7 +377,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark TextViewDelegate Methods
 - (void)textViewDidEndEditing:(UITextView *)textView {
     [self.view removeGestureRecognizer:self.tapGesture];
-    textView.layer.borderColor = [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1].CGColor;
+    self.tableView.contentInset = UIEdgeInsetsZero;
+    if (self.topCellIndex) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.topCellIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+    textView.layer.borderColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1].CGColor;
+    textView.layer.borderWidth = 0.0;
     NSUInteger tag = textView.tag;
     self.editCellIndex = -1;
     NSString *className = [self.currentClasses objectAtIndex:tag];
@@ -382,9 +403,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             self.currentUser[@"statuses"] = self.statuses;
         }
         [self reloadTable];
-        if (!self.currentUser[@"hasPreviouslyActivated"]) {
+        if ([self.currentUser[@"hasPreviouslyActivated"] isEqual:@NO]) {
             [self.currentUser setObject:@YES forKey:@"hasPreviouslyActivated"];
-            NSString *actionMessage = [NSString stringWithFormat:@"You and your status are now visible to other NightOwls in %@",className];
+            NSString *actionMessage = [NSString stringWithFormat:@"You and your status are now visible to other NightOwls in %@ and any class with a purple check is also visible.",className];
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Heads Up!" message:actionMessage preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"Got it!" style:UIAlertActionStyleDefault
                                                              handler:^(UIAlertAction * action) {
@@ -401,6 +422,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     [self.view addGestureRecognizer:self.tapGesture];
     textView.layer.borderColor = [UIColor colorWithRed:165.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1].CGColor;
+    textView.layer.borderWidth = 2.0;
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.tableView.frame.size.height - 73, 0);
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.editCellIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 - (BOOL)textView:(UITextView *)textView
