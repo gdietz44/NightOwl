@@ -188,11 +188,14 @@ static NSString* const ConversationCell = @"ConversationTableViewCell";
 - (IBAction)sendButtonWasPressed:(id)sender {
     
     // Code pre Parse-messaging (Pre 2/14)
+    Message *message;
     if ([self.currentConversation count] == 0) {
-        Message *message = [[Message alloc] initWithUser:self.otherUser message:self.messageTextView.text];
+        message = [[Message alloc] initWithUser:self.otherUser message:self.messageTextView.text];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Conversation Began" object:message];
+    } else {
+        message = [[Message alloc] initWithUser:nil message:self.messageTextView.text];
     }
-    Message *message = [[Message alloc] initWithUser:nil message:self.messageTextView.text];
+    
     [self.currentConversation addObject:message];
     [self.tableView reloadData];
     NSIndexPath* ip = [NSIndexPath indexPathForRow:[self.tableView numberOfRowsInSection:0] - 1 inSection:0];
