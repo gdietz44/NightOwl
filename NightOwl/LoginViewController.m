@@ -113,6 +113,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
     user[@"firstName"] = self.firstNameTextField.text;
     user[@"lastName"] = self.lastNameTextField.text;
     user[@"currentClasses"] = @[];
+    user[@"hasPreviouslyActivated"] = @NO;
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
