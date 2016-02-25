@@ -62,6 +62,7 @@ static NSString* const FindNightOwlCell = @"FindNightOwlTableViewCell";
                 User *newUser = [[User alloc] init];
                 
                 newUser.name = [NSString stringWithFormat:@"%@ %@.", user[@"firstName"], [[user objectForKey:@"lastName"] substringToIndex:1]];
+                newUser.username = user[@"username"];
                 newUser.locationName = user[@"locationName"];
                 newUser.coordinates = [[CLLocation alloc] initWithLatitude:[user[@"latitude"] floatValue] longitude:[user[@"longitude"] floatValue]];
                 newUser.distance = [[[CLLocation alloc] initWithLatitude:currentLocation.latitude longitude:currentLocation.longitude] distanceFromLocation:newUser.coordinates];
