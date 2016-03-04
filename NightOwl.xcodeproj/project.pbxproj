@@ -1218,7 +1218,7 @@
 					"-framework",
 					Lookback,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.cs193p.gdietz44.NightOwl;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.cs193p.gdietz44.NightOwlHighFi3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1247,7 +1247,7 @@
 					"-framework",
 					Lookback,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.cs193p.gdietz44.NightOwl;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.cs193p.gdietz44.NightOwlHighFi3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

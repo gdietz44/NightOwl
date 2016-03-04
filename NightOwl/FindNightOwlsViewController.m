@@ -293,7 +293,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     NSString *title = [NSString stringWithFormat:@"%@ @ %@",user.name,user.locationName];
     NSString *className = [self.classes objectAtIndex:[self.horizontalPicker selectedItem]];
     NSInteger classIndex = [user.sharedClasses indexOfObject:className];
-    NSString *status = [user.sharedClasses objectAtIndex:classIndex];
+    NSString *status = [user.statuses objectAtIndex:classIndex];
     [cell configureCellWithTitle:title status:status image:user.image];
     [cell setNeedsUpdateConstraints];
     return cell;
