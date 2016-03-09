@@ -118,6 +118,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            appDelegate.tabBarController = [[noTabBarController alloc] init];
             [appDelegate.tabBarController.messagesController loadData];
             [appDelegate.window setRootViewController:appDelegate.tabBarController];
         } else {
@@ -186,6 +187,7 @@ int SPACE_BETWEEN_TEXT_FIELDS = 36;
                                             [defaults setObject:[user objectForKey:@"currentClasses"] forKey:@"Classes"];
                                             [defaults synchronize];
                                             AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                                            appDelegate.tabBarController = [[noTabBarController alloc] init];
                                             [appDelegate.tabBarController.messagesController loadData];
                                             [appDelegate.tabBarController setSelectedIndex:0];
                                             [appDelegate.window setRootViewController:appDelegate.tabBarController];
